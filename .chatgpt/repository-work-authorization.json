@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1",
+  "repository": "rozmiarD/llm-fine-tuning-datasets",
+  "authorized_for_chatgpt_work": true,
+  "approved": true,
+  "scope": {
+    "allowed": [
+      "read repository contents",
+      "create files",
+      "update files",
+      "delete files when needed for cleanup inside this repository",
+      "prepare documentation",
+      "prepare dataset files",
+      "prepare schemas",
+      "prepare validation files",
+      "prepare samples",
+      "commit routine repository changes"
+    ],
+    "restricted": [
+      "do not touch other repositories",
+      "do not handle secrets or credentials",
+      "do not publish releases without explicit request",
+      "do not make destructive irreversible changes outside this repository",
+      "do not change repository visibility or ownership"
+    ]
+  },
+  "approval_policy": {
+    "routine_edits_inside_this_repository": "preapproved",
+    "documentation_changes": "preapproved",
+    "dataset_structure_changes": "preapproved",
+    "schema_changes": "preapproved",
+    "sample_dataset_changes": "preapproved",
+    "external_side_effects": "require_explicit_user_request",
+    "credential_or_secret_handling": "forbidden_without_explicit_user_request"
+  },
+  "note": "This file documents the user's repository-level working authorization for ChatGPT sessions. Platform-level approval dialogs, if shown by ChatGPT or GitHub integrations, are controlled by the platform and may not be disabled by repository files."
+}
