@@ -29,9 +29,14 @@ See [Dataset governance](docs/dataset-governance.md).
 
 | Dataset | Target model | Use | Language | Platform | Records | Purpose | Status |
 |---|---:|---|---|---|---:|---|---|
-| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | 2000 | Terminal administration: Bash commands, short explanations, inspection-first operator workflows | legacy experimental corpus |
-| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record format with risk metadata and quality gates | governed sample |
-| [`terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md) | small terminal-admin | SFT | English | Debian/Ubuntu | 908 | Governed draft conversion from cleaned Bash-heavy source material | governed draft conversion |
+| [`terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy`](datasets/terminal-admin-bash-master/README.md) | small terminal-admin | SFT | English | Debian/Ubuntu | 908 | Governed Bash-heavy terminal administration records with risk metadata and quality gates | governed draft dataset |
+| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record reference sample | governed sample |
+
+## Deprecated / removed source material
+
+The previous full `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl` corpus was removed from the active dataset tree because it contained faulty data and should not be treated as a valid training source.
+
+Historical validation notes may remain for audit context, but active training work should use governed records and fresh validation reports.
 
 ## Repository goals
 
@@ -51,7 +56,6 @@ This repository does not claim that:
 
 - a structurally valid dataset is automatically ready for training;
 - a fine-tuned terminal model is safe to run commands without runtime policy controls;
-- the legacy v0.1 corpus has full semantic, safety, or execution validation;
 - validation scripts can replace expert review;
 - draft migrated records are semantically reviewed only because they pass schema and governance linting.
 
@@ -86,16 +90,14 @@ python validation/validate_dataset.py \
   --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
 ```
 
-Validate the governed small-terminal-admin conversion:
+Validate the governed v0.3 Bash-heavy dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl \
+  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
   --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
+  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
 ```
-
-For legacy corpora, use `--warn-only` while migrating metadata and reviewing records.
 
 ## Naming convention
 
@@ -105,12 +107,10 @@ Dataset files should follow this pattern:
 <role>__<target-model-profile>__<training-use>__<language>__<platform>__<version>.jsonl
 ```
 
-A cleaned source-data label such as `v0.3.cleaned-bash-heavy` does not require a new schema by itself. Use a new schema version only when the governed source-record shape changes.
-
-The current full v0.1 corpus is stored with an explicit record-count suffix:
+A dataset content version such as `v0.3` does not require a new schema when the governed source-record shape is unchanged. The current governed record-shape schema is:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
+schemas/terminal-admin-bash-master.v0.2.schema.json
 ```
 
 See [Naming convention](docs/naming-convention.md).
@@ -129,7 +129,7 @@ See [Naming convention](docs/naming-convention.md).
 │   └── terminal-admin-bash-master/
 │       ├── README.md
 │       ├── DATASET_CARD.md
-│       ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
+│       ├── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl
 │       ├── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
 │       └── samples/
 │           ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
@@ -149,7 +149,7 @@ See [Naming convention](docs/naming-convention.md).
     ├── bootstrap-validation-report.md
     ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
     ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
-    └── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
+    └── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
 ```
 
 ## Documentation style
