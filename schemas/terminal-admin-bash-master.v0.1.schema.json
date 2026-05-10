@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rozmiarD/llm-fine-tuning-datasets/schemas/terminal-admin-bash-master.v0.1.schema.json",
+  "title": "terminal-admin-bash-master v0.1 record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "meta",
+    "messages"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^tabm-4b-ci-sft-en-(du|cl|xd)-[0-9]{6}$"
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "target_model_size",
+        "target_model_type",
+        "training_use",
+        "language",
+        "platform",
+        "task_type",
+        "difficulty",
+        "tags"
+      ],
+      "properties": {
+        "role": {
+          "const": "terminal-admin-bash-master"
+        },
+        "target_model_size": {
+          "enum": [
+            "4b"
+          ]
+        },
+        "target_model_type": {
+          "enum": [
+            "coder-instruct"
+          ]
+        },
+        "training_use": {
+          "enum": [
+            "sft",
+            "eval",
+            "preference",
+            "rag",
+            "tool-calling"
+          ]
+        },
+        "language": {
+          "enum": [
+            "en"
+          ]
+        },
+        "platform": {
+          "enum": [
+            "debian-ubuntu",
+            "common-linux",
+            "cross-distro"
+          ]
+        },
+        "task_type": {
+          "enum": [
+            "command_generation",
+            "command_explanation",
+            "log_analysis",
+            "troubleshooting",
+            "safe_fix",
+            "file_inspection",
+            "service_management",
+            "network_diagnosis",
+            "permission_diagnosis",
+            "process_diagnosis",
+            "package_management"
+          ]
+        },
+        "difficulty": {
+          "enum": [
+            "basic",
+            "intermediate",
+            "advanced"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "content"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "system",
+              "user",
+              "assistant"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
