@@ -1,8 +1,8 @@
 # LLM Fine-Tuning Datasets
 
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC--BY--4.0-blue.svg)](LICENSE.md)
-[![Format: JSONL messages](https://img.shields.io/badge/format-JSONL%20messages-informational.svg)](docs/dataset-format.md)
-[![Docs: WCAG-aware](https://img.shields.io/badge/docs-WCAG--aware-informational.svg)](docs/accessibility-guidelines.md)
+[![Format: JSONL messages](https://img.shields.io/badge/format-JSONL%20messages-green.svg)](docs/dataset-format.md)
+[![Docs: WCAG-aware](https://img.shields.io/badge/docs-WCAG--aware-purple.svg)](docs/accessibility-guidelines.md)
 
 Structured source datasets for fine-tuning, evaluating, and preparing small local LLMs for practical technical workflows.
 
