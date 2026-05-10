@@ -6,9 +6,21 @@
 
 ## Status
 
-Bootstrap sample.
+v0.1 source corpus.
 
-This is not yet a large training dataset. It defines the initial structure, schema, naming convention, and example style.
+This dataset contains 2000 canonical JSONL records for supervised fine-tuning.
+
+Identifier range:
+
+```text
+tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
+```
+
+SHA-256:
+
+```text
+fac95a13a6d0e6efd4ae326b1c1946bda1e2a9f59e4961ced6447699448b52d7
+```
 
 ## Intended use
 
@@ -20,7 +32,9 @@ Primary use case:
 - Debian/Ubuntu systems;
 - Bash command generation;
 - short factual explanations;
-- inspection-first troubleshooting.
+- inspection-first troubleshooting;
+- practical Bash automation;
+- Docker, network, service, package, permission, and hardening workflows.
 
 ## Language
 
@@ -32,7 +46,9 @@ Primary platform:
 
 - Debian/Ubuntu;
 - systemd-based systems;
-- apt/dpkg package management.
+- apt/dpkg package management;
+- Docker on Debian/Ubuntu hosts;
+- GNU userland command behavior.
 
 Secondary coverage:
 
@@ -82,7 +98,7 @@ The repository stores the canonical source data. Training pipelines should handl
 Assistant answers should usually contain:
 
 1. a Bash code block with one command or a short command sequence;
-2. one short factual explanation;
+2. one or two short factual explanation sentences;
 3. a caution only when needed.
 
 Example:
@@ -90,8 +106,9 @@ Example:
 ````text
 ```bash
 sudo systemctl status nginx --no-pager
+sudo journalctl -u nginx -n 80 --no-pager
 ```
-This shows the current nginx service status without opening an interactive pager.
+These commands inspect the current nginx service state and recent logs without opening an interactive pager.
 ````
 
 ## Quality priorities
@@ -104,10 +121,40 @@ Good records should teach:
 - short explanations;
 - safe inspection before modification;
 - interpretation of command output and common errors;
-- non-interactive commands suitable for terminal agents.
+- non-interactive commands suitable for terminal agents;
+- practical medium-sized Bash scripts;
+- verification after a fix.
+
+## Distribution summary
+
+### Difficulty
+
+| Difficulty | Count |
+|---|---:|
+| basic | 152 |
+| intermediate | 587 |
+| advanced | 1261 |
+
+### Task types
+
+| Task type | Count |
+|---|---:|
+| `command_explanation` | 117 |
+| `command_generation` | 360 |
+| `file_inspection` | 69 |
+| `log_analysis` | 94 |
+| `network_diagnosis` | 110 |
+| `package_management` | 149 |
+| `permission_diagnosis` | 54 |
+| `process_diagnosis` | 76 |
+| `safe_fix` | 422 |
+| `service_management` | 104 |
+| `troubleshooting` | 445 |
 
 ## Known limitations
 
 This dataset does not claim broad Linux coverage.
 
 It should not be treated as a complete system administration corpus, a security benchmark, or a production safety layer.
+
+The dataset teaches terminal operator behavior and command generation patterns. Runtime safety, authorization, and execution controls must be implemented outside the model.
