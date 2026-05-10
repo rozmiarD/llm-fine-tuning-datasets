@@ -6,17 +6,33 @@
 
 ## Status
 
-Bootstrap sample in repository.
+v0.1 source corpus.
 
-A larger v0.1 corpus has been prepared separately and should be added as the canonical source file when the full JSONL upload path is available.
+This dataset contains 2000 canonical JSONL records for supervised fine-tuning.
 
-Expected canonical source file:
+Full source file:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
 ```
 
-The current repository sample defines the initial structure, schema, naming convention, and example style.
+Identifier range:
+
+```text
+tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
+```
+
+SHA-256:
+
+```text
+7c0079f6985ce9fc1a75c77a7159a87baee21fb4b0b9c8f62f7d2a191c65ee01
+```
+
+Blob SHA observed in GitHub:
+
+```text
+181b4c7609b4a3d1adb230524960b4a1049018f5
+```
 
 ## Intended use
 
@@ -120,6 +136,32 @@ Good records should teach:
 - non-interactive commands suitable for terminal agents;
 - practical medium-sized Bash scripts;
 - verification after a fix.
+
+## Distribution summary
+
+### Difficulty
+
+| Difficulty | Count |
+|---|---:|
+| `basic` | 59 |
+| `intermediate` | 434 |
+| `advanced` | 1507 |
+
+### Task types
+
+| Task type | Count |
+|---|---:|
+| `command_explanation` | 26 |
+| `command_generation` | 432 |
+| `file_inspection` | 167 |
+| `log_analysis` | 95 |
+| `network_diagnosis` | 186 |
+| `package_management` | 181 |
+| `permission_diagnosis` | 95 |
+| `process_diagnosis` | 95 |
+| `safe_fix` | 287 |
+| `service_management` | 92 |
+| `troubleshooting` | 344 |
 
 ## Known limitations
 
