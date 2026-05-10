@@ -2,20 +2,33 @@
 
 ## Dataset name
 
-`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu`
+Primary dataset family:
+
+```text
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
+```
+
+Additional governed conversion track:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu
+```
 
 ## Status
 
-This dataset currently has two tracks:
+This dataset currently has three tracks:
 
 | Track | File | Status |
 |---|---|---|
 | v0.1 | `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl` | legacy experimental source corpus |
-| v0.2 | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| small-terminal-admin v0.2 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl` | governed draft conversion from cleaned Bash-heavy source material |
 
 The v0.1 corpus contains 2000 canonical JSONL records and remains in the repository for reproducibility and migration.
 
 The v0.2 sample defines the preferred governed source-record shape with explicit risk, safety, answer-style, and review metadata.
+
+The small-terminal-admin v0.2 conversion contains 908 governed draft records converted from a cleaned Bash-heavy v0.3 source dataset. It uses the existing governed v0.2 schema. No v0.3 schema is required because the governed record shape did not change.
 
 ## v0.1 corpus metadata
 
@@ -37,9 +50,55 @@ Blob SHA observed in GitHub:
 181b4c7609b4a3d1adb230524960b4a1049018f5
 ```
 
+## small-terminal-admin v0.2 metadata
+
+Source:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__linux-debian-ubuntu__v0.3.cleaned-bash-heavy.jsonl
+```
+
+Output:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl
+```
+
+Record count:
+
+```text
+908
+```
+
+SHA-256:
+
+```text
+b482349a828aca5309ce55a0026b18598702ffb9c8a520b4657063b3f872bcc2
+```
+
+Governance schema:
+
+```text
+schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
+Validation report:
+
+```text
+validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
+```
+
+Review status:
+
+```text
+draft
+```
+
 ## Production-readiness statement
 
 The v0.1 corpus should not be treated as production-grade training data only because it passes structural validation.
+
+The small-terminal-admin v0.2 conversion should also not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
 
 Before training, records should be migrated or filtered through the v0.2 governance model and reviewed for:
 
@@ -53,7 +112,7 @@ Before training, records should be migrated or filtered through the v0.2 governa
 
 ## Intended use
 
-This dataset is intended for supervised fine-tuning of small coder-instruct models around 4B parameters.
+This dataset is intended for supervised fine-tuning of small coder-instruct or terminal-administration models.
 
 Primary use case:
 
@@ -88,7 +147,7 @@ Secondary coverage:
 Preferred target:
 
 - approximately 4B parameters;
-- coder-instruct model;
+- coder-instruct or terminal-admin model;
 - chat/instruction-following capable;
 - suitable for local or edge-device experimentation.
 
@@ -182,6 +241,38 @@ Good records should teach:
 | `service_management` | 92 |
 | `troubleshooting` | 344 |
 
+## Distribution summary for small-terminal-admin v0.2 conversion
+
+### Difficulty
+
+| Difficulty | Count |
+|---|---:|
+| `beginner` | 314 |
+| `intermediate` | 241 |
+| `advanced` | 353 |
+
+### Risk level
+
+| Risk level | Count |
+|---|---:|
+| `safe_readonly` | 726 |
+| `state_change_low` | 97 |
+| `state_change_high` | 18 |
+| `network_sensitive` | 9 |
+| `privilege_sensitive` | 19 |
+| `security_sensitive` | 37 |
+| `destructive` | 2 |
+
+### Answer style
+
+| Answer style | Count |
+|---|---:|
+| `command_with_brief_explanation` | 398 |
+| `diagnostic_steps` | 224 |
+| `guarded_procedure` | 113 |
+| `refusal_with_safe_alternative` | 79 |
+| `script_with_explanation` | 94 |
+
 ## Known limitations
 
 This dataset does not claim broad Linux coverage.
@@ -192,14 +283,17 @@ The dataset teaches terminal operator behavior and command generation patterns. 
 
 The v0.1 corpus has structural validation evidence, but not full semantic, safety, or execution validation evidence.
 
+The small-terminal-admin v0.2 conversion has schema and governance-lint validation evidence, but all records remain draft until manual review.
+
 ## Migration recommendation
 
 Use v0.2 metadata for new records.
 
-For existing v0.1 records:
+For existing v0.1 records or cleaned external source records:
 
 1. migrate metadata into the v0.2 schema;
-2. run `validation/validate_dataset.py`;
-3. review lint findings;
-4. quarantine or reject ambiguous and unsafe records;
-5. export only reviewed subsets for training.
+2. preserve source lineage under `meta.source`;
+3. run `validation/validate_dataset.py`;
+4. review lint findings;
+5. quarantine or reject ambiguous and unsafe records;
+6. export only reviewed subsets for training.
