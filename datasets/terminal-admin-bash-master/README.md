@@ -8,6 +8,12 @@ Canonical dataset name:
 terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1
 ```
 
+Source file:
+
+```text
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
+```
+
 Dataset card:
 
 ```text
@@ -18,6 +24,28 @@ Sample file:
 
 ```text
 samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
+```
+
+Validation report:
+
+```text
+../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
+```
+
+## Status
+
+This is a v0.1 source corpus with 2000 canonical JSONL records.
+
+Identifier range:
+
+```text
+tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
+```
+
+SHA-256:
+
+```text
+fac95a13a6d0e6efd4ae326b1c1946bda1e2a9f59e4961ced6447699448b52d7
 ```
 
 ## Purpose
@@ -31,7 +59,8 @@ The expected model behavior is:
 - avoid unnecessary verbosity;
 - prefer safe inspection before modification;
 - recognize Debian/Ubuntu context;
-- handle common command output, service errors, logs, filesystems, permissions, packages, and network diagnostics.
+- handle common command output, service errors, logs, filesystems, permissions, packages, Docker, hardening, and network diagnostics;
+- write practical Bash automation for administration tasks.
 
 ## Target model
 
@@ -62,6 +91,7 @@ Use Debian/Ubuntu assumptions when relevant:
 - `journalctl`;
 - `ufw`;
 - `netplan`;
+- Docker on Debian/Ubuntu hosts;
 - GNU userland tools.
 
 When a record is not Debian/Ubuntu-specific, use:
@@ -81,6 +111,21 @@ When comparing distributions, use:
 The dataset uses canonical JSONL records with a `messages` field.
 
 This format is not the final training format for every model. Before fine-tuning, export the source records to the chat template required by the target model.
+
+## Coverage
+
+The v0.1 corpus includes:
+
+- inspection-first terminal workflows;
+- systemd and journalctl troubleshooting;
+- apt and dpkg package repair;
+- filesystem usage and safe cleanup;
+- process, port, and resource diagnostics;
+- network, DNS, route, UFW, and netplan diagnosis;
+- Docker and Docker Compose operations;
+- SSH, sudoers, permissions, ACL, and hardening checks;
+- Bash scripts for audits, cleanup, backups, reports, and log parsing;
+- output-to-diagnosis records where the user provides command output or errors.
 
 ## Task type suggestions
 
