@@ -8,12 +8,19 @@ Canonical dataset family:
 terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
 ```
 
+Additional governed conversion track:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu
+```
+
 ## Tracks
 
 | Track | File | Status |
 |---|---|---|
 | v0.1 | `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl` | legacy experimental source corpus |
-| v0.2 | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| small-terminal-admin v0.2 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl` | governed draft conversion from cleaned Bash-heavy source |
 
 Dataset card:
 
@@ -26,6 +33,13 @@ Validation reports:
 ```text
 ../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
 ../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+../../validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
+```
+
+Migration notes:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
 ```
 
 ## Status
@@ -44,6 +58,8 @@ The v0.2 sample is the preferred format for new records because it includes expl
 - semantic review;
 - safety review;
 - execution validation status.
+
+The small-terminal-admin v0.2 conversion contains 908 governed draft records derived from a cleaned Bash-heavy v0.3 source dataset. It uses the existing v0.2 governed source-record schema. No v0.3 schema is required because the record shape did not change.
 
 ## v0.1 corpus metadata
 
@@ -71,6 +87,34 @@ Blob SHA observed in GitHub:
 181b4c7609b4a3d1adb230524960b4a1049018f5
 ```
 
+## small-terminal-admin v0.2 conversion metadata
+
+Record count:
+
+```text
+908
+```
+
+SHA-256:
+
+```text
+b482349a828aca5309ce55a0026b18598702ffb9c8a520b4657063b3f872bcc2
+```
+
+Governance schema:
+
+```text
+../../schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
+Review status:
+
+```text
+draft
+```
+
+The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint errors, and 0 warnings. This is not a semantic, safety, or execution review claim.
+
 ## Purpose
 
 This dataset teaches small coder-instruct models to behave like concise Debian/Ubuntu terminal administration assistants.
@@ -92,6 +136,8 @@ Primary target:
 ```text
 4B coder-instruct
 ```
+
+The small-terminal-admin conversion is intended for small terminal-administration models and uses the same governed record shape.
 
 This means the dataset is written for small instruction-following coding models rather than broad general chat models or base models.
 
@@ -131,6 +177,8 @@ New records should follow the governed v0.2 schema:
 ../../schemas/terminal-admin-bash-master.v0.2.schema.json
 ```
 
+A cleaned source dataset may have a newer source-data label such as `v0.3.cleaned-bash-heavy`. That does not require a new schema unless the governed source-record shape changes.
+
 ## Coverage
 
 The v0.1 corpus covers:
@@ -145,6 +193,18 @@ The v0.1 corpus covers:
 - SSH, sudoers, permissions, ACL, and hardening checks;
 - Bash scripts for audits, cleanup, backups, reports, and log parsing;
 - output-to-diagnosis records where the user provides command output or errors.
+
+The small-terminal-admin v0.2 conversion adds a Bash-heavy governed draft set with stronger coverage of:
+
+- terminal inspection commands;
+- systemd and log workflows;
+- package-management checks and repairs;
+- networking and firewall-adjacent workflows;
+- Docker administration;
+- Bash scripts and functions;
+- tool-availability handling;
+- structured command-output interpretation;
+- refusal and safer-alternative examples.
 
 ## v0.2 metadata values
 
@@ -214,6 +274,14 @@ From the repository root, validate the v0.2 sample:
 ```bash
 python validation/validate_dataset.py \
   datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
+  --schema schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
+Validate the small-terminal-admin governed conversion:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl \
   --schema schemas/terminal-admin-bash-master.v0.2.schema.json
 ```
 
