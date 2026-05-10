@@ -2,17 +2,26 @@
 
 ## Dataset identity
 
-Canonical dataset name:
+Current active dataset:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy
 ```
 
-Full source file:
+Reference dataset family:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
 ```
+
+## Tracks
+
+| Track | File | Status |
+|---|---|---|
+| small-terminal-admin v0.3 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl` | active governed draft dataset |
+| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+
+The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
 
 Dataset card:
 
@@ -20,49 +29,64 @@ Dataset card:
 DATASET_CARD.md
 ```
 
-Sample file:
+Validation reports:
 
 ```text
-samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
+../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+../../validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
 ```
 
-Validation report:
+Migration notes:
 
 ```text
-../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
 ```
 
 ## Status
 
-v0.1 source corpus in repository.
+The active v0.3 Bash-heavy dataset contains 908 governed draft records.
+
+It uses the existing governed record-shape schema:
+
+```text
+../../schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
+`meta.dataset_version` is `0.3` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
+
+All records are currently marked as draft. Passing JSON Schema validation and governance linting does not mean that records have been manually reviewed for semantic correctness, safety, or execution behavior.
+
+## small-terminal-admin v0.3 metadata
 
 Record count:
 
 ```text
-2000
-```
-
-Identifier range:
-
-```text
-tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
+908
 ```
 
 SHA-256:
 
 ```text
-7c0079f6985ce9fc1a75c77a7159a87baee21fb4b0b9c8f62f7d2a191c65ee01
+036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca
 ```
 
-Blob SHA observed in GitHub:
+Governance schema:
 
 ```text
-181b4c7609b4a3d1adb230524960b4a1049018f5
+../../schemas/terminal-admin-bash-master.v0.2.schema.json
 ```
+
+Review status:
+
+```text
+draft
+```
+
+The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint errors, and 0 warnings. This is not a semantic, safety, or execution review claim.
 
 ## Purpose
 
-This dataset teaches small coder-instruct models to behave like concise Debian/Ubuntu terminal administration assistants.
+This dataset teaches small terminal-administration models to behave like concise Debian/Ubuntu terminal assistants.
 
 The expected model behavior is:
 
@@ -79,10 +103,8 @@ The expected model behavior is:
 Primary target:
 
 ```text
-4B coder-instruct
+small terminal-admin / small coder-instruct
 ```
-
-This means the dataset is written for small instruction-following coding models rather than broad general chat models or base models.
 
 The examples should be precise, compact, and command-oriented.
 
@@ -106,17 +128,7 @@ Use Debian/Ubuntu assumptions when relevant:
 - Docker on Debian/Ubuntu hosts;
 - GNU userland tools.
 
-When a record is not Debian/Ubuntu-specific, use:
-
-```json
-"platform": "common-linux"
-```
-
-When comparing distributions, use:
-
-```json
-"platform": "cross-distro"
-```
+Do not mix package managers from unrelated distributions inside this Debian/Ubuntu-only corpus.
 
 ## Source format
 
@@ -124,46 +136,53 @@ The dataset uses canonical JSONL records with a `messages` field.
 
 This format is not the final training format for every model. Before fine-tuning, export the source records to the chat template required by the target model.
 
+Governed records should follow the current record-shape schema:
+
+```text
+../../schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
 ## Coverage
 
-The v0.1 corpus covers:
+The active v0.3 dataset covers:
 
-- inspection-first terminal workflows;
-- systemd and journalctl troubleshooting;
-- apt and dpkg package repair;
-- filesystem usage and safe cleanup;
-- process, port, and resource diagnostics;
-- network, DNS, route, UFW, and netplan diagnosis;
-- Docker and Docker Compose operations;
-- SSH, sudoers, permissions, ACL, and hardening checks;
-- Bash scripts for audits, cleanup, backups, reports, and log parsing;
-- output-to-diagnosis records where the user provides command output or errors.
+- terminal inspection commands;
+- systemd and log workflows;
+- package-management checks and repairs;
+- networking and firewall-adjacent workflows;
+- Docker administration;
+- Bash scripts and functions;
+- tool-availability handling;
+- structured command-output interpretation;
+- refusal and safer-alternative examples.
 
-## Task type suggestions
+## Metadata values
 
-Use one of these values for `meta.task_type`:
+Use these values for `meta.risk_level`:
 
-- `command_generation`;
-- `command_explanation`;
-- `log_analysis`;
-- `troubleshooting`;
-- `safe_fix`;
-- `file_inspection`;
-- `service_management`;
-- `network_diagnosis`;
-- `permission_diagnosis`;
-- `process_diagnosis`;
-- `package_management`.
+- `safe_readonly`;
+- `state_change_low`;
+- `state_change_high`;
+- `network_sensitive`;
+- `privilege_sensitive`;
+- `security_sensitive`;
+- `destructive`.
 
-## Difficulty values
+Use these values for `meta.answer_style`:
 
-Use:
+- `single_command`;
+- `command_with_brief_explanation`;
+- `diagnostic_steps`;
+- `script_with_explanation`;
+- `guarded_procedure`;
+- `refusal_with_safe_alternative`.
 
-- `basic`;
-- `intermediate`;
-- `advanced`.
+Use these values for `meta.review.status`:
 
-Do not use difficulty as marketing. Use it to help split evals and training subsets.
+- `draft`;
+- `reviewed`;
+- `quarantined`;
+- `rejected`.
 
 ## Good example pattern
 
@@ -178,12 +197,40 @@ command here
 Short explanation here.
 ````
 
+For higher-risk operations, the assistant answer should include a guarded procedure, a warning, or a safe alternative as appropriate.
+
 ## Bad example pattern
 
 Avoid answers that:
 
-- combine `apt`, `dnf`, `pacman`, and `apk` in one generic command sequence;
-- produce destructive one-liners without inspection;
+- combine unrelated distribution package managers;
+- produce broad destructive one-liners without inspection;
 - explain basic shell concepts for many paragraphs;
 - guess the environment when the prompt is under-specified;
-- use deprecated tools when a modern default exists.
+- use deprecated tools when a modern default exists;
+- mark risky commands as `safe_readonly`;
+- claim review or execution validation that did not happen.
+
+## Validation
+
+Install dependencies:
+
+```bash
+python -m pip install -r ../../requirements-dev.txt
+```
+
+From the repository root, validate the v0.2 sample:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
+  --schema schemas/terminal-admin-bash-master.v0.2.schema.json
+```
+
+Validate the governed v0.3 Bash-heavy dataset:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
+  --schema schemas/terminal-admin-bash-master.v0.2.schema.json
+```

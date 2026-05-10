@@ -12,6 +12,8 @@ Each object contains:
 - `meta`;
 - `messages`.
 
+The `messages` field contains the trainable conversation. The `meta` field is used for filtering, validation, export, safety review, and documentation.
+
 ## Why JSONL messages
 
 The `messages` format is used because it is easy to export into common instruction/chat training formats.
@@ -26,26 +28,53 @@ It can be converted into:
 
 The repository stores source data. Training pipelines should handle final formatting.
 
-## Minimal record
+## Governed v0.2 record
+
+New terminal-administration records should use the governed v0.2 shape.
 
 ```json
 {
-  "id": "tabm-4b-ci-sft-en-du-000001",
+  "id": "terminal-admin-bash-master:filesystem.du-largest-current.001",
   "meta": {
-    "role": "terminal-admin-bash-master",
-    "target_model_size": "4b",
-    "target_model_type": "coder-instruct",
-    "training_use": "sft",
+    "dataset_version": "0.2",
+    "task_type": "sft",
     "language": "en",
-    "platform": "debian-ubuntu",
-    "task_type": "command_generation",
-    "difficulty": "basic",
-    "tags": ["linux", "bash", "disk-usage"]
+    "domain": "terminal_admin_bash",
+    "subdomain": "filesystem",
+    "target_os": {
+      "family": "linux",
+      "distros": ["debian", "ubuntu"],
+      "shell": "bash",
+      "package_manager": "none"
+    },
+    "difficulty": "beginner",
+    "risk_level": "safe_readonly",
+    "requires_root": false,
+    "answer_style": "command_with_brief_explanation",
+    "tags": ["du", "sort", "disk-usage"],
+    "safety": {
+      "has_side_effects": false,
+      "side_effects": [],
+      "destructive": false,
+      "warning_required": false,
+      "warning_present": false,
+      "dry_run_available": false,
+      "rollback_available": false
+    },
+    "review": {
+      "status": "reviewed",
+      "semantic_review": true,
+      "safety_review": true,
+      "execution_validation": {
+        "mode": "static_only",
+        "status": "passed"
+      }
+    }
   },
   "messages": [
     {
       "role": "system",
-      "content": "You are a Linux terminal administration assistant. Return correct Bash commands and a brief factual explanation. Prefer safe, non-destructive commands unless the user explicitly asks for a change."
+      "content": "You are a Debian/Ubuntu terminal administration assistant. Return correct Bash commands and brief factual explanations. Prefer inspection before modification."
     },
     {
       "role": "user",
@@ -59,36 +88,82 @@ The repository stores source data. Training pipelines should handle final format
 }
 ```
 
+## Legacy v0.1 record
+
+The original v0.1 corpus used a lighter metadata shape.
+
+Legacy records can remain in the repository for reproducibility, but new records should use v0.2 governance metadata.
+
 ## Field notes
 
 ### id
 
 Stable unique identifier.
 
-Recommended prefix for this dataset:
+Recommended v0.2 pattern:
 
 ```text
-tabm-4b-ci-sft-en-du-
+terminal-admin-bash-master:<subdomain>.<short-task-name>.<number>
 ```
 
-Where:
+Examples:
 
-- `tabm` = terminal-admin-bash-master;
-- `4b` = target model size;
-- `ci` = coder-instruct;
-- `sft` = supervised fine-tuning;
-- `en` = English;
-- `du` = Debian/Ubuntu.
+```text
+terminal-admin-bash-master:filesystem.du-largest-current.001
+terminal-admin-bash-master:systemd.nginx-status-logs.001
+terminal-admin-bash-master:scripting.audit-world-writable.001
+```
 
-### meta
+### meta.dataset_version
 
-Metadata is used for filtering, validation, exports, and dataset documentation.
+Use `0.2` for governed records.
 
-Models should usually train on `messages`, not on serialized metadata.
+### meta.target_os
+
+Declare the operating-system assumptions explicitly.
+
+For this dataset, use Debian/Ubuntu assumptions by default:
+
+- `apt` / `apt-get` / `dpkg` package management;
+- `systemd`, `systemctl`, and `journalctl`;
+- GNU userland behavior;
+- Bash unless the task is explicitly POSIX shell.
+
+Do not mix unrelated package managers unless the task is explicitly about cross-distro comparison.
+
+### meta.risk_level
+
+Risk level describes the operational risk of the assistant answer.
+
+Use the highest relevant risk level. When in doubt, choose the more conservative value.
+
+See [Dataset governance](dataset-governance.md).
+
+### meta.answer_style
+
+Answer style constrains the expected assistant behavior.
+
+Use it to prevent the dataset from mixing terse command lookup, long tutorials, procedures, scripts, and refusals without control.
+
+### meta.safety
+
+Safety metadata must match the answer content.
+
+Examples:
+
+- `sudo apt install nginx` has side effects and requires root;
+- `sudo systemctl restart nginx` has side effects and can be disruptive;
+- `rm -rf` patterns are destructive unless clearly constrained and guarded;
+- firewall changes are network-sensitive;
+- user and sudoers changes are privilege-sensitive.
+
+### meta.review
+
+A record should not be marked `reviewed` unless both semantic and safety review have happened.
+
+If the command has not been executed, do not claim execution validation. Use `static_only`, `manual`, `not_executed`, or `skipped` honestly.
 
 ### messages
-
-The conversation to train on.
 
 Allowed roles:
 
@@ -96,7 +171,13 @@ Allowed roles:
 - `user`;
 - `assistant`.
 
-The last message should normally be an assistant message.
+Preferred pattern for SFT records:
+
+```text
+system -> user -> assistant
+```
+
+The final message should be an assistant message.
 
 ## Target-specific export
 
@@ -112,9 +193,11 @@ Model-specific export should preserve:
 - safety-relevant wording;
 - short explanation style.
 
+Do not edit source records just to satisfy one trainer. Add an exporter.
+
 ## Assistant answer format
 
-Preferred:
+Preferred for command answers:
 
 ````text
 ```bash
@@ -123,4 +206,6 @@ command here
 Short explanation here.
 ````
 
-If the command changes system state, the answer should be clear about that.
+For state-changing or high-risk operations, include enough context to prevent unsafe imitation.
+
+For destructive or under-specified requests, prefer a guarded procedure or a refusal with a safer alternative.

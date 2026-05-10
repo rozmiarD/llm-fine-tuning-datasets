@@ -2,41 +2,94 @@
 
 ## Dataset name
 
-`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`
+Current active dataset:
+
+```text
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy
+```
+
+Reference dataset family:
+
+```text
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
+```
 
 ## Status
 
-v0.1 source corpus.
+This dataset currently has two active tracks:
 
-This dataset contains 2000 canonical JSONL records for supervised fine-tuning.
+| Track | File | Status |
+|---|---|---|
+| small-terminal-admin v0.3 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl` | active governed draft dataset |
+| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
 
-Full source file:
+The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
+
+The v0.2 sample defines the governed source-record shape with explicit risk, safety, answer-style, and review metadata.
+
+The active v0.3 Bash-heavy dataset contains 908 governed draft records. It uses the existing governed v0.2 record-shape schema because the record shape did not change.
+
+## small-terminal-admin v0.3 metadata
+
+Source:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
+terminal-admin-bash-master__small-terminal-admin__sft__en__linux-debian-ubuntu__v0.3.cleaned-bash-heavy.jsonl
 ```
 
-Identifier range:
+Output:
 
 ```text
-tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl
+```
+
+Record count:
+
+```text
+908
 ```
 
 SHA-256:
 
 ```text
-7c0079f6985ce9fc1a75c77a7159a87baee21fb4b0b9c8f62f7d2a191c65ee01
+036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca
 ```
 
-Blob SHA observed in GitHub:
+Governance schema:
 
 ```text
-181b4c7609b4a3d1adb230524960b4a1049018f5
+schemas/terminal-admin-bash-master.v0.2.schema.json
 ```
+
+Validation report:
+
+```text
+validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+```
+
+Review status:
+
+```text
+draft
+```
+
+## Production-readiness statement
+
+The active v0.3 dataset should not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
+
+Before training, records should be reviewed for:
+
+- semantic correctness;
+- Debian/Ubuntu platform consistency;
+- risk-level accuracy;
+- safety metadata accuracy;
+- answer-style consistency;
+- command correctness;
+- suitability for the target model and runtime controls.
 
 ## Intended use
 
-This dataset is intended for supervised fine-tuning of small coder-instruct models around 4B parameters.
+This dataset is intended for supervised fine-tuning of small coder-instruct or terminal-administration models.
 
 Primary use case:
 
@@ -70,8 +123,7 @@ Secondary coverage:
 
 Preferred target:
 
-- approximately 4B parameters;
-- coder-instruct model;
+- small terminal-admin or coder-instruct model;
 - chat/instruction-following capable;
 - suitable for local or edge-device experimentation.
 
@@ -87,7 +139,7 @@ Each record contains:
 - `meta`;
 - `messages`.
 
-The `messages` field is the training conversation. The `meta` field is for filtering, validation, export, and documentation.
+The `messages` field is the training conversation. The `meta` field is for filtering, validation, export, safety review, and documentation.
 
 ## Model-specific formatting
 
@@ -111,14 +163,15 @@ Assistant answers should usually contain:
 
 1. a Bash code block with one command or a short command sequence;
 2. one or two short factual explanation sentences;
-3. a caution only when needed.
+3. a caution only when needed;
+4. guarded procedure language when the task changes system state.
 
 Example:
 
 ````text
 ```bash
-sudo systemctl status nginx --no-pager
-sudo journalctl -u nginx -n 80 --no-pager
+systemctl status nginx --no-pager
+journalctl -u nginx -n 80 --no-pager
 ```
 These commands inspect the current nginx service state and recent logs without opening an interactive pager.
 ````
@@ -135,33 +188,40 @@ Good records should teach:
 - interpretation of command output and common errors;
 - non-interactive commands suitable for terminal agents;
 - practical medium-sized Bash scripts;
-- verification after a fix.
+- verification after a fix;
+- honest risk and review metadata.
 
-## Distribution summary
+## Distribution summary for small-terminal-admin v0.3
 
 ### Difficulty
 
 | Difficulty | Count |
 |---|---:|
-| `basic` | 59 |
-| `intermediate` | 434 |
-| `advanced` | 1507 |
+| `beginner` | 314 |
+| `intermediate` | 241 |
+| `advanced` | 353 |
 
-### Task types
+### Risk level
 
-| Task type | Count |
+| Risk level | Count |
 |---|---:|
-| `command_explanation` | 26 |
-| `command_generation` | 432 |
-| `file_inspection` | 167 |
-| `log_analysis` | 95 |
-| `network_diagnosis` | 186 |
-| `package_management` | 181 |
-| `permission_diagnosis` | 95 |
-| `process_diagnosis` | 95 |
-| `safe_fix` | 287 |
-| `service_management` | 92 |
-| `troubleshooting` | 344 |
+| `safe_readonly` | 728 |
+| `state_change_low` | 97 |
+| `state_change_high` | 18 |
+| `network_sensitive` | 7 |
+| `privilege_sensitive` | 19 |
+| `security_sensitive` | 37 |
+| `destructive` | 2 |
+
+### Answer style
+
+| Answer style | Count |
+|---|---:|
+| `command_with_brief_explanation` | 387 |
+| `diagnostic_steps` | 217 |
+| `guarded_procedure` | 110 |
+| `refusal_with_safe_alternative` | 100 |
+| `script_with_explanation` | 94 |
 
 ## Known limitations
 
@@ -170,3 +230,15 @@ This dataset does not claim broad Linux coverage.
 It should not be treated as a complete system administration corpus, a security benchmark, or a production safety layer.
 
 The dataset teaches terminal operator behavior and command generation patterns. Runtime safety, authorization, and execution controls must be implemented outside the model.
+
+The active v0.3 dataset has schema and governance-lint validation evidence, but all records remain draft until manual review.
+
+## Migration recommendation
+
+For cleaned external source records:
+
+1. preserve source lineage under `meta.source`;
+2. run `validation/validate_dataset.py`;
+3. review lint findings;
+4. quarantine or reject ambiguous and unsafe records;
+5. export only reviewed subsets for training.
