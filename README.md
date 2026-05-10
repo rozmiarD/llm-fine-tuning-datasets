@@ -12,7 +12,7 @@ This repository is organized around role-specific datasets. Each dataset should 
 
 | Dataset | Target model | Use | Language | Platform | Records | Purpose | Status |
 |---|---:|---|---|---|---:|---|---|
-| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | 2000 | Terminal administration: Bash commands, short explanations, inspection-first operator workflows | v0.1 corpus |
+| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample included; full corpus pending upload | Terminal administration: Bash commands, short explanations, inspection-first operator workflows | Corpus prepared; source file upload pending |
 
 ## Repository goals
 
@@ -68,7 +68,6 @@ See [Naming convention](docs/naming-convention.md).
 │   └── terminal-admin-bash-master/
 │       ├── README.md
 │       ├── DATASET_CARD.md
-│       ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
 │       └── samples/
 │           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
 ├── docs/
@@ -80,8 +79,7 @@ See [Naming convention](docs/naming-convention.md).
 │   └── terminal-admin-bash-master.v0.1.schema.json
 └── validation/
     ├── README.md
-    ├── bootstrap-validation-report.md
-    └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
+    └── bootstrap-validation-report.md
 ```
 
 ## Documentation style
