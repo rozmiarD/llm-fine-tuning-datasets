@@ -19,10 +19,10 @@ The validator can catch many common dataset defects, but it does not prove that 
 
 | Schema | Scope |
 |---|---|
-| `schemas/terminal-admin-bash-master.v0.1.schema.json` | Legacy v0.1 source records. |
-| `schemas/terminal-admin-bash-master.v0.2.schema.json` | Governed v0.2 source records with risk, safety, answer-style, and review metadata. |
+| `schemas/terminal-admin-bash-master.v0.1.schema.json` | Legacy v0.1 source records retained for historical/audit validation only. |
+| `schemas/terminal-admin-bash-master.v0.2.schema.json` | Governed record-shape schema for terminal-admin records with risk, safety, answer-style, and review metadata. |
 
-No v0.3 schema is required for the cleaned Bash-heavy migration. The source material came from a `v0.3.cleaned-bash-heavy` dataset, but the repository record shape is still the governed v0.2 source-record schema.
+The governed v0.3 Bash-heavy dataset uses `meta.dataset_version="0.3"`, but it still validates against `schemas/terminal-admin-bash-master.v0.2.schema.json` because the governed record shape did not change.
 
 ## Validator
 
@@ -47,22 +47,13 @@ python validation/validate_dataset.py \
   --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
 ```
 
-Validate the governed small-terminal-admin v0.2 conversion:
+Validate the governed v0.3 Bash-heavy dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl \
+  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
   --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
-```
-
-Validate a legacy corpus without failing the migration run:
-
-```bash
-python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.1.schema.json \
-  --warn-only
+  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
 ```
 
 ## What the validator checks
@@ -106,12 +97,12 @@ The validator does not prove that:
 | Report | Scope | Status |
 |---|---|---|
 | [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
-| [v0.1 validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md) | Legacy full corpus structural validation | legacy structural pass |
+| [v0.1 validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
 | [v0.2 sample validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
-| [small-terminal-admin v0.2 validation report](terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md) | Governed conversion from the cleaned Bash-heavy source dataset | pass |
+| [small-terminal-admin v0.3 governed Bash-heavy validation report](terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md) | Governed Bash-heavy dataset validation | pass |
 
 ## Migration rule
 
-Do not treat a legacy v0.1 pass as production readiness.
+Do not treat a structural pass as production readiness.
 
-Before using records for training, migrate them to v0.2 metadata and run governance validation. High-risk or ambiguous records should be reviewed, quarantined, or rejected.
+Before using records for training, run governance validation and then review the records semantically and for safety. High-risk or ambiguous records should be reviewed, quarantined, or rejected.
