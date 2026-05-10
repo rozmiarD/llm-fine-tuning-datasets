@@ -1,16 +1,23 @@
 # Validation
 
-This directory is reserved for validation notes and future validation scripts.
+This directory contains validation notes and validation reports.
 
 ## Current validation approach
 
-The current bootstrap structure includes a JSON Schema:
+The current structure includes a JSON Schema:
 
 ```text
 schemas/terminal-admin-bash-master.v0.1.schema.json
 ```
 
 Dataset records should be valid JSONL and each line should conform to that schema.
+
+## Reports
+
+| Report | Scope | Status |
+|---|---|---|
+| [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
+| [terminal-admin-bash-master v0.1 validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md) | Expanded 2000-record canonical JSONL corpus | pass |
 
 ## Suggested future script
 
