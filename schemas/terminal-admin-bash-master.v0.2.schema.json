@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/rozmiarD/llm-fine-tuning-datasets/schemas/terminal-admin-bash-master.v0.2.schema.json",
-  "title": "terminal-admin-bash-master governed source record v0.2",
-  "description": "Governed source-record schema for Debian/Ubuntu Bash terminal-administration SFT records. This schema validates record shape and required governance metadata; semantic and safety linting is handled by validation/validate_dataset.py.",
+  "title": "terminal-admin-bash-master governed source record shape v0.2",
+  "description": "Governed source-record schema for Debian/Ubuntu Bash terminal-administration SFT records. This schema validates the governed record shape and required governance metadata; semantic and safety linting is handled by validation/validate_dataset.py. Dataset content versions such as 0.2 and 0.3 may share this schema when the record shape is unchanged.",
   "type": "object",
   "required": ["id", "meta", "messages"],
   "additionalProperties": false,
@@ -34,7 +34,8 @@
       "properties": {
         "dataset_version": {
           "type": "string",
-          "const": "0.2"
+          "enum": ["0.2", "0.3"],
+          "description": "Dataset content version. This is separate from the governed record-shape schema version."
         },
         "task_type": {
           "type": "string",
