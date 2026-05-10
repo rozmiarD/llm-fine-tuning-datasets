@@ -2,19 +2,22 @@
 
 ## Dataset name
 
-`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`
+`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu`
 
 ## Status
 
-v0.1 source corpus.
+This dataset currently has two tracks:
 
-This dataset contains 2000 canonical JSONL records for supervised fine-tuning.
+| Track | File | Status |
+|---|---|---|
+| v0.1 | `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl` | legacy experimental source corpus |
+| v0.2 | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
 
-Full source file:
+The v0.1 corpus contains 2000 canonical JSONL records and remains in the repository for reproducibility and migration.
 
-```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
-```
+The v0.2 sample defines the preferred governed source-record shape with explicit risk, safety, answer-style, and review metadata.
+
+## v0.1 corpus metadata
 
 Identifier range:
 
@@ -33,6 +36,20 @@ Blob SHA observed in GitHub:
 ```text
 181b4c7609b4a3d1adb230524960b4a1049018f5
 ```
+
+## Production-readiness statement
+
+The v0.1 corpus should not be treated as production-grade training data only because it passes structural validation.
+
+Before training, records should be migrated or filtered through the v0.2 governance model and reviewed for:
+
+- semantic correctness;
+- Debian/Ubuntu platform consistency;
+- risk-level accuracy;
+- safety metadata accuracy;
+- answer-style consistency;
+- command correctness;
+- suitability for the target model and runtime controls.
 
 ## Intended use
 
@@ -87,7 +104,7 @@ Each record contains:
 - `meta`;
 - `messages`.
 
-The `messages` field is the training conversation. The `meta` field is for filtering, validation, export, and documentation.
+The `messages` field is the training conversation. The `meta` field is for filtering, validation, export, safety review, and documentation.
 
 ## Model-specific formatting
 
@@ -111,14 +128,15 @@ Assistant answers should usually contain:
 
 1. a Bash code block with one command or a short command sequence;
 2. one or two short factual explanation sentences;
-3. a caution only when needed.
+3. a caution only when needed;
+4. guarded procedure language when the task changes system state.
 
 Example:
 
 ````text
 ```bash
-sudo systemctl status nginx --no-pager
-sudo journalctl -u nginx -n 80 --no-pager
+systemctl status nginx --no-pager
+journalctl -u nginx -n 80 --no-pager
 ```
 These commands inspect the current nginx service state and recent logs without opening an interactive pager.
 ````
@@ -135,9 +153,10 @@ Good records should teach:
 - interpretation of command output and common errors;
 - non-interactive commands suitable for terminal agents;
 - practical medium-sized Bash scripts;
-- verification after a fix.
+- verification after a fix;
+- honest risk and review metadata.
 
-## Distribution summary
+## Distribution summary for v0.1 legacy corpus
 
 ### Difficulty
 
@@ -170,3 +189,17 @@ This dataset does not claim broad Linux coverage.
 It should not be treated as a complete system administration corpus, a security benchmark, or a production safety layer.
 
 The dataset teaches terminal operator behavior and command generation patterns. Runtime safety, authorization, and execution controls must be implemented outside the model.
+
+The v0.1 corpus has structural validation evidence, but not full semantic, safety, or execution validation evidence.
+
+## Migration recommendation
+
+Use v0.2 metadata for new records.
+
+For existing v0.1 records:
+
+1. migrate metadata into the v0.2 schema;
+2. run `validation/validate_dataset.py`;
+3. review lint findings;
+4. quarantine or reject ambiguous and unsafe records;
+5. export only reviewed subsets for training.
