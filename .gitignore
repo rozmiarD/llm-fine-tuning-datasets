@@ -10,6 +10,9 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Local assistant/tool state
+.chatgpt/
+
 # Generated outputs
 dist/
 build/
