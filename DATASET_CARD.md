@@ -6,9 +6,9 @@ Dataset-specific cards should live next to their dataset documentation. The root
 
 ## Available dataset cards
 
-| Dataset | Card | Purpose | Status |
-|---|---|---|---|
-| `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1` | [Dataset card](datasets/terminal-admin-bash-master/DATASET_CARD.md) | Debian/Ubuntu terminal administration for 4B coder-instruct models | Bootstrap sample |
+| Dataset | Card | Purpose | Records | Status |
+|---|---|---|---:|---|
+| `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1` | [Dataset card](datasets/terminal-admin-bash-master/DATASET_CARD.md) | Debian/Ubuntu terminal administration for 4B coder-instruct models | 2000 | v0.1 corpus |
 
 ## Card expectations
 
