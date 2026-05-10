@@ -34,7 +34,11 @@ Avoid:
 
 ## Record requirements
 
-New governed records should use the v0.2 source-record shape.
+New governed records should use the current governed source-record shape defined by:
+
+```text
+schemas/terminal-admin-bash-master.v0.2.schema.json
+```
 
 Every governed record must include:
 
@@ -66,9 +70,11 @@ For current governance linting, keep records to one user message and one assista
 
 ## Metadata rules
 
-Use `meta.dataset_version: "0.2"` for records that follow the governed v0.2 source-record schema.
+Use `meta.dataset_version` for the dataset content version, for example `0.2` for the governed reference sample or `0.3` for the active cleaned Bash-heavy dataset.
 
-A source-data label such as `v0.3.cleaned-bash-heavy` should be preserved under `meta.source`, not turned into a new schema version by itself.
+Use the existing v0.2 schema when the governed record shape is unchanged. Do not create a new schema only because dataset content moved from `0.2` to `0.3`.
+
+Preserve source lineage under `meta.source` when records were migrated from generated, cleaned, or external source material.
 
 Create a new schema version only when the governed record shape changes, for example new required fields, changed enum meanings, or a materially different review/safety model.
 
@@ -144,7 +150,7 @@ Install development dependencies:
 python -m pip install -r requirements-dev.txt
 ```
 
-Validate a governed v0.2 JSONL file:
+Validate a governed JSONL file:
 
 ```bash
 python validation/validate_dataset.py \
