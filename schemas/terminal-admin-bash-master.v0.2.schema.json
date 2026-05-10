@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rozmiarD/llm-fine-tuning-datasets/schemas/terminal-admin-bash-master.v0.2.schema.json",
+  "title": "terminal-admin-bash-master governed source record v0.2",
+  "description": "Governed source-record schema for Debian/Ubuntu Bash terminal-administration SFT records. This schema validates record shape and required governance metadata; semantic and safety linting is handled by validation/validate_dataset.py.",
+  "type": "object",
+  "required": ["id", "meta", "messages"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 8,
+      "pattern": "^terminal-admin-bash-master:[a-z0-9][a-z0-9._:-]+$",
+      "description": "Stable record identifier. Keep it stable across edits unless the task meaning changes."
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "dataset_version",
+        "task_type",
+        "language",
+        "domain",
+        "subdomain",
+        "target_os",
+        "difficulty",
+        "risk_level",
+        "requires_root",
+        "answer_style",
+        "tags",
+        "safety",
+        "review"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "dataset_version": {
+          "type": "string",
+          "const": "0.2"
+        },
+        "task_type": {
+          "type": "string",
+          "enum": ["sft", "preference", "eval"]
+        },
+        "language": {
+          "type": "string",
+          "enum": ["en"]
+        },
+        "domain": {
+          "type": "string",
+          "const": "terminal_admin_bash"
+        },
+        "subdomain": {
+          "type": "string",
+          "minLength": 2,
+          "examples": ["filesystem", "processes", "packages", "systemd", "networking", "logs", "users", "scripting"]
+        },
+        "target_os": {
+          "type": "object",
+          "required": ["family", "distros", "shell"],
+          "additionalProperties": true,
+          "properties": {
+            "family": {
+              "type": "string",
+              "const": "linux"
+            },
+            "distros": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["debian", "ubuntu"]
+              }
+            },
+            "shell": {
+              "type": "string",
+              "enum": ["bash", "posix-sh"]
+            },
+            "package_manager": {
+              "type": "string",
+              "enum": ["apt", "none", "not_applicable"]
+            }
+          }
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced"]
+        },
+        "risk_level": {
+          "type": "string",
+          "enum": [
+            "safe_readonly",
+            "state_change_low",
+            "state_change_high",
+            "network_sensitive",
+            "privilege_sensitive",
+            "security_sensitive",
+            "destructive"
+          ]
+        },
+        "requires_root": {
+          "type": "boolean"
+        },
+        "answer_style": {
+          "type": "string",
+          "enum": [
+            "single_command",
+            "command_with_brief_explanation",
+            "diagnostic_steps",
+            "script_with_explanation",
+            "guarded_procedure",
+            "refusal_with_safe_alternative"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          }
+        },
+        "safety": {
+          "type": "object",
+          "required": [
+            "has_side_effects",
+            "side_effects",
+            "destructive",
+            "warning_required",
+            "warning_present",
+            "dry_run_available",
+            "rollback_available"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "has_side_effects": {
+              "type": "boolean"
+            },
+            "side_effects": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*$"
+              }
+            },
+            "destructive": {
+              "type": "boolean"
+            },
+            "warning_required": {
+              "type": "boolean"
+            },
+            "warning_present": {
+              "type": "boolean"
+            },
+            "dry_run_available": {
+              "type": "boolean"
+            },
+            "rollback_available": {
+              "type": "boolean"
+            }
+          }
+        },
+        "review": {
+          "type": "object",
+          "required": [
+            "status",
+            "semantic_review",
+            "safety_review",
+            "execution_validation"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["draft", "reviewed", "quarantined", "rejected"]
+            },
+            "semantic_review": {
+              "type": "boolean"
+            },
+            "safety_review": {
+              "type": "boolean"
+            },
+            "execution_validation": {
+              "type": "object",
+              "required": ["mode", "status"],
+              "additionalProperties": true,
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "enum": ["not_executed", "static_only", "container", "manual"]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["not_applicable", "pending", "passed", "failed", "skipped"]
+                },
+                "image": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["role", "content"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["system", "user", "assistant"]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
