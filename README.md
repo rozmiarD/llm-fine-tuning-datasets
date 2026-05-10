@@ -31,6 +31,7 @@ See [Dataset governance](docs/dataset-governance.md).
 |---|---:|---|---|---|---:|---|---|
 | [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | 2000 | Terminal administration: Bash commands, short explanations, inspection-first operator workflows | legacy experimental corpus |
 | [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record format with risk metadata and quality gates | governed sample |
+| [`terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md) | small terminal-admin | SFT | English | Debian/Ubuntu | 908 | Governed draft conversion from cleaned Bash-heavy source material | governed draft conversion |
 
 ## Repository goals
 
@@ -51,7 +52,8 @@ This repository does not claim that:
 - a structurally valid dataset is automatically ready for training;
 - a fine-tuned terminal model is safe to run commands without runtime policy controls;
 - the legacy v0.1 corpus has full semantic, safety, or execution validation;
-- validation scripts can replace expert review.
+- validation scripts can replace expert review;
+- draft migrated records are semantically reviewed only because they pass schema and governance linting.
 
 ## Source format
 
@@ -84,6 +86,15 @@ python validation/validate_dataset.py \
   --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
 ```
 
+Validate the governed small-terminal-admin conversion:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl \
+  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
+  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
+```
+
 For legacy corpora, use `--warn-only` while migrating metadata and reviewing records.
 
 ## Naming convention
@@ -93,6 +104,8 @@ Dataset files should follow this pattern:
 ```text
 <role>__<target-model-profile>__<training-use>__<language>__<platform>__<version>.jsonl
 ```
+
+A cleaned source-data label such as `v0.3.cleaned-bash-heavy` does not require a new schema by itself. Use a new schema version only when the governed source-record shape changes.
 
 The current full v0.1 corpus is stored with an explicit record-count suffix:
 
@@ -117,6 +130,7 @@ See [Naming convention](docs/naming-convention.md).
 │       ├── README.md
 │       ├── DATASET_CARD.md
 │       ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl
+│       ├── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
 │       └── samples/
 │           ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
 │           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl
@@ -134,7 +148,8 @@ See [Naming convention](docs/naming-convention.md).
     ├── validate_dataset.py
     ├── bootstrap-validation-report.md
     ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
-    └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+    ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+    └── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md
 ```
 
 ## Documentation style
