@@ -67,6 +67,7 @@ See [Naming convention](docs/naming-convention.md).
 │   ├── README.md
 │   └── terminal-admin-bash-master/
 │       ├── README.md
+│       ├── DATASET_CARD.md
 │       └── samples/
 │           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
 ├── docs/
@@ -77,7 +78,8 @@ See [Naming convention](docs/naming-convention.md).
 ├── schemas/
 │   └── terminal-admin-bash-master.v0.1.schema.json
 └── validation/
-    └── README.md
+    ├── README.md
+    └── bootstrap-validation-report.md
 ```
 
 ## Documentation style
