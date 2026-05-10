@@ -1,39 +1,42 @@
-# Migration notes: small-terminal-admin v0.3 cleaned source to governed v0.2 records
+# Migration notes: small-terminal-admin cleaned source to governed v0.3 dataset
 
-Generated: 2026-05-10T21:55:05.896946+00:00
+Generated: 2026-05-10T22:20:00+00:00
 
 ## Source
 
 - Source file: `terminal-admin-bash-master__small-terminal-admin__sft__en__linux-debian-ubuntu__v0.3.cleaned-bash-heavy.jsonl`
-- Source records parsed: 866
 - Source status: cleaned Bash-heavy dataset supplied for migration
+- Previous legacy full corpus: removed because it contained incorrect / faulty data and should not remain as the active training source.
 
 ## Output
 
-- Output file: `datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.jsonl`
+- Output file: `datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl`
 - Output records: 908
-- SHA-256: `b482349a828aca5309ce55a0026b18598702ffb9c8a520b4657063b3f872bcc2`
-- Governed schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`
-- Validation report: `validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.validation-report.md`
+- SHA-256: `036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca`
+- Governed record-shape schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`
+- Validation report: `validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md`
+
+## Versioning decision
+
+`meta.dataset_version` is `0.3` because this is the cleaned Bash-heavy dataset content version.
+
+The schema remains `schemas/terminal-admin-bash-master.v0.2.schema.json` because the governed source-record shape did not change. Dataset content version and schema-shape version are intentionally separate.
+
+No separate `v0.3` schema is required unless the governed record shape changes.
 
 ## Conversion decisions
 
-- Multi-turn records were split into single-pair SFT records to match the current governance linter expectation: exactly one user message and one assistant message per record.
+- Multi-turn source records were split into single-pair SFT records to match the current governance linter expectation: exactly one user message and one assistant message per record.
 - Exact duplicate user/assistant pairs were removed before the final output.
-- `meta.dataset_version` is `0.2` because the records use the existing governed v0.2 source-record shape.
-- The original cleaned dataset lineage is preserved under `meta.source`.
+- Source lineage is preserved under `meta.source`.
 - Records are marked `review.status=draft`; this migration does not claim manual semantic review, safety review, or execution validation.
-- 21 records were reclassified away from `refusal_with_safe_alternative` because their assistant answers did not contain refusal/safe-alternative language.
 
 ## Record-count summary
 
 | Step | Records |
 |---|---:|
-| Parsed input records | 866 |
-| After multi-turn splitting | 912 |
-| Exact duplicate pairs removed | 4 |
-| Final output records | 908 |
+| Final governed output records | 908 |
 
 ## Non-claims
 
-This migration does not claim that the dataset is production-grade or ready for unattended terminal-agent training. It only places the cleaned source material into the repository's governed v0.2 source-record format and validates that structure plus governance-lint compatibility.
+This migration does not claim that the dataset is production-grade or ready for unattended terminal-agent training. It places the cleaned source material into the repository's governed source-record format and validates that structure plus governance-lint compatibility.
