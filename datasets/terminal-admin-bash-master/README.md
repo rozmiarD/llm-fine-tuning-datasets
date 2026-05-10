@@ -8,6 +8,18 @@ Canonical dataset name:
 terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1
 ```
 
+Dataset card:
+
+```text
+DATASET_CARD.md
+```
+
+Sample file:
+
+```text
+samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
+```
+
 ## Purpose
 
 This dataset teaches small coder-instruct models to behave like concise Debian/Ubuntu terminal administration assistants.
@@ -69,14 +81,6 @@ When comparing distributions, use:
 The dataset uses canonical JSONL records with a `messages` field.
 
 This format is not the final training format for every model. Before fine-tuning, export the source records to the chat template required by the target model.
-
-## Current file
-
-Sample file:
-
-```text
-samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
-```
 
 ## Task type suggestions
 
