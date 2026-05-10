@@ -8,12 +8,6 @@ Canonical dataset name:
 terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1
 ```
 
-Source file:
-
-```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
-```
-
 Dataset card:
 
 ```text
@@ -26,27 +20,17 @@ Sample file:
 samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
 ```
 
-Validation report:
-
-```text
-../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
-```
-
 ## Status
 
-This is a v0.1 source corpus with 2000 canonical JSONL records.
+Bootstrap sample in repository.
 
-Identifier range:
-
-```text
-tabm-4b-ci-sft-en-du-000005 .. tabm-4b-ci-sft-en-du-002004
-```
-
-SHA-256:
+A larger v0.1 corpus has been prepared separately and should be added as the canonical source file when the full JSONL upload path is available:
 
 ```text
-fac95a13a6d0e6efd4ae326b1c1946bda1e2a9f59e4961ced6447699448b52d7
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
 ```
+
+The repository sample remains the inspectable minimal example for format, metadata, naming, and answer style.
 
 ## Purpose
 
@@ -112,9 +96,9 @@ The dataset uses canonical JSONL records with a `messages` field.
 
 This format is not the final training format for every model. Before fine-tuning, export the source records to the chat template required by the target model.
 
-## Coverage
+## Intended coverage for the full v0.1 corpus
 
-The v0.1 corpus includes:
+The full v0.1 corpus is intended to cover:
 
 - inspection-first terminal workflows;
 - systemd and journalctl troubleshooting;
