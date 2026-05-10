@@ -17,7 +17,6 @@ Dataset records should be valid JSONL and each line should conform to that schem
 | Report | Scope | Status |
 |---|---|---|
 | [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
-| [terminal-admin-bash-master v0.1 validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md) | Expanded 2000-record canonical JSONL corpus | pass |
 
 ## Suggested future script
 
