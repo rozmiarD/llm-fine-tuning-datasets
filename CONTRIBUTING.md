@@ -32,6 +32,27 @@ Avoid:
 - distro-mixed command sequences unless the task is explicitly cross-distro;
 - claims that schema validation equals production readiness.
 
+## Documentation rules
+
+Documentation should be boring, navigable, and evidence-backed.
+
+Use this hierarchy:
+
+- `README.md`: repository purpose, current registry, quick validation commands, and layout map.
+- `DATASET_CARD.md`: repository-level dataset index and high-level caveats.
+- `datasets/<family>/README.md`: family-specific source files, schema, validation, metadata values, and usage notes.
+- `datasets/<family>/DATASET_CARD.md`: detailed dataset card, distribution counters, limitations, and intended use.
+- `docs/`: reusable policies, format rules, naming rules, governance, quality, and accessibility guidance.
+- `validation/`: executable validator, reproducible commands, and generated validation reports.
+
+Keep docs truthful:
+
+- update validation reports after dataset or validator changes;
+- keep record counts and distribution counters synchronized with generated reports;
+- say `draft`, `sample`, `historical`, or `reviewed` explicitly;
+- do not duplicate long guidance when a shorter link to the canonical page is enough;
+- do not claim semantic, safety, execution, training, or production readiness from schema/lint success alone.
+
 ## Record requirements
 
 New governed records should use the current governed source-record shape defined by:

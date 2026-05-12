@@ -17,7 +17,7 @@ Each dataset directory should contain its own README with:
 
 | Directory | Dataset family | Purpose | Status |
 |---|---|---|---|
-| [`terminal-admin-bash-master`](terminal-admin-bash-master/README.md) | Terminal administration for 4B coder-instruct models | Debian/Ubuntu Bash command generation, short explanations, and inspection-first troubleshooting | Bootstrap sample |
+| [`terminal-admin-bash-master`](terminal-admin-bash-master/README.md) | Terminal administration for small terminal-admin and coder-instruct model profiles | Debian/Ubuntu Bash command generation, short explanations, inspection-first troubleshooting, and governed safety metadata | governed draft dataset plus reference samples |
 
 ## Directory naming
 

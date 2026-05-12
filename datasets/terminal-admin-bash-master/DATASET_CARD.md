@@ -205,10 +205,10 @@ Good records should teach:
 
 | Risk level | Count |
 |---|---:|
-| `safe_readonly` | 728 |
+| `safe_readonly` | 726 |
 | `state_change_low` | 97 |
 | `state_change_high` | 18 |
-| `network_sensitive` | 7 |
+| `network_sensitive` | 9 |
 | `privilege_sensitive` | 19 |
 | `security_sensitive` | 37 |
 | `destructive` | 2 |
@@ -217,10 +217,10 @@ Good records should teach:
 
 | Answer style | Count |
 |---|---:|
-| `command_with_brief_explanation` | 387 |
+| `command_with_brief_explanation` | 398 |
 | `diagnostic_steps` | 217 |
-| `guarded_procedure` | 110 |
-| `refusal_with_safe_alternative` | 100 |
+| `guarded_procedure` | 115 |
+| `refusal_with_safe_alternative` | 84 |
 | `script_with_explanation` | 94 |
 
 ## Known limitations

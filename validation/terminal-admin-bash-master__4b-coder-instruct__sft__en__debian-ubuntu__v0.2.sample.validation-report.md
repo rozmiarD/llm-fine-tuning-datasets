@@ -56,16 +56,3 @@ None.
 ## Warnings
 
 None.
-
-## Notes
-
-This report documents the expected result of running:
-
-```bash
-python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
-```
-
-The v0.2 sample is a governed reference sample, not a full training corpus.

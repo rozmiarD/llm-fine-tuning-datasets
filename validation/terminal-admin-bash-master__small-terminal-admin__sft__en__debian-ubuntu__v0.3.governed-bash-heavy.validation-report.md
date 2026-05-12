@@ -20,19 +20,19 @@
 ### risk_level
 
 - `destructive`: 2
-- `network_sensitive`: 7
+- `network_sensitive`: 9
 - `privilege_sensitive`: 19
-- `safe_readonly`: 728
+- `safe_readonly`: 726
 - `security_sensitive`: 37
 - `state_change_high`: 18
 - `state_change_low`: 97
 
 ### answer_style
 
-- `command_with_brief_explanation`: 387
+- `command_with_brief_explanation`: 398
 - `diagnostic_steps`: 217
-- `guarded_procedure`: 110
-- `refusal_with_safe_alternative`: 100
+- `guarded_procedure`: 115
+- `refusal_with_safe_alternative`: 84
 - `script_with_explanation`: 94
 
 ### review_status
@@ -72,10 +72,3 @@ None.
 ## Warnings
 
 None.
-
-## Notes
-
-- This report covers the governed v0.3 Bash-heavy dataset.
-- The dataset uses `meta.dataset_version="0.3"` while validating against the existing governed record-shape schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`.
-- This does not create a new schema generation. The schema version describes the governed record shape; the dataset version describes the dataset content.
-- All records remain `review.status=draft`; schema/lint pass is not a claim of semantic, safety, or execution review.
