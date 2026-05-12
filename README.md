@@ -23,7 +23,7 @@ source JSONL
   -> model-specific export
 ```
 
-See [Dataset governance](docs/dataset-governance.md).
+See [Dataset governance](docs/dataset-governance.md). The documentation map is in [docs/README.md](docs/README.md).
 
 ## Dataset registry
 
@@ -135,6 +135,7 @@ See [Naming convention](docs/naming-convention.md).
 │           ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
 │           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl
 ├── docs/
+│   ├── README.md
 │   ├── accessibility-guidelines.md
 │   ├── dataset-format.md
 │   ├── dataset-governance.md
@@ -167,7 +168,7 @@ Use:
 
 Avoid marketing language, vague claims, and long explanations that do not help maintain or use the dataset.
 
-See [Accessibility guidelines](docs/accessibility-guidelines.md), [Quality guidelines](docs/quality-guidelines.md), and [Dataset governance](docs/dataset-governance.md).
+See [Documentation map](docs/README.md), [Accessibility guidelines](docs/accessibility-guidelines.md), [Quality guidelines](docs/quality-guidelines.md), and [Dataset governance](docs/dataset-governance.md).
 
 ## License
 

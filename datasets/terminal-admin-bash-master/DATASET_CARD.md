@@ -52,7 +52,7 @@ Record count:
 SHA-256:
 
 ```text
-036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca
+61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016
 ```
 
 Governance schema:
@@ -129,54 +129,17 @@ Preferred target:
 
 This dataset is not optimized for base models without instruction tuning unless converted and mixed with appropriate instruction data.
 
-## Canonical source format
+## Source format and export
 
-JSONL with one record per line.
+Canonical source format and model-specific export expectations are defined in [Dataset format](../../docs/dataset-format.md).
 
-Each record contains:
+This card only records dataset-specific facts: the active v0.3 file is JSONL source data, not a trainer-specific export.
 
-- `id`;
-- `meta`;
-- `messages`.
+## Recommended answer style and quality priorities
 
-The `messages` field is the training conversation. The `meta` field is for filtering, validation, export, safety review, and documentation.
+Canonical answer styles are defined in [Dataset governance](../../docs/dataset-governance.md). General quality guidance is defined in [Quality guidelines](../../docs/quality-guidelines.md).
 
-## Model-specific formatting
-
-The source JSONL format is not a replacement for model-specific chat templates.
-
-Before training, records should be exported or templated for the target model family.
-
-Examples:
-
-- ChatML-style models;
-- Llama-style chat templates;
-- Gemma-style chat templates;
-- Alpaca-style prompt/completion formats;
-- trainer-specific formats used by Axolotl, TRL, Unsloth, or similar tools.
-
-The repository stores the canonical source data. Training pipelines should handle the final target format.
-
-## Recommended answer style
-
-Assistant answers should usually contain:
-
-1. a Bash code block with one command or a short command sequence;
-2. one or two short factual explanation sentences;
-3. a caution only when needed;
-4. guarded procedure language when the task changes system state.
-
-Example:
-
-````text
-```bash
-systemctl status nginx --no-pager
-journalctl -u nginx -n 80 --no-pager
-```
-These commands inspect the current nginx service state and recent logs without opening an interactive pager.
-````
-
-## Quality priorities
+Family-specific priority: examples should remain command-first, concise, Debian/Ubuntu-aware, and explicit about operational risk.
 
 Good records should teach:
 

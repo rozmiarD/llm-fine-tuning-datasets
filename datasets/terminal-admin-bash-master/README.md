@@ -67,7 +67,7 @@ Record count:
 SHA-256:
 
 ```text
-036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca
+61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016
 ```
 
 Governance schema:
@@ -156,60 +156,13 @@ The active v0.3 dataset covers:
 - structured command-output interpretation;
 - refusal and safer-alternative examples.
 
-## Metadata values
+## Metadata and quality rules
 
-Use these values for `meta.risk_level`:
+Canonical metadata values and review rules live in [Dataset governance](../../docs/dataset-governance.md).
 
-- `safe_readonly`;
-- `state_change_low`;
-- `state_change_high`;
-- `network_sensitive`;
-- `privilege_sensitive`;
-- `security_sensitive`;
-- `destructive`.
+Canonical record-quality guidance lives in [Quality guidelines](../../docs/quality-guidelines.md).
 
-Use these values for `meta.answer_style`:
-
-- `single_command`;
-- `command_with_brief_explanation`;
-- `diagnostic_steps`;
-- `script_with_explanation`;
-- `guarded_procedure`;
-- `refusal_with_safe_alternative`.
-
-Use these values for `meta.review.status`:
-
-- `draft`;
-- `reviewed`;
-- `quarantined`;
-- `rejected`.
-
-## Good example pattern
-
-User asks for a specific operation with context.
-
-Assistant returns:
-
-````text
-```bash
-command here
-```
-Short explanation here.
-````
-
-For higher-risk operations, the assistant answer should include a guarded procedure, a warning, or a safe alternative as appropriate.
-
-## Bad example pattern
-
-Avoid answers that:
-
-- combine unrelated distribution package managers;
-- produce broad destructive one-liners without inspection;
-- explain basic shell concepts for many paragraphs;
-- guess the environment when the prompt is under-specified;
-- use deprecated tools when a modern default exists;
-- mark risky commands as `safe_readonly`;
-- claim review or execution validation that did not happen.
+Short family-specific rule: keep this corpus Debian/Ubuntu-oriented, command-first, concise, inspection-first, and honest about risk/review state.
 
 ## Validation
 

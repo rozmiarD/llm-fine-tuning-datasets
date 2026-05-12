@@ -14,11 +14,21 @@ For sample files:
 <role>__<target-model-profile>__<training-use>__<language>__<platform>__<version>.sample.jsonl
 ```
 
-## Current dataset
+## Current active datasets
+
+Active governed draft dataset:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.jsonl
+terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl
 ```
+
+Governed reference sample:
+
+```text
+terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl
+```
+
+Historical v0.1 material is retained only as samples or validation context, not as an active full corpus.
 
 ## Field meanings
 
@@ -93,10 +103,10 @@ Other possible future values:
 
 ### version
 
-Use semantic dataset versioning:
+Use dataset content versioning:
 
 ```text
-v0.1
+v0.3
 ```
 
-Increase the version when structure, scope, or data quality rules change significantly.
+Increase the version when scope, source data, record quality rules, or intended training use changes significantly. A dataset content version does not require a new JSON Schema version when the governed record shape is unchanged.

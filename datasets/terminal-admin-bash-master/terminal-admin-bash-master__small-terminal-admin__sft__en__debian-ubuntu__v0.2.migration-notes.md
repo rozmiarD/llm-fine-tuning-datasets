@@ -12,7 +12,7 @@ Generated: 2026-05-10T22:20:00+00:00
 
 - Output file: `datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl`
 - Output records: 908
-- SHA-256: `036b4a295b1dc37827760d36e1b2aa958c3a910831e0411bbee0d1735ac358ca`
+- SHA-256: `61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016`
 - Governed record-shape schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`
 - Validation report: `validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md`
 
@@ -26,6 +26,7 @@ No separate `v0.3` schema is required unless the governed record shape changes.
 
 ## Conversion decisions
 
+- 2026-05-12 governance cleanup corrected metadata and safety/refusal wording for validator alignment without changing record count.
 - Multi-turn source records were split into single-pair SFT records to match the current governance linter expectation: exactly one user message and one assistant message per record.
 - Exact duplicate user/assistant pairs were removed before the final output.
 - Source lineage is preserved under `meta.source`.

@@ -28,9 +28,9 @@ It can be converted into:
 
 The repository stores source data. Training pipelines should handle final formatting.
 
-## Governed v0.2 record
+## Governed record shape
 
-New terminal-administration records should use the governed v0.2 shape.
+New terminal-administration records should use the current governed shape defined by `schemas/terminal-admin-bash-master.v0.2.schema.json`. Dataset content versions can move forward, for example `meta.dataset_version="0.3"`, while the record-shape schema remains v0.2.
 
 ```json
 {
@@ -116,7 +116,7 @@ terminal-admin-bash-master:scripting.audit-world-writable.001
 
 ### meta.dataset_version
 
-Use `0.2` for governed records.
+Use the dataset content version for the source file, for example `0.2` for the governed reference sample or `0.3` for the active Bash-heavy dataset. Do not confuse this with the JSON Schema version.
 
 ### meta.target_os
 
@@ -137,13 +137,13 @@ Risk level describes the operational risk of the assistant answer.
 
 Use the highest relevant risk level. When in doubt, choose the more conservative value.
 
-See [Dataset governance](dataset-governance.md).
+Canonical risk levels are defined in [Dataset governance](dataset-governance.md).
 
 ### meta.answer_style
 
 Answer style constrains the expected assistant behavior.
 
-Use it to prevent the dataset from mixing terse command lookup, long tutorials, procedures, scripts, and refusals without control.
+Use it to prevent the dataset from mixing terse command lookup, long tutorials, procedures, scripts, and refusals without control. Canonical answer styles are defined in [Dataset governance](dataset-governance.md).
 
 ### meta.safety
 
