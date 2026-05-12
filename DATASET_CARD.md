@@ -8,8 +8,8 @@ Dataset-specific cards should live next to their dataset documentation. The root
 
 | Dataset | Card | Purpose | Records | Status |
 |---|---|---|---:|---|
-| `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy` | [Dataset card](datasets/terminal-admin-bash-master/DATASET_CARD.md) | Governed Bash-heavy terminal-admin source records | 908 | governed draft dataset |
-| `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2` | [Dataset card](datasets/terminal-admin-bash-master/DATASET_CARD.md) | Governed source-record reference sample | sample only | governed reference sample |
+| `debian-admin-bash-sft.v0.4` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Debian/Ubuntu admin Bash SFT source records | 932 | governed draft dataset |
+| `debian-admin-bash-sft.v0.2` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Governed source-record reference sample | sample only | governed reference sample |
 
 ## Removed source material
 

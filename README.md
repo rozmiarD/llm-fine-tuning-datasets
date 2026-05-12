@@ -29,12 +29,12 @@ See [Dataset governance](docs/dataset-governance.md). The documentation map is i
 
 | Dataset | Target model | Use | Language | Platform | Records | Purpose | Status |
 |---|---:|---|---|---|---:|---|---|
-| [`terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy`](datasets/terminal-admin-bash-master/README.md) | small terminal-admin | SFT | English | Debian/Ubuntu | 908 | Governed Bash-heavy terminal administration records with risk metadata and quality gates | governed draft dataset |
-| [`terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2`](datasets/terminal-admin-bash-master/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record reference sample | governed sample |
+| [`debian-admin-bash-sft.v0.4`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 932 | Debian/Ubuntu admin Bash SFT records with risk metadata and quality gates | governed draft dataset |
+| [`debian-admin-bash-sft.v0.2`](datasets/debian-admin-bash/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record reference sample | governed sample |
 
 ## Deprecated / removed source material
 
-The previous full `terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.full-2000.jsonl` corpus was removed from the active dataset tree because it contained faulty data and should not be treated as a valid training source.
+The previous full `debian-admin-bash-sft.v0.1.full-2000.jsonl` corpus was removed from the active dataset tree because it contained faulty data and should not be treated as a valid training source.
 
 Historical validation notes may remain for audit context, but active training work should use governed records and fresh validation reports.
 
@@ -85,32 +85,34 @@ Validate the governed v0.2 sample:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+  datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ```
 
-Validate the governed v0.3 Bash-heavy dataset:
+Validate the governed v0.4 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v0.4.validation-report.md
 ```
 
 ## Naming convention
 
-Dataset files should follow this pattern:
+Dataset files should use short purpose-oriented names:
 
 ```text
-<role>__<target-model-profile>__<training-use>__<language>__<platform>__<version>.jsonl
+<purpose>-<training-use>.<version>.jsonl
 ```
 
-A dataset content version such as `v0.3` does not require a new schema when the governed source-record shape is unchanged. The current governed record-shape schema is:
+For this repo, the active purpose name is `debian-admin-bash`: Debian/Ubuntu administration through concise Bash-oriented assistant answers.
+
+A dataset content version such as `v0.4` does not require a new schema when the governed source-record shape is unchanged. The current governed record-shape schema is:
 
 ```text
-schemas/terminal-admin-bash-master.v0.2.schema.json
+schemas/debian-admin-bash.v0.2.schema.json
 ```
 
 See [Naming convention](docs/naming-convention.md).
@@ -126,14 +128,14 @@ See [Naming convention](docs/naming-convention.md).
 ├── requirements-dev.txt
 ├── datasets/
 │   ├── README.md
-│   └── terminal-admin-bash-master/
+│   └── debian-admin-bash/
 │       ├── README.md
 │       ├── DATASET_CARD.md
-│       ├── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl
-│       ├── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
+│       ├── debian-admin-bash-sft.v0.4.jsonl
+│       ├── debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 │       └── samples/
-│           ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
-│           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl
+│           ├── debian-admin-bash-sft.v0.1.sample.jsonl
+│           └── debian-admin-bash-sft.v0.2.sample.jsonl
 ├── docs/
 │   ├── README.md
 │   ├── accessibility-guidelines.md
@@ -142,15 +144,15 @@ See [Naming convention](docs/naming-convention.md).
 │   ├── naming-convention.md
 │   └── quality-guidelines.md
 ├── schemas/
-│   ├── terminal-admin-bash-master.v0.1.schema.json
-│   └── terminal-admin-bash-master.v0.2.schema.json
+│   ├── debian-admin-bash.v0.1.schema.json
+│   └── debian-admin-bash.v0.2.schema.json
 └── validation/
     ├── README.md
     ├── validate_dataset.py
     ├── bootstrap-validation-report.md
-    ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md
-    ├── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
-    └── terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+    ├── debian-admin-bash-sft.v0.1.historical.validation-report.md
+    ├── debian-admin-bash-sft.v0.2.sample.validation-report.md
+    └── debian-admin-bash-sft.v0.4.validation-report.md
 ```
 
 ## Documentation style

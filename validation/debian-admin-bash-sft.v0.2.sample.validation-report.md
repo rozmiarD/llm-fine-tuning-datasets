@@ -1,7 +1,7 @@
 # Dataset validation report
 
-- Dataset: `datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl`
-- Schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`
+- Dataset: `datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl`
+- Schema: `schemas/debian-admin-bash.v0.2.schema.json`
 - Records: 5
 - JSON errors: 0
 - Schema errors: 0

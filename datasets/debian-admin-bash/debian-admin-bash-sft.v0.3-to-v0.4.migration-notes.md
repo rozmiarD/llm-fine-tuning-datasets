@@ -1,32 +1,33 @@
-# Migration notes: small-terminal-admin cleaned source to governed v0.3 dataset
+# Migration notes: small-debian-admin cleaned source to governed v0.4 dataset
 
 Generated: 2026-05-10T22:20:00+00:00
 
 ## Source
 
-- Source file: `terminal-admin-bash-master__small-terminal-admin__sft__en__linux-debian-ubuntu__v0.3.cleaned-bash-heavy.jsonl`
+- Source file: `debian-admin-bash-sft.v0.3.cleaned-source.jsonl`
 - Source status: cleaned Bash-heavy dataset supplied for migration
 - Previous legacy full corpus: removed because it contained incorrect / faulty data and should not remain as the active training source.
 
 ## Output
 
-- Output file: `datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl`
-- Output records: 908
-- SHA-256: `61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016`
-- Governed record-shape schema: `schemas/terminal-admin-bash-master.v0.2.schema.json`
-- Validation report: `validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md`
+- Output file: `datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl`
+- Output records: 932
+- SHA-256: `498c49a5d51a55316cdc1ca7be6efbf7263ac95a19de0dece05e71384dbfea55`
+- Governed record-shape schema: `schemas/debian-admin-bash.v0.2.schema.json`
+- Validation report: `validation/debian-admin-bash-sft.v0.4.validation-report.md`
 
 ## Versioning decision
 
-`meta.dataset_version` is `0.3` because this is the cleaned Bash-heavy dataset content version.
+`meta.dataset_version` is `0.4` because this version combines the cleaned v0.3 source, the governance cleanup, shorter dataset naming, and a small curated supplement.
 
-The schema remains `schemas/terminal-admin-bash-master.v0.2.schema.json` because the governed source-record shape did not change. Dataset content version and schema-shape version are intentionally separate.
+The schema remains `schemas/debian-admin-bash.v0.2.schema.json` because the governed source-record shape did not change. Dataset content version and schema-shape version are intentionally separate.
 
-No separate `v0.3` schema is required unless the governed record shape changes.
+No separate `v0.4` schema is required unless the governed record shape changes.
 
 ## Conversion decisions
 
 - 2026-05-12 governance cleanup corrected metadata and safety/refusal wording for validator alignment without changing record count.
+- 2026-05-12 v0.4 naming/supplement pass renamed the active dataset to `debian-admin-bash-sft.v0.4.jsonl` and added 24 curated records focused on Debian/Ubuntu administration gaps.
 - Multi-turn source records were split into single-pair SFT records to match the current governance linter expectation: exactly one user message and one assistant message per record.
 - Exact duplicate user/assistant pairs were removed before the final output.
 - Source lineage is preserved under `meta.source`.
@@ -36,7 +37,9 @@ No separate `v0.3` schema is required unless the governed record shape changes.
 
 | Step | Records |
 |---|---:|
-| Final governed output records | 908 |
+| Migrated governed v0.3 records | 908 |
+| Curated v0.4 supplement records | 24 |
+| Final governed output records | 932 |
 
 ## Non-claims
 

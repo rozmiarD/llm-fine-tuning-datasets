@@ -17,7 +17,7 @@ Each dataset directory should contain its own README with:
 
 | Directory | Dataset family | Purpose | Status |
 |---|---|---|---|
-| [`terminal-admin-bash-master`](terminal-admin-bash-master/README.md) | Terminal administration for small terminal-admin and coder-instruct model profiles | Debian/Ubuntu Bash command generation, short explanations, inspection-first troubleshooting, and governed safety metadata | governed draft dataset plus reference samples |
+| [`debian-admin-bash`](debian-admin-bash/README.md) | Debian/Ubuntu administration for small Debian-admin and coder-instruct model profiles | Debian/Ubuntu Bash command generation, short explanations, inspection-first troubleshooting, and governed safety metadata | governed draft dataset plus reference samples |
 
 ## Directory naming
 
@@ -26,7 +26,7 @@ Dataset directories should use the role name only.
 Good:
 
 ```text
-terminal-admin-bash-master
+debian-admin-bash
 ```
 
 Avoid including full dataset file names in directory names. Full names belong to `.jsonl` dataset files.

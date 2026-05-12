@@ -114,9 +114,9 @@ Validate a governed v0.2 dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+  datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ```
 
 During migration of legacy corpora, use `--warn-only` to generate reports without failing the command.

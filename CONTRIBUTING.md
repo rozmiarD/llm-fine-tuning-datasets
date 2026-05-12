@@ -58,7 +58,7 @@ Keep docs truthful:
 New governed records should use the current governed source-record shape defined by:
 
 ```text
-schemas/terminal-admin-bash-master.v0.2.schema.json
+schemas/debian-admin-bash.v0.2.schema.json
 ```
 
 Every governed record must include:
@@ -91,7 +91,7 @@ For current governance linting, keep records to one user message and one assista
 
 ## Metadata rules
 
-Use `meta.dataset_version` for the dataset content version, for example `0.2` for the governed reference sample or `0.3` for the active cleaned Bash-heavy dataset.
+Use `meta.dataset_version` for the dataset content version, for example `0.2` for the governed reference sample or `0.4` for the active Debian-admin Bash dataset.
 
 Use the existing v0.2 schema when the governed record shape is unchanged. Do not create a new schema only because dataset content moved from `0.2` to `0.3`.
 
@@ -175,8 +175,8 @@ Validate a governed JSONL file:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/<dataset-file>.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
+  datasets/debian-admin-bash/<dataset-file>.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
   --report validation/<dataset-file>.validation-report.md
 ```
 

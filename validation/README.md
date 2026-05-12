@@ -19,10 +19,10 @@ The validator can catch many common dataset defects, but it does not prove that 
 
 | Schema | Scope |
 |---|---|
-| `schemas/terminal-admin-bash-master.v0.1.schema.json` | Legacy v0.1 source records retained for historical/audit validation only. |
-| `schemas/terminal-admin-bash-master.v0.2.schema.json` | Governed record-shape schema for terminal-admin records with risk, safety, answer-style, and review metadata. |
+| `schemas/debian-admin-bash.v0.1.schema.json` | Legacy v0.1 source records retained for historical/audit validation only. |
+| `schemas/debian-admin-bash.v0.2.schema.json` | Governed record-shape schema for Debian/Ubuntu admin Bash records with risk, safety, answer-style, and review metadata. |
 
-The governed v0.3 Bash-heavy dataset uses `meta.dataset_version="0.3"`, but it still validates against `schemas/terminal-admin-bash-master.v0.2.schema.json` because the governed record shape did not change.
+The governed v0.4 Debian-admin Bash dataset uses `meta.dataset_version="0.4"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
 
 ## Validator
 
@@ -42,18 +42,18 @@ Validate the governed v0.2 sample:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
+  datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ```
 
-Validate the governed v0.3 Bash-heavy dataset:
+Validate the governed v0.4 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json \
-  --report validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v0.4.validation-report.md
 ```
 
 ## What the validator checks
@@ -97,9 +97,9 @@ The validator does not prove that:
 | Report | Scope | Status |
 |---|---|---|
 | [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
-| [v0.1 validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
-| [v0.2 sample validation report](terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
-| [small-terminal-admin v0.3 governed Bash-heavy validation report](terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md) | Governed Bash-heavy dataset validation | pass |
+| [v0.1 validation report](debian-admin-bash-sft.v0.1.historical.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
+| [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
+| [debian-admin-bash v0.4 governed SFT validation report](debian-admin-bash-sft.v0.4.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
 
 ## Migration rule
 

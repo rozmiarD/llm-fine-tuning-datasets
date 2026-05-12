@@ -1,17 +1,17 @@
-# Dataset Card: terminal-admin-bash-master
+# Dataset Card: debian-admin-bash
 
 ## Dataset name
 
 Current active dataset:
 
 ```text
-terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy
+debian-admin-bash-sft.v0.4
 ```
 
 Reference dataset family:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
+debian-admin-bash-sft
 ```
 
 ## Status
@@ -20,51 +20,51 @@ This dataset currently has two active tracks:
 
 | Track | File | Status |
 |---|---|---|
-| small-terminal-admin v0.3 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl` | active governed draft dataset |
-| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| debian-admin-bash v0.4 | `debian-admin-bash-sft.v0.4.jsonl` | active governed draft dataset |
+| v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
 
 The v0.2 sample defines the governed source-record shape with explicit risk, safety, answer-style, and review metadata.
 
-The active v0.3 Bash-heavy dataset contains 908 governed draft records. It uses the existing governed v0.2 record-shape schema because the record shape did not change.
+The active v0.4 Debian-admin Bash dataset contains 932 governed draft records. It uses the existing governed v0.2 record-shape schema because the record shape did not change.
 
-## small-terminal-admin v0.3 metadata
+## debian-admin-bash v0.4 metadata
 
 Source:
 
 ```text
-terminal-admin-bash-master__small-terminal-admin__sft__en__linux-debian-ubuntu__v0.3.cleaned-bash-heavy.jsonl
+debian-admin-bash-sft.v0.3.cleaned-source.jsonl
 ```
 
 Output:
 
 ```text
-terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl
+debian-admin-bash-sft.v0.4.jsonl
 ```
 
 Record count:
 
 ```text
-908
+932
 ```
 
 SHA-256:
 
 ```text
-61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016
+498c49a5d51a55316cdc1ca7be6efbf7263ac95a19de0dece05e71384dbfea55
 ```
 
 Governance schema:
 
 ```text
-schemas/terminal-admin-bash-master.v0.2.schema.json
+schemas/debian-admin-bash.v0.2.schema.json
 ```
 
 Validation report:
 
 ```text
-validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+validation/debian-admin-bash-sft.v0.4.validation-report.md
 ```
 
 Review status:
@@ -75,7 +75,7 @@ draft
 
 ## Production-readiness statement
 
-The active v0.3 dataset should not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
+The active v0.4 dataset should not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
 
 Before training, records should be reviewed for:
 
@@ -123,7 +123,7 @@ Secondary coverage:
 
 Preferred target:
 
-- small terminal-admin or coder-instruct model;
+- small Debian-admin or coder-instruct model;
 - chat/instruction-following capable;
 - suitable for local or edge-device experimentation.
 
@@ -133,7 +133,7 @@ This dataset is not optimized for base models without instruction tuning unless 
 
 Canonical source format and model-specific export expectations are defined in [Dataset format](../../docs/dataset-format.md).
 
-This card only records dataset-specific facts: the active v0.3 file is JSONL source data, not a trainer-specific export.
+This card only records dataset-specific facts: the active v0.4 file is JSONL source data, not a trainer-specific export.
 
 ## Recommended answer style and quality priorities
 
@@ -154,37 +154,37 @@ Good records should teach:
 - verification after a fix;
 - honest risk and review metadata.
 
-## Distribution summary for small-terminal-admin v0.3
+## Distribution summary for debian-admin-bash v0.4
 
 ### Difficulty
 
 | Difficulty | Count |
 |---|---:|
-| `beginner` | 314 |
-| `intermediate` | 241 |
-| `advanced` | 353 |
+| `beginner` | 318 |
+| `intermediate` | 254 |
+| `advanced` | 360 |
 
 ### Risk level
 
 | Risk level | Count |
 |---|---:|
-| `safe_readonly` | 726 |
-| `state_change_low` | 97 |
+| `safe_readonly` | 740 |
+| `state_change_low` | 102 |
 | `state_change_high` | 18 |
-| `network_sensitive` | 9 |
+| `network_sensitive` | 11 |
 | `privilege_sensitive` | 19 |
-| `security_sensitive` | 37 |
-| `destructive` | 2 |
+| `security_sensitive` | 39 |
+| `destructive` | 3 |
 
 ### Answer style
 
 | Answer style | Count |
 |---|---:|
-| `command_with_brief_explanation` | 398 |
-| `diagnostic_steps` | 217 |
-| `guarded_procedure` | 115 |
-| `refusal_with_safe_alternative` | 84 |
-| `script_with_explanation` | 94 |
+| `command_with_brief_explanation` | 404 |
+| `diagnostic_steps` | 225 |
+| `guarded_procedure` | 121 |
+| `refusal_with_safe_alternative` | 87 |
+| `script_with_explanation` | 95 |
 
 ## Known limitations
 
@@ -194,7 +194,7 @@ It should not be treated as a complete system administration corpus, a security 
 
 The dataset teaches terminal operator behavior and command generation patterns. Runtime safety, authorization, and execution controls must be implemented outside the model.
 
-The active v0.3 dataset has schema and governance-lint validation evidence, but all records remain draft until manual review.
+The active v0.4 dataset has schema and governance-lint validation evidence, but all records remain draft until manual review.
 
 ## Migration recommendation
 

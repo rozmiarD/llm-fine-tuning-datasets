@@ -1,25 +1,25 @@
-# terminal-admin-bash-master
+# debian-admin-bash
 
 ## Dataset identity
 
 Current active dataset:
 
 ```text
-terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy
+debian-admin-bash-sft.v0.4
 ```
 
 Reference dataset family:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu
+debian-admin-bash-sft
 ```
 
 ## Tracks
 
 | Track | File | Status |
 |---|---|---|
-| small-terminal-admin v0.3 | `terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl` | active governed draft dataset |
-| v0.2 sample | `samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl` | governed reference sample |
+| debian-admin-bash v0.4 | `debian-admin-bash-sft.v0.4.jsonl` | active governed draft dataset |
+| v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
 
@@ -32,48 +32,48 @@ DATASET_CARD.md
 Validation reports:
 
 ```text
-../../validation/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.validation-report.md
-../../validation/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.validation-report.md
+../../validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
+../../validation/debian-admin-bash-sft.v0.4.validation-report.md
 ```
 
 Migration notes:
 
 ```text
-terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.2.migration-notes.md
+debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 ```
 
 ## Status
 
-The active v0.3 Bash-heavy dataset contains 908 governed draft records.
+The active v0.4 Debian-admin Bash dataset contains 932 governed draft records.
 
 It uses the existing governed record-shape schema:
 
 ```text
-../../schemas/terminal-admin-bash-master.v0.2.schema.json
+../../schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-`meta.dataset_version` is `0.3` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
+`meta.dataset_version` is `0.4` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
 
 All records are currently marked as draft. Passing JSON Schema validation and governance linting does not mean that records have been manually reviewed for semantic correctness, safety, or execution behavior.
 
-## small-terminal-admin v0.3 metadata
+## debian-admin-bash v0.4 metadata
 
 Record count:
 
 ```text
-908
+932
 ```
 
 SHA-256:
 
 ```text
-61d9dc129b965eacb24015dabc9e1598a302f25abae652b4c453ecb0c062e016
+498c49a5d51a55316cdc1ca7be6efbf7263ac95a19de0dece05e71384dbfea55
 ```
 
 Governance schema:
 
 ```text
-../../schemas/terminal-admin-bash-master.v0.2.schema.json
+../../schemas/debian-admin-bash.v0.2.schema.json
 ```
 
 Review status:
@@ -86,7 +86,7 @@ The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint er
 
 ## Purpose
 
-This dataset teaches small terminal-administration models to behave like concise Debian/Ubuntu terminal assistants.
+This dataset teaches small Debian/Ubuntu administration models to behave like concise Debian/Ubuntu terminal assistants.
 
 The expected model behavior is:
 
@@ -103,7 +103,7 @@ The expected model behavior is:
 Primary target:
 
 ```text
-small terminal-admin / small coder-instruct
+small Debian-admin / small coder-instruct
 ```
 
 The examples should be precise, compact, and command-oriented.
@@ -139,12 +139,12 @@ This format is not the final training format for every model. Before fine-tuning
 Governed records should follow the current record-shape schema:
 
 ```text
-../../schemas/terminal-admin-bash-master.v0.2.schema.json
+../../schemas/debian-admin-bash.v0.2.schema.json
 ```
 
 ## Coverage
 
-The active v0.3 dataset covers:
+The active v0.4 dataset covers:
 
 - terminal inspection commands;
 - systemd and log workflows;
@@ -176,14 +176,14 @@ From the repository root, validate the v0.2 sample:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.2.sample.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json
+  datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-Validate the governed v0.3 Bash-heavy dataset:
+Validate the governed v0.4 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/terminal-admin-bash-master/terminal-admin-bash-master__small-terminal-admin__sft__en__debian-ubuntu__v0.3.governed-bash-heavy.jsonl \
-  --schema schemas/terminal-admin-bash-master.v0.2.schema.json
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json
 ```

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/rozmiarD/llm-fine-tuning-datasets/schemas/terminal-admin-bash-master.v0.1.schema.json",
-  "title": "terminal-admin-bash-master v0.1 record",
+  "$id": "https://github.com/rozmiarD/llm-fine-tuning-datasets/schemas/debian-admin-bash.v0.1.schema.json",
+  "title": "debian-admin-bash v0.1 legacy record",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -30,7 +30,7 @@
       ],
       "properties": {
         "role": {
-          "const": "terminal-admin-bash-master"
+          "const": "debian-admin-bash"
         },
         "target_model_size": {
           "enum": [

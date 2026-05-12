@@ -2,12 +2,12 @@
 
 ## Scope
 
-This report covers the initial repository structure and documentation consistency after the bootstrap cleanup.
+This historical report covers the initial repository structure and documentation consistency after the bootstrap cleanup. For current active dataset validation, see `debian-admin-bash-sft.v0.4.validation-report.md`.
 
 Validated areas:
 
 - root README is general repository documentation;
-- dataset-specific documentation is placed under `datasets/terminal-admin-bash-master/`;
+- dataset-specific documentation is placed under `datasets/debian-admin-bash/`;
 - `datasets/README.md` exists to make the dataset directory explicit;
 - dataset naming follows the documented convention;
 - sample JSONL file name matches the dataset identity;
@@ -28,18 +28,22 @@ Expected structure:
 ├── LICENSE.md
 ├── datasets/
 │   ├── README.md
-│   └── terminal-admin-bash-master/
+│   └── debian-admin-bash/
 │       ├── README.md
 │       ├── DATASET_CARD.md
+│       ├── debian-admin-bash-sft.v0.4.jsonl
 │       └── samples/
-│           └── terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
+│           ├── debian-admin-bash-sft.v0.1.sample.jsonl
+│           └── debian-admin-bash-sft.v0.2.sample.jsonl
 ├── docs/
+│   ├── README.md
 │   ├── accessibility-guidelines.md
 │   ├── dataset-format.md
 │   ├── naming-convention.md
 │   └── quality-guidelines.md
 ├── schemas/
-│   └── terminal-admin-bash-master.v0.1.schema.json
+│   ├── debian-admin-bash.v0.1.schema.json
+│   └── debian-admin-bash.v0.2.schema.json
 └── validation/
     ├── README.md
     └── bootstrap-validation-report.md
@@ -52,13 +56,13 @@ Status: pass.
 Canonical dataset name:
 
 ```text
-terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1
+debian-admin-bash-sft.v0.1
 ```
 
 Sample file:
 
 ```text
-datasets/terminal-admin-bash-master/samples/terminal-admin-bash-master__4b-coder-instruct__sft__en__debian-ubuntu__v0.1.sample.jsonl
+datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.1.sample.jsonl
 ```
 
 Status: pass.
@@ -68,7 +72,7 @@ Status: pass.
 Current sample records use:
 
 ```text
-role: terminal-admin-bash-master
+role: debian-admin-bash
 target_model_size: 4b
 target_model_type: coder-instruct
 training_use: sft
@@ -108,11 +112,11 @@ Documentation uses:
 
 Status: pass.
 
-## Known follow-up work
+## Historical follow-up status
 
-Recommended next steps:
+The original bootstrap follow-ups are complete enough for the current repository shape:
 
-- add a real validation script for JSONL and schema checks;
-- add CI once the validation script exists;
-- add the first non-sample dataset file when records are ready;
-- split schema rules later if future datasets target other model sizes, platforms, or training uses.
+- JSONL/schema/governance validation now lives in `validation/validate_dataset.py`;
+- the active governed dataset is `datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl`;
+- current validation reports live under `validation/`;
+- future schema splits should still happen only when record shape or governance semantics change.

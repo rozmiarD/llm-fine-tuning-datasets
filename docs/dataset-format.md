@@ -30,16 +30,16 @@ The repository stores source data. Training pipelines should handle final format
 
 ## Governed record shape
 
-New terminal-administration records should use the current governed shape defined by `schemas/terminal-admin-bash-master.v0.2.schema.json`. Dataset content versions can move forward, for example `meta.dataset_version="0.3"`, while the record-shape schema remains v0.2.
+New terminal-administration records should use the current governed shape defined by `schemas/debian-admin-bash.v0.2.schema.json`. Dataset content versions can move forward, for example `meta.dataset_version="0.4"`, while the record-shape schema remains v0.2.
 
 ```json
 {
-  "id": "terminal-admin-bash-master:filesystem.du-largest-current.001",
+  "id": "debian-admin-bash:filesystem.du-largest-current.001",
   "meta": {
     "dataset_version": "0.2",
     "task_type": "sft",
     "language": "en",
-    "domain": "terminal_admin_bash",
+    "domain": "debian_admin_bash",
     "subdomain": "filesystem",
     "target_os": {
       "family": "linux",
@@ -103,20 +103,20 @@ Stable unique identifier.
 Recommended v0.2 pattern:
 
 ```text
-terminal-admin-bash-master:<subdomain>.<short-task-name>.<number>
+debian-admin-bash:<subdomain>.<short-task-name>.<number>
 ```
 
 Examples:
 
 ```text
-terminal-admin-bash-master:filesystem.du-largest-current.001
-terminal-admin-bash-master:systemd.nginx-status-logs.001
-terminal-admin-bash-master:scripting.audit-world-writable.001
+debian-admin-bash:filesystem.du-largest-current.001
+debian-admin-bash:systemd.nginx-status-logs.001
+debian-admin-bash:scripting.audit-world-writable.001
 ```
 
 ### meta.dataset_version
 
-Use the dataset content version for the source file, for example `0.2` for the governed reference sample or `0.3` for the active Bash-heavy dataset. Do not confuse this with the JSON Schema version.
+Use the dataset content version for the source file, for example `0.2` for the governed reference sample or `0.4` for the active Debian-admin Bash dataset. Do not confuse this with the JSON Schema version.
 
 ### meta.target_os
 
