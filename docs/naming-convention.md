@@ -21,7 +21,7 @@ Current purpose names should describe what the data trains, not every metadata a
 Active governed draft dataset:
 
 ```text
-debian-admin-bash-sft.v0.4.jsonl
+debian-admin-bash-sft.v0.5.jsonl
 ```
 
 Governed reference sample:
@@ -80,7 +80,7 @@ Do not put every axis into the file name. Keep these in `meta` and dataset cards
 Use dataset content versioning:
 
 ```text
-v0.4
+v0.5
 ```
 
 Increase the version when scope, source data, record quality rules, or intended training use changes significantly. A dataset content version does not require a new JSON Schema version when the governed record shape is unchanged.

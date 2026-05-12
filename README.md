@@ -29,7 +29,7 @@ See [Dataset governance](docs/dataset-governance.md). The documentation map is i
 
 | Dataset | Target model | Use | Language | Platform | Records | Purpose | Status |
 |---|---:|---|---|---|---:|---|---|
-| [`debian-admin-bash-sft.v0.4`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 932 | Debian/Ubuntu admin Bash SFT records with risk metadata and quality gates | governed draft dataset |
+| [`debian-admin-bash-sft.v0.5`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 1000 | Debian/Ubuntu admin Bash SFT records with SQLite, backup/restore, SSH/auth, risk metadata, and quality gates | governed draft dataset |
 | [`debian-admin-bash-sft.v0.2`](datasets/debian-admin-bash/README.md) | 4B coder-instruct | SFT | English | Debian/Ubuntu | sample only | Governed source-record reference sample | governed sample |
 
 ## Deprecated / removed source material
@@ -90,13 +90,13 @@ python validation/validate_dataset.py \
   --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ```
 
-Validate the governed v0.4 Debian-admin Bash dataset:
+Validate the governed v0.5 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/debian-admin-bash-sft.v0.4.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.5.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-sft.v0.4.validation-report.md
+  --report validation/debian-admin-bash-sft.v0.5.validation-report.md
 ```
 
 ## Naming convention
@@ -109,7 +109,7 @@ Dataset files should use short purpose-oriented names:
 
 For this repo, the active purpose name is `debian-admin-bash`: Debian/Ubuntu administration through concise Bash-oriented assistant answers.
 
-A dataset content version such as `v0.4` does not require a new schema when the governed source-record shape is unchanged. The current governed record-shape schema is:
+A dataset content version such as `v0.5` does not require a new schema when the governed source-record shape is unchanged. The current governed record-shape schema is:
 
 ```text
 schemas/debian-admin-bash.v0.2.schema.json
@@ -131,8 +131,9 @@ See [Naming convention](docs/naming-convention.md).
 │   └── debian-admin-bash/
 │       ├── README.md
 │       ├── DATASET_CARD.md
-│       ├── debian-admin-bash-sft.v0.4.jsonl
+│       ├── debian-admin-bash-sft.v0.5.jsonl
 │       ├── debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
+│       ├── debian-admin-bash-sft.v0.4-to-v0.5.migration-notes.md
 │       └── samples/
 │           ├── debian-admin-bash-sft.v0.1.sample.jsonl
 │           └── debian-admin-bash-sft.v0.2.sample.jsonl
@@ -152,7 +153,7 @@ See [Naming convention](docs/naming-convention.md).
     ├── bootstrap-validation-report.md
     ├── debian-admin-bash-sft.v0.1.historical.validation-report.md
     ├── debian-admin-bash-sft.v0.2.sample.validation-report.md
-    └── debian-admin-bash-sft.v0.4.validation-report.md
+    └── debian-admin-bash-sft.v0.5.validation-report.md
 ```
 
 ## Documentation style
