@@ -2,7 +2,7 @@
 
 ## Scope
 
-This historical report covers the initial repository structure and documentation consistency after the bootstrap cleanup. For current active dataset validation, see `debian-admin-bash-sft.v0.5.validation-report.md`.
+This historical report covers the initial repository structure and documentation consistency after the bootstrap cleanup. For current active dataset validation, see `debian-admin-bash-sft.v0.6.validation-report.md`.
 
 Validated areas:
 
@@ -31,7 +31,7 @@ Expected structure:
 │   └── debian-admin-bash/
 │       ├── README.md
 │       ├── DATASET_CARD.md
-│       ├── debian-admin-bash-sft.v0.5.jsonl
+│       ├── debian-admin-bash-sft.v0.6.jsonl
 │       └── samples/
 │           ├── debian-admin-bash-sft.v0.1.sample.jsonl
 │           └── debian-admin-bash-sft.v0.2.sample.jsonl
@@ -117,6 +117,6 @@ Status: pass.
 The original bootstrap follow-ups are complete enough for the current repository shape:
 
 - JSONL/schema/governance validation now lives in `validation/validate_dataset.py`;
-- the active governed dataset is `datasets/debian-admin-bash/debian-admin-bash-sft.v0.5.jsonl`;
+- the active governed dataset is `datasets/debian-admin-bash/debian-admin-bash-sft.v0.6.jsonl`;
 - current validation reports live under `validation/`;
 - future schema splits should still happen only when record shape or governance semantics change.

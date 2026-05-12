@@ -5,7 +5,7 @@
 Current active dataset:
 
 ```text
-debian-admin-bash-sft.v0.5
+debian-admin-bash-sft.v0.6
 ```
 
 Reference dataset family:
@@ -18,7 +18,7 @@ debian-admin-bash-sft
 
 | Track | File | Status |
 |---|---|---|
-| debian-admin-bash v0.5 | `debian-admin-bash-sft.v0.5.jsonl` | active governed draft dataset |
+| debian-admin-bash v0.6 | `debian-admin-bash-sft.v0.6.jsonl` | active governed draft dataset |
 | v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
@@ -33,7 +33,7 @@ Validation reports:
 
 ```text
 ../../validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
-../../validation/debian-admin-bash-sft.v0.5.validation-report.md
+../../validation/debian-admin-bash-sft.v0.6.validation-report.md
 ```
 
 Migration notes:
@@ -41,11 +41,12 @@ Migration notes:
 ```text
 debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 debian-admin-bash-sft.v0.4-to-v0.5.migration-notes.md
+debian-admin-bash-sft.v0.5-to-v0.6.migration-notes.md
 ```
 
 ## Status
 
-The active v0.5 Debian-admin Bash dataset contains 1000 governed draft records.
+The active v0.6 Debian-admin Bash dataset contains 1700 governed draft records.
 
 It uses the existing governed record-shape schema:
 
@@ -53,22 +54,24 @@ It uses the existing governed record-shape schema:
 ../../schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-`meta.dataset_version` is `0.5` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
+`meta.dataset_version` is `0.6` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
 
 All records are currently marked as draft. Passing JSON Schema validation and governance linting does not mean that records have been manually reviewed for semantic correctness, safety, or execution behavior.
 
-## debian-admin-bash v0.5 metadata
+PostgreSQL is intentionally excluded from the active corpus; database coverage is scoped to SQLite as a local file-backed admin surface.
+
+## debian-admin-bash v0.6 metadata
 
 Record count:
 
 ```text
-1000
+1700
 ```
 
 SHA-256:
 
 ```text
-90526e75efae73e90a33c4d736dd87eac0e6b32e4fabed506a344374f7036c95
+2f3e07990fd6a18e0c41076eb3fe98ccfdeccc8a079be1c498122feabef069ef
 ```
 
 Governance schema:
@@ -84,6 +87,8 @@ draft
 ```
 
 The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint errors, and 0 warnings. This is not a semantic, safety, or execution review claim.
+
+The v0.6 supplement specifically adds 700 curated draft records: 250 Bash CLI tooling, 240 incident multisurface, 100 structured parser, 60 SQLite deeper-ops, and 50 defensive host-admin records.
 
 ## Purpose
 
@@ -145,16 +150,20 @@ Governed records should follow the current record-shape schema:
 
 ## Coverage
 
-The active v0.5 dataset covers:
+The active v0.6 dataset covers:
 
 - terminal inspection commands;
 - systemd and log workflows;
 - package-management checks and repairs;
 - networking and firewall-adjacent workflows;
 - Docker administration;
+- Bash CLI tooling patterns;
+- incident multisurface triage;
+- structured parser output contracts;
 - SQLite local database operations;
 - backup and restore workflows;
 - SSH/authentication administration;
+- bounded defensive host-admin audits;
 - Bash scripts and functions;
 - tool-availability handling;
 - structured command-output interpretation;
@@ -184,10 +193,10 @@ python validation/validate_dataset.py \
   --schema schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-Validate the governed v0.5 Debian-admin Bash dataset:
+Validate the governed v0.6 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/debian-admin-bash-sft.v0.5.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.6.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json
 ```

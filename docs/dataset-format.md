@@ -30,7 +30,7 @@ The repository stores source data. Training pipelines should handle final format
 
 ## Governed record shape
 
-New terminal-administration records should use the current governed shape defined by `schemas/debian-admin-bash.v0.2.schema.json`. Dataset content versions can move forward, for example `meta.dataset_version="0.5"`, while the record-shape schema remains v0.2.
+New terminal-administration records should use the current governed shape defined by `schemas/debian-admin-bash.v0.2.schema.json`. Dataset content versions can move forward, for example `meta.dataset_version="0.6"`, while the record-shape schema remains v0.2.
 
 ```json
 {
@@ -116,7 +116,7 @@ debian-admin-bash:scripting.audit-world-writable.001
 
 ### meta.dataset_version
 
-Use the dataset content version for the source file, for example `0.2` for the governed reference sample or `0.5` for the active Debian-admin Bash dataset. Do not confuse this with the JSON Schema version.
+Use the dataset content version for the source file, for example `0.2` for the governed reference sample or `0.6` for the active Debian-admin Bash dataset. Do not confuse this with the JSON Schema version.
 
 ### meta.target_os
 
