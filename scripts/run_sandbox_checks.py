@@ -303,6 +303,15 @@ def bwrap_command(script: Path, workdir: Path) -> list[str] | None:
     ]
 
 
+def stable_tail(text: str, limit: int = 600) -> str:
+    """Return a bounded tail with volatile fixture timestamps normalized."""
+    scrubbed = re.sub(r"\t\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+ [+-]\d{4}", "\t<TIMESTAMP>", text)
+    scrubbed = re.sub(r"\b[A-Z][a-z]{2}\s+\d{1,2}\s+\d{2}:\d{2}\b", "<MTIME>", scrubbed)
+    scrubbed = re.sub(r"\.\d{14}\.bak\b", ".<TIMESTAMP>.bak", scrubbed)
+    scrubbed = re.sub(r"(?m)^\.d\.\.t\.+ \./\n", "", scrubbed)
+    return scrubbed[-limit:]
+
+
 def execute(block: str, cwd: Path, backend: str) -> tuple[str, int | None, str, str]:
     script = cwd / "execute.sh"
     script.write_text(executable_script(block), encoding="utf-8")
@@ -314,9 +323,10 @@ def execute(block: str, cwd: Path, backend: str) -> tuple[str, int | None, str, 
             cp = run(cmd, cwd, timeout=8)
         else:
             cp = run(["bash", str(script)], cwd, timeout=8)
-        return ("passed" if cp.returncode == 0 else "failed", cp.returncode, cp.stdout[-600:], cp.stderr[-600:])
+        return ("passed" if cp.returncode == 0 else "failed", cp.returncode, stable_tail(cp.stdout), stable_tail(cp.stderr))
     except subprocess.TimeoutExpired as exc:
-        return "failed", None, (exc.stdout or "")[-600:] if isinstance(exc.stdout, str) else "", "timeout"
+        stdout = stable_tail(exc.stdout or "") if isinstance(exc.stdout, str) else ""
+        return "failed", None, stdout, "timeout"
 
 
 def check_record(record: dict[str, Any], backend: str) -> list[CheckResult]:

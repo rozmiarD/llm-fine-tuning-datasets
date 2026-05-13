@@ -4,7 +4,7 @@
 - Backend: `bwrap`
 - Result JSONL: `validation/debian-admin-bash-sft.v1.1.sandbox-checks.jsonl`
 - Checked code blocks: 360
-- Result SHA-256: `60ec7f23fdea21b724174a7a2eb7996ac71709891293a9bceeca3fd3524c4244`
+- Result SHA-256: `a07d71c52f495cd68f96a3aadee8e9733ee8532b1760fa3d12f15d1bc6138196`
 
 ## Validation provenance
 
