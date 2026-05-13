@@ -5,7 +5,7 @@
 Current active dataset:
 
 ```text
-debian-admin-bash-sft.v0.7
+debian-admin-bash-sft.v0.8
 ```
 
 Reference dataset family:
@@ -18,7 +18,7 @@ debian-admin-bash-sft
 
 | Track | File | Status |
 |---|---|---|
-| debian-admin-bash v0.7 | `debian-admin-bash-sft.v0.7.jsonl` | active governed draft dataset |
+| debian-admin-bash v0.8 | `debian-admin-bash-sft.v0.8.jsonl` | active governed draft dataset |
 | v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
@@ -33,7 +33,7 @@ Validation reports:
 
 ```text
 ../../validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
-../../validation/debian-admin-bash-sft.v0.7.validation-report.md
+../../validation/debian-admin-bash-sft.v0.8.validation-report.md
 ```
 
 Migration notes:
@@ -43,11 +43,12 @@ debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 debian-admin-bash-sft.v0.4-to-v0.5.migration-notes.md
 debian-admin-bash-sft.v0.5-to-v0.6.migration-notes.md
 debian-admin-bash-sft.v0.6-to-v0.7.migration-notes.md
+debian-admin-bash-sft.v0.7-to-v0.8.migration-notes.md
 ```
 
 ## Status
 
-The active v0.7 Debian-admin Bash dataset contains 2270 governed draft records.
+The active v0.8 Debian-admin Bash dataset contains 2360 governed draft records.
 
 It uses the existing governed record-shape schema:
 
@@ -55,24 +56,24 @@ It uses the existing governed record-shape schema:
 ../../schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-`meta.dataset_version` is `0.7` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
+`meta.dataset_version` is `0.8` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
 
 All records are currently marked as draft. Passing JSON Schema validation and governance linting does not mean that records have been manually reviewed for semantic correctness, safety, or execution behavior.
 
 PostgreSQL is intentionally excluded from the active corpus; database coverage is scoped to SQLite as a local file-backed admin surface.
 
-## debian-admin-bash v0.7 metadata
+## debian-admin-bash v0.8 metadata
 
 Record count:
 
 ```text
-2270
+2360
 ```
 
 SHA-256:
 
 ```text
-414393096ba683a7de91a77f1ef61ed8c38384d6e521d6fa6d023793004c7fbd
+07b9c534f078c97988663c256fa8ce93abdc8aa54190379ee20dfc29c18e4115
 ```
 
 Governance schema:
@@ -89,7 +90,7 @@ draft
 
 The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint errors, and 0 warnings. This is not a semantic, safety, or execution review claim.
 
-The v0.7 supplement specifically adds 570 curated draft records focused on keeping the 3B target narrow: 80 SQLite local database operations, 80 JSON/JQ/JSONL transformations, 60 Bash production scripting and repair patterns, 50 systemd unit/timer/debugging records, 130 stderr/log diagnosis records, 60 context-required safety/refusal records, 30 bounded web/TLS records, 30 Docker Compose admin troubleshooting records, and 50 tool-availability fallback records.
+The v0.8 supplement specifically adds 90 curated draft nmap records as a narrow host-exposure verification layer: approved one-host scans, `ss`/firewall comparison, bounded post-change checks, output interpretation, structured handoff output, tool-availability fallbacks, and refusals for unauthorized public or stealth/offensive scanning.
 
 ## Purpose
 
@@ -151,7 +152,7 @@ Governed records should follow the current record-shape schema:
 
 ## Coverage
 
-The active v0.7 dataset covers:
+The active v0.8 dataset covers:
 
 - terminal inspection commands;
 - systemd and log workflows;
@@ -194,10 +195,10 @@ python validation/validate_dataset.py \
   --schema schemas/debian-admin-bash.v0.2.schema.json
 ```
 
-Validate the governed v0.7 Debian-admin Bash dataset:
+Validate the governed v0.8 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/debian-admin-bash-sft.v0.7.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.8.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json
 ```
