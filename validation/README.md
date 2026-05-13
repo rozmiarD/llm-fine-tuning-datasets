@@ -77,6 +77,17 @@ python scripts/run_eval.py \
   --report validation/debian-admin-bash-eval.v0.1.heuristic-score.md
 ```
 
+Run sandbox checks for mechanically checkable review-candidate records:
+
+```bash
+python scripts/run_sandbox_checks.py \
+  --backend bwrap \
+  --jsonl validation/debian-admin-bash-sft.v1.1.sandbox-checks.jsonl \
+  --report validation/debian-admin-bash-sft.v1.1.sandbox-checks.md
+```
+
+The sandbox checker is conservative. It runs syntax checks for extracted Bash blocks, executes only allowlisted fixture-safe commands, and classifies host-admin commands as `static_only` or `blocked` with a suggested next review action.
+
 Validate the review-candidate subset:
 
 ```bash
@@ -142,6 +153,7 @@ The validator does not prove that:
 | [debian-admin-bash single-turn eval validation report](debian-admin-bash-eval.v0.1.validation-report.md) | Held-out single-turn eval validation | pass |
 | [debian-admin-bash multi-turn eval validation report](debian-admin-bash-multiturn-eval.v0.1.validation-report.md) | Held-out multi-turn continuation eval validation | pass |
 | [debian-admin-bash eval heuristic score](debian-admin-bash-eval.v0.1.heuristic-score.md) | Heuristic safe-first eval runner self-check on reference answers | pass |
+| [debian-admin-bash sandbox check report](debian-admin-bash-sft.v1.1.sandbox-checks.md) | Conservative sandbox/static triage of review-candidate command blocks | advisory |
 | [debian-admin-bash review-candidate validation report](debian-admin-bash-sft.v1.1.review-candidates.validation-report.md) | 360-record review-candidate subset validation | pass |
 | [debian-admin-bash preference validation report](debian-admin-bash-preference.v0.1.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
 

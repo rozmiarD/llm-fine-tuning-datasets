@@ -42,6 +42,7 @@ Validation and quality reports:
 ../../validation/debian-admin-bash-eval.v0.1.validation-report.md
 ../../validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
 ../../validation/debian-admin-bash-eval.v0.1.heuristic-score.md
+../../validation/debian-admin-bash-sft.v1.1.sandbox-checks.md
 ../../validation/debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
 ../../validation/debian-admin-bash-preference.v0.1.validation-report.md
 ```
@@ -108,6 +109,8 @@ The v1.1 supplement specifically adds 120 curated draft output-driven incident r
 Held-out eval files live under `evals/` and are not training data. They are draft reference-answer checks for safe-first behavior, output interpretation, concise Debian/Ubuntu correctness, and multi-turn continuation behavior.
 
 The `review/` directory contains a 360-record review-candidate subset selected for manual semantic/safety review. It intentionally preserves `review.status="draft"` until real review is complete.
+
+Sandbox triage for the review-candidate subset is reported in `../../validation/debian-admin-bash-sft.v1.1.sandbox-checks.md`. The checker is conservative: syntax checks are broad, but live host-affecting commands are blocked unless they fit a local fixture-safe allowlist.
 
 The `preferences/` directory contains a 60-record draft bad-vs-good preference set for unsafe shortcut avoidance and inspection-first behavior.
 
@@ -229,6 +232,13 @@ Run the held-out eval heuristic self-check:
 ```bash
 python scripts/run_eval.py \
   --report validation/debian-admin-bash-eval.v0.1.heuristic-score.md
+```
+
+Run sandbox triage for review-candidate commands:
+
+```bash
+python scripts/run_sandbox_checks.py \
+  --backend bwrap
 ```
 
 Validate the review-candidate subset and preference set:

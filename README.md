@@ -163,7 +163,8 @@ See [Naming convention](docs/naming-convention.md).
 │   ├── build_quality_artifacts.py
 │   ├── build_preference_set.py
 │   ├── build_review_subset.py
-│   └── run_eval.py
+│   ├── run_eval.py
+│   └── run_sandbox_checks.py
 └── validation/
     ├── README.md
     ├── validate_dataset.py
@@ -176,6 +177,7 @@ See [Naming convention](docs/naming-convention.md).
     ├── debian-admin-bash-eval.v0.1.validation-report.md
     ├── debian-admin-bash-multiturn-eval.v0.1.validation-report.md
     ├── debian-admin-bash-eval.v0.1.heuristic-score.md
+    ├── debian-admin-bash-sft.v1.1.sandbox-checks.md
     ├── debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
     └── debian-admin-bash-preference.v0.1.validation-report.md
 ```
