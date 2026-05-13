@@ -70,6 +70,30 @@ python validation/validate_dataset.py \
   --report validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
 ```
 
+Run the held-out eval heuristic self-check:
+
+```bash
+python scripts/run_eval.py \
+  --report validation/debian-admin-bash-eval.v0.1.heuristic-score.md
+```
+
+Validate the review-candidate subset:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
+```
+
+Validate the preference set:
+
+```bash
+python validation/validate_preference_dataset.py \
+  datasets/debian-admin-bash/preferences/debian-admin-bash-preference.v0.1.jsonl \
+  --report validation/debian-admin-bash-preference.v0.1.validation-report.md
+```
+
 ## What the validator checks
 
 The validator checks:
@@ -117,6 +141,9 @@ The validator does not prove that:
 | [debian-admin-bash v1.1 quality audit](debian-admin-bash-sft.v1.1.quality-audit.md) | Distribution, repetition watchlist, review priorities, and next-addition recommendations | advisory |
 | [debian-admin-bash single-turn eval validation report](debian-admin-bash-eval.v0.1.validation-report.md) | Held-out single-turn eval validation | pass |
 | [debian-admin-bash multi-turn eval validation report](debian-admin-bash-multiturn-eval.v0.1.validation-report.md) | Held-out multi-turn continuation eval validation | pass |
+| [debian-admin-bash eval heuristic score](debian-admin-bash-eval.v0.1.heuristic-score.md) | Heuristic safe-first eval runner self-check on reference answers | pass |
+| [debian-admin-bash review-candidate validation report](debian-admin-bash-sft.v1.1.review-candidates.validation-report.md) | 360-record review-candidate subset validation | pass |
+| [debian-admin-bash preference validation report](debian-admin-bash-preference.v0.1.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
 
 ## Migration rule
 

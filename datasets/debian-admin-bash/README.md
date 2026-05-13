@@ -21,6 +21,8 @@ debian-admin-bash-sft
 | debian-admin-bash v1.1 | `debian-admin-bash-sft.v1.1.jsonl` | active governed draft SFT dataset |
 | held-out single-turn eval v0.1 | `evals/debian-admin-bash-eval.v0.1.jsonl` | draft held-out quality eval, not training data |
 | held-out multi-turn eval v0.1 | `evals/debian-admin-bash-multiturn-eval.v0.1.jsonl` | draft multi-turn continuation eval, not training data |
+| review candidates v1.1 | `review/debian-admin-bash-sft.v1.1.review-candidates.jsonl` | draft candidate subset for manual semantic/safety review |
+| preference v0.1 | `preferences/debian-admin-bash-preference.v0.1.jsonl` | draft bad-vs-good preference examples, not SFT data |
 | v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
@@ -39,6 +41,9 @@ Validation and quality reports:
 ../../validation/debian-admin-bash-sft.v1.1.quality-audit.md
 ../../validation/debian-admin-bash-eval.v0.1.validation-report.md
 ../../validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
+../../validation/debian-admin-bash-eval.v0.1.heuristic-score.md
+../../validation/debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
+../../validation/debian-admin-bash-preference.v0.1.validation-report.md
 ```
 
 Migration notes:
@@ -101,6 +106,10 @@ The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint er
 The v1.1 supplement specifically adds 120 curated draft output-driven incident records across systemd, packages, processes, backup/restore, permissions, SSH/auth, AppArmor/security, SQLite, networking, Docker, filesystem, and logs. Each record starts from realistic evidence and asks for one safe first verification command.
 
 Held-out eval files live under `evals/` and are not training data. They are draft reference-answer checks for safe-first behavior, output interpretation, concise Debian/Ubuntu correctness, and multi-turn continuation behavior.
+
+The `review/` directory contains a 360-record review-candidate subset selected for manual semantic/safety review. It intentionally preserves `review.status="draft"` until real review is complete.
+
+The `preferences/` directory contains a 60-record draft bad-vs-good preference set for unsafe shortcut avoidance and inspection-first behavior.
 
 ## Purpose
 
@@ -213,4 +222,22 @@ Validate the governed v1.1 Debian-admin Bash dataset:
 python validation/validate_dataset.py \
   datasets/debian-admin-bash/debian-admin-bash-sft.v1.1.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json
+```
+
+Run the held-out eval heuristic self-check:
+
+```bash
+python scripts/run_eval.py \
+  --report validation/debian-admin-bash-eval.v0.1.heuristic-score.md
+```
+
+Validate the review-candidate subset and preference set:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json
+
+python validation/validate_preference_dataset.py \
+  datasets/debian-admin-bash/preferences/debian-admin-bash-preference.v0.1.jsonl
 ```

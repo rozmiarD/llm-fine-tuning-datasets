@@ -135,6 +135,7 @@ See [Naming convention](docs/naming-convention.md).
 │       ├── DATASET_CARD.md
 │       ├── debian-admin-bash-sft.v1.1.jsonl
 │       ├── evals/
+│       ├── preferences/
 │       ├── review/
 │       ├── debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 │       ├── debian-admin-bash-sft.v0.4-to-v0.5.migration-notes.md
@@ -159,17 +160,24 @@ See [Naming convention](docs/naming-convention.md).
 │   ├── debian-admin-bash.v0.1.schema.json
 │   └── debian-admin-bash.v0.2.schema.json
 ├── scripts/
-│   └── build_quality_artifacts.py
+│   ├── build_quality_artifacts.py
+│   ├── build_preference_set.py
+│   ├── build_review_subset.py
+│   └── run_eval.py
 └── validation/
     ├── README.md
     ├── validate_dataset.py
+    ├── validate_preference_dataset.py
     ├── bootstrap-validation-report.md
     ├── debian-admin-bash-sft.v0.1.historical.validation-report.md
     ├── debian-admin-bash-sft.v0.2.sample.validation-report.md
     ├── debian-admin-bash-sft.v1.1.validation-report.md
     ├── debian-admin-bash-sft.v1.1.quality-audit.md
     ├── debian-admin-bash-eval.v0.1.validation-report.md
-    └── debian-admin-bash-multiturn-eval.v0.1.validation-report.md
+    ├── debian-admin-bash-multiturn-eval.v0.1.validation-report.md
+    ├── debian-admin-bash-eval.v0.1.heuristic-score.md
+    ├── debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
+    └── debian-admin-bash-preference.v0.1.validation-report.md
 ```
 
 ## Documentation style
