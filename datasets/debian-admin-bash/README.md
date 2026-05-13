@@ -18,7 +18,9 @@ debian-admin-bash-sft
 
 | Track | File | Status |
 |---|---|---|
-| debian-admin-bash v1.1 | `debian-admin-bash-sft.v1.1.jsonl` | active governed draft dataset |
+| debian-admin-bash v1.1 | `debian-admin-bash-sft.v1.1.jsonl` | active governed draft SFT dataset |
+| held-out single-turn eval v0.1 | `evals/debian-admin-bash-eval.v0.1.jsonl` | draft held-out quality eval, not training data |
+| held-out multi-turn eval v0.1 | `evals/debian-admin-bash-multiturn-eval.v0.1.jsonl` | draft multi-turn continuation eval, not training data |
 | v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
@@ -29,11 +31,14 @@ Dataset card:
 DATASET_CARD.md
 ```
 
-Validation reports:
+Validation and quality reports:
 
 ```text
 ../../validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ../../validation/debian-admin-bash-sft.v1.1.validation-report.md
+../../validation/debian-admin-bash-sft.v1.1.quality-audit.md
+../../validation/debian-admin-bash-eval.v0.1.validation-report.md
+../../validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
 ```
 
 Migration notes:
@@ -94,6 +99,8 @@ draft
 The validation report shows 0 JSON errors, 0 schema errors, 0 governance lint errors, and 0 warnings. This is not a semantic, safety, or execution review claim.
 
 The v1.1 supplement specifically adds 120 curated draft output-driven incident records across systemd, packages, processes, backup/restore, permissions, SSH/auth, AppArmor/security, SQLite, networking, Docker, filesystem, and logs. Each record starts from realistic evidence and asks for one safe first verification command.
+
+Held-out eval files live under `evals/` and are not training data. They are draft reference-answer checks for safe-first behavior, output interpretation, concise Debian/Ubuntu correctness, and multi-turn continuation behavior.
 
 ## Purpose
 
@@ -179,6 +186,8 @@ The active v1.1 dataset covers:
 Canonical metadata values and review rules live in [Dataset governance](../../docs/dataset-governance.md).
 
 Canonical record-quality guidance lives in [Quality guidelines](../../docs/quality-guidelines.md).
+
+The review plan for this dataset family lives in [review/REVIEW_PLAN.md](review/REVIEW_PLAN.md).
 
 Short family-specific rule: keep this corpus Debian/Ubuntu-oriented, command-first, concise, inspection-first, and honest about risk/review state.
 

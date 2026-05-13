@@ -49,6 +49,7 @@ The repository is intended to provide:
 - dataset-governance rules for safety, risk, answer style, and review status;
 - repository-specific publishing rules that keep draft waves local and push only official checkpoints;
 - quality guidelines for creating useful training records;
+- held-out eval and review artefacts for measuring quality separately from training data;
 - documentation that remains readable and accessible without relying on visuals alone.
 
 ## Non-goals
@@ -133,6 +134,8 @@ See [Naming convention](docs/naming-convention.md).
 │       ├── README.md
 │       ├── DATASET_CARD.md
 │       ├── debian-admin-bash-sft.v1.1.jsonl
+│       ├── evals/
+│       ├── review/
 │       ├── debian-admin-bash-sft.v0.3-to-v0.4.migration-notes.md
 │       ├── debian-admin-bash-sft.v0.4-to-v0.5.migration-notes.md
 │       ├── debian-admin-bash-sft.v0.5-to-v0.6.migration-notes.md
@@ -155,13 +158,18 @@ See [Naming convention](docs/naming-convention.md).
 ├── schemas/
 │   ├── debian-admin-bash.v0.1.schema.json
 │   └── debian-admin-bash.v0.2.schema.json
+├── scripts/
+│   └── build_quality_artifacts.py
 └── validation/
     ├── README.md
     ├── validate_dataset.py
     ├── bootstrap-validation-report.md
     ├── debian-admin-bash-sft.v0.1.historical.validation-report.md
     ├── debian-admin-bash-sft.v0.2.sample.validation-report.md
-    └── debian-admin-bash-sft.v1.1.validation-report.md
+    ├── debian-admin-bash-sft.v1.1.validation-report.md
+    ├── debian-admin-bash-sft.v1.1.quality-audit.md
+    ├── debian-admin-bash-eval.v0.1.validation-report.md
+    └── debian-admin-bash-multiturn-eval.v0.1.validation-report.md
 ```
 
 ## Documentation style

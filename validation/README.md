@@ -56,6 +56,20 @@ python validation/validate_dataset.py \
   --report validation/debian-admin-bash-sft.v1.1.validation-report.md
 ```
 
+Validate the held-out eval files:
+
+```bash
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/evals/debian-admin-bash-eval.v0.1.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-eval.v0.1.validation-report.md
+
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/evals/debian-admin-bash-multiturn-eval.v0.1.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
+```
+
 ## What the validator checks
 
 The validator checks:
@@ -100,6 +114,9 @@ The validator does not prove that:
 | [v0.1 validation report](debian-admin-bash-sft.v0.1.historical.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
 | [debian-admin-bash v1.1 governed SFT validation report](debian-admin-bash-sft.v1.1.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
+| [debian-admin-bash v1.1 quality audit](debian-admin-bash-sft.v1.1.quality-audit.md) | Distribution, repetition watchlist, review priorities, and next-addition recommendations | advisory |
+| [debian-admin-bash single-turn eval validation report](debian-admin-bash-eval.v0.1.validation-report.md) | Held-out single-turn eval validation | pass |
+| [debian-admin-bash multi-turn eval validation report](debian-admin-bash-multiturn-eval.v0.1.validation-report.md) | Held-out multi-turn continuation eval validation | pass |
 
 ## Migration rule
 

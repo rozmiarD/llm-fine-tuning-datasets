@@ -1,6 +1,6 @@
 # Documentation map
 
-This directory contains reusable documentation for dataset shape, governance, quality, naming, and accessibility.
+This directory contains reusable documentation for dataset shape, governance, quality, naming, repository workflow, and accessibility.
 
 ## Canonical sources
 
