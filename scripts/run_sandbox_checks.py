@@ -34,9 +34,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_DATASET = ROOT / "datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl"
-DEFAULT_JSONL = ROOT / "validation/debian-admin-bash-sft.v1.1.sandbox-checks.jsonl"
-DEFAULT_REPORT = ROOT / "validation/debian-admin-bash-sft.v1.1.sandbox-checks.md"
+DEFAULT_DATASET = ROOT / "datasets/debian-admin-bash/review/review-candidates.jsonl"
+DEFAULT_JSONL = ROOT / "validation/debian-admin-bash-review-candidates.sandbox-checks.jsonl"
+DEFAULT_REPORT = ROOT / "validation/debian-admin-bash-review-candidates.sandbox-checks.md"
 
 BASH_BLOCK = re.compile(r"```bash\n(.*?)\n```", re.S)
 DANGEROUS = re.compile(

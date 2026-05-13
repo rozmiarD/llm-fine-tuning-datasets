@@ -1,36 +1,45 @@
 # Naming Convention
 
-## Dataset file pattern
+## Public artifact rule for this repository
 
-Use short purpose-oriented names:
+For `llm-fine-tuning-datasets`, the current public full dataset file should use a stable purpose-oriented name:
 
 ```text
-<purpose>-<training-use>.<version>.jsonl
+<purpose>-<training-use>.jsonl
 ```
 
-For sample files:
+Example:
+
+```text
+datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
+```
+
+The dataset content version belongs in record metadata, validation reports, dataset cards, and the changelog, not necessarily in the active filename.
+
+Current content checkpoint:
+
+```text
+meta.dataset_version = "1.1"
+```
+
+This avoids cluttering `main` with full JSONL snapshots for every checkpoint. Historical checkpoint summaries belong in `datasets/debian-admin-bash/CHANGELOG.md` and git history.
+
+## Samples and companion artifacts
+
+Samples may keep explicit version labels when they are retained as reference examples:
 
 ```text
 <purpose>-<training-use>.<version>.sample.jsonl
 ```
 
-Current purpose names should describe what the data trains, not every metadata axis. Keep target model, language, platform, and review status in metadata and dataset cards.
-
-## Current active datasets
-
-Active governed draft dataset:
+Companion artifacts should use stable role names inside their directories:
 
 ```text
-debian-admin-bash-sft.v0.6.jsonl
+evals/single-turn.jsonl
+evals/multiturn.jsonl
+review/review-candidates.jsonl
+preferences/preference.jsonl
 ```
-
-Governed reference sample:
-
-```text
-debian-admin-bash-sft.v0.2.sample.jsonl
-```
-
-Historical v0.1 material is retained only as samples or validation context, not as an active full corpus.
 
 ## Field meanings
 
@@ -73,14 +82,15 @@ Do not put every axis into the file name. Keep these in `meta` and dataset cards
 - target model profile;
 - review status;
 - schema version;
+- content version;
 - detailed source lineage.
 
-### version
+### content version
 
-Use dataset content versioning:
+Use dataset content versioning in metadata and changelog entries:
 
 ```text
-v0.6
+v1.1
 ```
 
-Increase the version when scope, source data, record quality rules, or intended training use changes significantly. A dataset content version does not require a new JSON Schema version when the governed record shape is unchanged.
+Increase the content version when scope, source data, record quality rules, or intended training use changes significantly. A dataset content version does not require a new JSON Schema version when the governed record shape is unchanged.

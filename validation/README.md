@@ -1,21 +1,20 @@
 # Validation
 
-This directory contains validation scripts, validation notes, and validation reports.
+This directory contains validation scripts, validation provenance, and current validation reports.
 
 ## Validation provenance
 
 The current validation/model provenance is recorded in [Validation provenance](VALIDATION_PROVENANCE.md).
 
-Short version for the current local quality wave: deterministic scripts produced the validation/sandbox counts; model-assisted curation and audit were performed in OpenClaw with `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`. An earlier status read briefly reported `medium`; see provenance notes. This is not a claim of full independent semantic/human review.
+Short version: deterministic scripts produce the validation, eval, and sandbox counts. Model-assisted curation and audit were performed in OpenClaw with `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`; an earlier status read briefly reported `medium`, so provenance records that ambiguity. This is not a claim of full independent semantic/human review.
 
 ## Validation layers
-
-Validation is layered.
 
 ```text
 JSON parse
   -> JSON Schema
   -> governance lint
+  -> mechanical eval/sandbox checks where applicable
   -> semantic and safety review
 ```
 
@@ -25,18 +24,12 @@ The validator can catch many common dataset defects, but it does not prove that 
 
 | Schema | Scope |
 |---|---|
-| `schemas/debian-admin-bash.v0.1.schema.json` | Legacy v0.1 source records retained for historical/audit validation only. |
+| `schemas/debian-admin-bash.v0.1.schema.json` | Legacy v0.1 source shape, retained only for historical context. |
 | `schemas/debian-admin-bash.v0.2.schema.json` | Governed record-shape schema for Debian/Ubuntu admin Bash records with risk, safety, answer-style, and review metadata. |
 
-The governed v1.1 Debian-admin Bash dataset uses `meta.dataset_version="1.1"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
+The current Debian-admin Bash SFT file uses `meta.dataset_version="1.1"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
 
-## Validator
-
-Executable validator:
-
-```text
-validation/validate_dataset.py
-```
+## Commands
 
 Install dependencies:
 
@@ -44,76 +37,57 @@ Install dependencies:
 python -m pip install -r requirements-dev.txt
 ```
 
-Validate the governed v0.2 sample:
+Validate the current SFT dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
+  --report validation/debian-admin-bash-sft.validation-report.md
 ```
 
-Validate the governed v1.1 Debian-admin Bash dataset:
+Validate companion JSONL files:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/debian-admin-bash-sft.v1.1.jsonl \
+  datasets/debian-admin-bash/evals/single-turn.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-sft.v1.1.validation-report.md
+  --report validation/debian-admin-bash-eval.validation-report.md
+
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/evals/multiturn.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-multiturn-eval.validation-report.md
+
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/review/review-candidates.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-review-candidates.validation-report.md
 ```
 
-Validate the held-out eval files:
+Validate preference examples:
 
 ```bash
-python validation/validate_dataset.py \
-  datasets/debian-admin-bash/evals/debian-admin-bash-eval.v0.1.jsonl \
-  --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-eval.v0.1.validation-report.md
-
-python validation/validate_dataset.py \
-  datasets/debian-admin-bash/evals/debian-admin-bash-multiturn-eval.v0.1.jsonl \
-  --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-multiturn-eval.v0.1.validation-report.md
+python validation/validate_preference_dataset.py \
+  datasets/debian-admin-bash/preferences/preference.jsonl \
+  --report validation/debian-admin-bash-preference.validation-report.md
 ```
 
-Run the held-out eval heuristic self-check:
+Run eval and sandbox checks:
 
 ```bash
 python scripts/run_eval.py \
-  --report validation/debian-admin-bash-eval.v0.1.heuristic-score.md
-```
+  --report validation/debian-admin-bash-eval.heuristic-score.md
 
-Run sandbox checks for mechanically checkable review-candidate records:
-
-```bash
 python scripts/run_sandbox_checks.py \
   --backend bwrap \
-  --jsonl validation/debian-admin-bash-sft.v1.1.sandbox-checks.jsonl \
-  --report validation/debian-admin-bash-sft.v1.1.sandbox-checks.md
+  --jsonl validation/debian-admin-bash-review-candidates.sandbox-checks.jsonl \
+  --report validation/debian-admin-bash-review-candidates.sandbox-checks.md
 ```
 
 The sandbox checker is conservative. It runs syntax checks for extracted Bash blocks, executes only allowlisted fixture-safe commands, and classifies host-admin commands as `static_only` or `blocked` with a suggested next review action.
 
-Validate the review-candidate subset:
-
-```bash
-python validation/validate_dataset.py \
-  datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl \
-  --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-sft.v1.1.review-candidates.validation-report.md
-```
-
-Validate the preference set:
-
-```bash
-python validation/validate_preference_dataset.py \
-  datasets/debian-admin-bash/preferences/debian-admin-bash-preference.v0.1.jsonl \
-  --report validation/debian-admin-bash-preference.v0.1.validation-report.md
-```
-
 ## What the validator checks
-
-The validator checks:
 
 - JSONL parseability;
 - JSON Schema conformance when a schema is provided;
@@ -129,17 +103,9 @@ The validator checks:
 - basic answer-style consistency;
 - review-status honesty.
 
-## Validator implementation notes
+## What validation does not prove
 
-The validator stores an internal `__line_no` helper while reading JSONL, but that helper is removed before JSON Schema validation. It should not make otherwise valid records fail schema validation.
-
-Privilege escalation words such as `sudo`, `doas`, and `su -` are checked against `meta.requires_root`. They do not automatically force `privilege_sensitive` risk, because normal package, service, and inspection workflows may legitimately require root while belonging to a lower or different risk class.
-
-Read-only firewall inspection such as `ufw status` or `iptables -S` is not treated as a firewall state change. Firewall-changing operations such as `ufw allow`, `ufw enable`, `iptables -A`, `iptables -F`, or `nft add` remain `network_sensitive`.
-
-## What the validator does not prove
-
-The validator does not prove that:
+Validation does not prove that:
 
 - the command is the best command;
 - the command has been executed successfully;
@@ -147,22 +113,22 @@ The validator does not prove that:
 - the dataset is production-grade;
 - a trained model will behave safely without runtime controls.
 
-## Reports
+## Current reports
 
 | Report | Scope | Status |
 |---|---|---|
-| [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
-| [v0.1 validation report](debian-admin-bash-sft.v0.1.historical.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
-| [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
 | [Validation provenance](VALIDATION_PROVENANCE.md) | Validator/tool/model provenance and review-claim boundary | current |
-| [debian-admin-bash v1.1 governed SFT validation report](debian-admin-bash-sft.v1.1.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
-| [debian-admin-bash v1.1 quality audit](debian-admin-bash-sft.v1.1.quality-audit.md) | Distribution, repetition watchlist, review priorities, and next-addition recommendations | advisory |
-| [debian-admin-bash single-turn eval validation report](debian-admin-bash-eval.v0.1.validation-report.md) | Held-out single-turn eval validation | pass |
-| [debian-admin-bash multi-turn eval validation report](debian-admin-bash-multiturn-eval.v0.1.validation-report.md) | Held-out multi-turn continuation eval validation | pass |
-| [debian-admin-bash eval heuristic score](debian-admin-bash-eval.v0.1.heuristic-score.md) | Heuristic safe-first eval runner self-check on reference answers | pass |
-| [debian-admin-bash sandbox check report](debian-admin-bash-sft.v1.1.sandbox-checks.md) | Conservative sandbox/static triage of review-candidate command blocks | advisory |
-| [debian-admin-bash review-candidate validation report](debian-admin-bash-sft.v1.1.review-candidates.validation-report.md) | 360-record review-candidate subset validation | pass |
-| [debian-admin-bash preference validation report](debian-admin-bash-preference.v0.1.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
+| [SFT validation report](debian-admin-bash-sft.validation-report.md) | Current Debian/Ubuntu admin Bash SFT dataset validation | pass |
+| [Quality audit](debian-admin-bash-sft.quality-audit.md) | Distribution, repetition watchlist, review priorities, and next-addition recommendations | advisory |
+| [Single-turn eval validation report](debian-admin-bash-eval.validation-report.md) | Held-out single-turn eval validation | pass |
+| [Multi-turn eval validation report](debian-admin-bash-multiturn-eval.validation-report.md) | Held-out multi-turn continuation eval validation | pass |
+| [Eval heuristic score](debian-admin-bash-eval.heuristic-score.md) | Heuristic safe-first eval runner self-check on reference answers | pass |
+| [Review-candidate validation report](debian-admin-bash-review-candidates.validation-report.md) | 360-record review-candidate subset validation | pass |
+| [Review-candidate sandbox report](debian-admin-bash-review-candidates.sandbox-checks.md) | Conservative sandbox/static triage of review-candidate command blocks | advisory |
+| [Preference validation report](debian-admin-bash-preference.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
+| [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
+
+Historical validation context for removed full snapshots lives in `datasets/debian-admin-bash/CHANGELOG.md` and git history.
 
 ## Migration rule
 

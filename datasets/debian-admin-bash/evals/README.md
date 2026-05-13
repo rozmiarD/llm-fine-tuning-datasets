@@ -8,8 +8,8 @@ These files are not training data. They are intended to test whether a small Deb
 
 | File | Records | Purpose |
 |---|---:|---|
-| `debian-admin-bash-eval.v0.1.jsonl` | 80 | Single-turn held-out evidence-to-command evaluation records. |
-| `debian-admin-bash-multiturn-eval.v0.1.jsonl` | 40 | Multi-turn continuation evals encoded as single user prompts so they remain compatible with the current governed record shape. |
+| `single-turn.jsonl` | 80 | Single-turn held-out evidence-to-command evaluation records. |
+| `multiturn.jsonl` | 40 | Multi-turn continuation evals encoded as single user prompts so they remain compatible with the current governed record shape. |
 
 ## Format
 

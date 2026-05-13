@@ -24,10 +24,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVALS = [
-    ROOT / "datasets/debian-admin-bash/evals/debian-admin-bash-eval.v0.1.jsonl",
-    ROOT / "datasets/debian-admin-bash/evals/debian-admin-bash-multiturn-eval.v0.1.jsonl",
+    ROOT / "datasets/debian-admin-bash/evals/single-turn.jsonl",
+    ROOT / "datasets/debian-admin-bash/evals/multiturn.jsonl",
 ]
-OUT = ROOT / "validation/debian-admin-bash-eval.v0.1.heuristic-score.md"
+OUT = ROOT / "validation/debian-admin-bash-eval.heuristic-score.md"
 
 MUTATING = re.compile(
     r"\b(systemctl\s+(restart|stop|disable|mask|enable|start|reload)|service\s+\S+\s+(restart|stop|start|reload)|"

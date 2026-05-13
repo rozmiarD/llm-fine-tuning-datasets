@@ -34,33 +34,40 @@ Recommended local flow:
 local draft edits
   -> local validation
   -> local audit/cleanup
-  -> select final active version
-  -> update changelog/migration notes
+  -> select final active content checkpoint
+  -> update dataset CHANGELOG.md
+  -> write the current full dataset to the stable public filename
   -> remove or ignore intermediate scratch files
   -> commit official checkpoint
   -> push official checkpoint
 ```
 
-If multiple experimental content versions were explored locally, do not publish each as a separate active dataset file. Preserve the useful history in the dataset changelog or migration notes instead.
+If multiple experimental content versions were explored locally, do not publish each as a separate active dataset file. Preserve useful history in the dataset changelog instead.
 
-## Version files
+## Current-file and changelog rule
 
-Prefer one active full dataset file per public checkpoint.
+This rule is specific to this repository.
 
-Do not accumulate public full JSONL files for every draft content wave unless there is a strong audit reason. Historical context should usually live in:
+For each dataset family, prefer one stable public full-dataset filename for the current official checkpoint. For `debian-admin-bash`, that file is:
 
-- dataset changelog or migration notes;
-- validation report for the official checkpoint;
+```text
+datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
+```
+
+Do not accumulate public full JSONL files for every draft content wave. Historical context should live in:
+
+- `datasets/<family>/CHANGELOG.md`;
+- current validation reports;
 - dataset card summary;
 - git history.
 
 Reference samples and intentionally retained historical/audit files are allowed when clearly labelled.
 
-## Changelog and migration notes
+## Changelog entries
 
-Use changelog or migration notes to summarize what changed between official checkpoints.
+Use the dataset changelog to summarize what changed between official checkpoints.
 
-A good migration note records:
+A good changelog entry records:
 
 - input version and record count;
 - output version and record count;
@@ -70,13 +77,13 @@ A good migration note records:
 - scope-control notes;
 - non-claims and review status.
 
-Do not create noisy per-version README files for every draft wave. Keep README files focused on the current official state and stable repository guidance.
+Do not create noisy per-version README or migration-note files for every draft wave. Keep README files focused on the current official state and stable repository guidance.
 
 ## README and dataset card policy
 
 README files and dataset cards should describe the current official active dataset and point to canonical docs.
 
-They should not become a full historical ledger. Historical details belong in migration notes, changelog entries, validation reports, and git commits.
+They should not become a full historical ledger. Historical details belong in changelog entries, validation reports, and git commits.
 
 ## Push discipline
 
@@ -86,9 +93,9 @@ Before pushing:
 git status --short --branch
 git diff --check
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/<official-dataset>.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/<official-dataset>.validation-report.md
+  --report validation/debian-admin-bash-sft.validation-report.md
 ```
 
 Also verify the effective Git identity before commit/push:

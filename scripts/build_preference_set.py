@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PREF_DIR = ROOT / "datasets/debian-admin-bash/preferences"
 PREF_DIR.mkdir(parents=True, exist_ok=True)
-OUT = PREF_DIR / "debian-admin-bash-preference.v0.1.jsonl"
+OUT = PREF_DIR / "preference.jsonl"
 README = PREF_DIR / "README.md"
 SYSTEM = "You are a Debian/Ubuntu terminal administration assistant. Prefer inspection before modification, refuse unsafe shortcuts, and keep answers concise."
 
@@ -55,5 +55,5 @@ for round_no in range(6):
         idx += 1
 
 OUT.write_text("\n".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) for r in records) + "\n", encoding="utf-8")
-README.write_text(f"""# Debian-admin Bash preference set\n\nThis directory contains a small draft preference dataset for bad-vs-good Debian/Ubuntu terminal-admin behavior.\n\nIt is not SFT training data and does not use the governed `messages` shape. Each record contains:\n\n- `prompt.system`;\n- `prompt.user`;\n- `chosen`;\n- `rejected`;\n- `rationale`.\n\n## File\n\n| File | Records | Purpose |\n|---|---:|---|\n| `debian-admin-bash-preference.v0.1.jsonl` | {len(records)} | Preference examples for inspection-first, safe-first behavior. |\n\n## Scope\n\nThe preference set targets common unsafe shortcuts:\n\n- deleting package-manager locks;\n- restarting services before validation;\n- broad log deletion;\n- `chmod 777` permission fixes;\n- opening firewall ports before listener checks;\n- restoring over live data without dry-run;\n- disabling security controls;\n- killing broad process names;\n- copying live SQLite files unsafely;\n- restarting Docker stacks before identifying the conflict.\n\n## Review status\n\nAll preference records are draft. They are intended for review and preference-training experiments, not as a production-safety claim.\n""", encoding="utf-8")
+README.write_text(f"""# Debian-admin Bash preference set\n\nThis directory contains a small draft preference dataset for bad-vs-good Debian/Ubuntu terminal-admin behavior.\n\nIt is not SFT training data and does not use the governed `messages` shape. Each record contains:\n\n- `prompt.system`;\n- `prompt.user`;\n- `chosen`;\n- `rejected`;\n- `rationale`.\n\n## File\n\n| File | Records | Purpose |\n|---|---:|---|\n| `preference.jsonl` | {len(records)} | Preference examples for inspection-first, safe-first behavior. |\n\n## Scope\n\nThe preference set targets common unsafe shortcuts:\n\n- deleting package-manager locks;\n- restarting services before validation;\n- broad log deletion;\n- `chmod 777` permission fixes;\n- opening firewall ports before listener checks;\n- restoring over live data without dry-run;\n- disabling security controls;\n- killing broad process names;\n- copying live SQLite files unsafely;\n- restarting Docker stacks before identifying the conflict.\n\n## Review status\n\nAll preference records are draft. They are intended for review and preference-training experiments, not as a production-safety claim.\n""", encoding="utf-8")
 print(f"wrote {OUT.relative_to(ROOT)} records={len(records)} sha256={hashlib.sha256(OUT.read_bytes()).hexdigest()}")

@@ -2,24 +2,24 @@
 
 This file is an index of dataset cards in this repository.
 
-Dataset-specific cards should live next to their dataset documentation. The root file should stay general and should not duplicate detailed per-dataset documentation.
+Dataset-specific cards live next to their dataset documentation. The root file stays general and does not duplicate detailed per-dataset documentation.
 
 ## Available dataset cards
 
-| Dataset | Card | Purpose | Records | Status |
+| Dataset family | Current file | Card | Records | Status |
 |---|---|---|---:|---|
-| `debian-admin-bash-sft.v1.1` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Debian/Ubuntu admin Bash SFT source records with Bash tooling, incident triage, structured parser, SQLite, backup/restore, SSH/auth, and defensive-admin coverage | 2672 | governed draft dataset |
-| `debian-admin-bash-sft.v0.2` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Governed source-record reference sample | sample only | governed reference sample |
+| `debian-admin-bash-sft` | `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | 2672 | governed draft dataset |
+| `debian-admin-bash` sample | `datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | sample only | governed reference sample |
 
-## Removed source material
+## Historical source material
 
-The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
+The previous full `v0.1` corpus and intermediate full JSONL snapshots are not active public files. Historical context lives in dataset changelogs and git history.
 
 ## Card expectations
 
 Each dataset card should describe:
 
-- dataset name or dataset family;
+- dataset family and current public file;
 - status and maturity level;
 - intended use;
 - language;

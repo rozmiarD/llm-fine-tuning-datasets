@@ -1,12 +1,12 @@
 # Debian-admin Bash review plan
 
-This review plan is for the active `debian-admin-bash-sft.v1.1` dataset.
+This review plan is for the current `debian-admin-bash-sft` dataset family, whose active SFT source file is `../debian-admin-bash-sft.jsonl`.
 
 ## Goal
 
-Create a reviewed subset for training and release decisions without pretending that all generated draft records are production-ready.
+Create reviewed subsets for training and release decisions without pretending that all generated draft records are production-ready.
 
-Validation/model provenance for this wave is tracked in `../../validation/VALIDATION_PROVENANCE.md`. The current OpenClaw-assisted audit used `openai-codex/gpt-5.5` with intended/current think mode `xhigh` (an earlier status read briefly reported `medium`; see provenance); this is not a substitute for full semantic/safety review.
+Validation/model provenance is tracked in `../../../validation/VALIDATION_PROVENANCE.md`. The current OpenClaw-assisted audit used `openai-codex/gpt-5.5` with intended/current think mode `xhigh` (an earlier status read briefly reported `medium`; see provenance); this is not a substitute for full semantic/safety review.
 
 ## Review stages
 

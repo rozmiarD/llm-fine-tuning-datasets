@@ -14,7 +14,7 @@ It is not SFT training data and does not use the governed `messages` shape. Each
 
 | File | Records | Purpose |
 |---|---:|---|
-| `debian-admin-bash-preference.v0.1.jsonl` | 60 | Preference examples for inspection-first, safe-first behavior. |
+| `preference.jsonl` | 60 | Preference examples for inspection-first, safe-first behavior. |
 
 ## Scope
 

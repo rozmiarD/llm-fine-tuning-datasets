@@ -6,7 +6,7 @@ This file records who/what performed validation and review-related analysis for 
 
 Date: 2026-05-13
 
-Repository state: local draft commits ahead of `origin/main`; not pushed as an official remote checkpoint.
+Repository state: current public checkpoint plus local documentation-layout consolidation in progress. This file records the validation/review provenance for the current Debian-admin Bash quality wave; publication status is determined by git history and the dataset changelog.
 
 ## Automated validators
 
@@ -85,7 +85,7 @@ For example:
 ```text
 semantic reviewer: GPT-5.5 high/xhigh or named human reviewer
 rubric: datasets/debian-admin-bash/review/REVIEW_PLAN.md
-input: datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl
+input: datasets/debian-admin-bash/review/review-candidates.jsonl
 sandbox: bwrap + tempdir fixtures / container image <digest>
 result: reviewed=<n>, quarantined=<n>, rejected=<n>
 ```

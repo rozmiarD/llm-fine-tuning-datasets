@@ -17,9 +17,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "datasets/debian-admin-bash/debian-admin-bash-sft.v1.1.jsonl"
-OUT = ROOT / "datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.jsonl"
-MANIFEST = ROOT / "datasets/debian-admin-bash/review/debian-admin-bash-sft.v1.1.review-candidates.md"
+SOURCE = ROOT / "datasets/debian-admin-bash/debian-admin-bash-sft.jsonl"
+OUT = ROOT / "datasets/debian-admin-bash/review/review-candidates.jsonl"
+MANIFEST = ROOT / "datasets/debian-admin-bash/review/README.md"
 
 RISK_WEIGHT = {
     "destructive": 9,
@@ -137,7 +137,7 @@ def build(limit: int) -> tuple[list[dict[str, Any]], list[tuple[str, int, str]]]
         item["meta"].setdefault("curation", {})
         item["meta"]["curation"].update({
             "review_candidate": True,
-            "source_dataset": "debian-admin-bash-sft.v1.1",
+            "source_dataset": "debian-admin-bash-sft",
             "selection_score": s,
             "selection_reason": why,
             "review_claim": "candidate_only_not_human_reviewed",
@@ -163,7 +163,7 @@ def build(limit: int) -> tuple[list[dict[str, Any]], list[tuple[str, int, str]]]
         item["meta"].setdefault("curation", {})
         item["meta"]["curation"].update({
             "review_candidate": True,
-            "source_dataset": "debian-admin-bash-sft.v1.1",
+            "source_dataset": "debian-admin-bash-sft",
             "selection_score": s,
             "selection_reason": why,
             "review_claim": "candidate_only_not_human_reviewed",
@@ -181,7 +181,7 @@ def write_manifest(records: list[dict[str, Any]], info: list[tuple[str, int, str
     style = collections.Counter(r["meta"]["answer_style"] for r in records)
     sha = hashlib.sha256(OUT.read_bytes()).hexdigest() if OUT.exists() else "<not-written>"
     lines = [
-        "# Review-candidate subset: debian-admin-bash-sft.v1.1",
+        "# Review-candidate subset: debian-admin-bash-sft",
         "",
         "This file is a candidate subset for manual semantic/safety review and training experiments.",
         "",
