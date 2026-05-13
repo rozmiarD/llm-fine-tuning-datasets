@@ -73,7 +73,7 @@ python validation/validate_preference_dataset.py \
   --report validation/debian-admin-bash-preference.validation-report.md
 ```
 
-Run eval and sandbox checks:
+Run eval, sandbox, and review-state checks:
 
 ```bash
 python scripts/run_eval.py \
@@ -83,9 +83,13 @@ python scripts/run_sandbox_checks.py \
   --backend bwrap \
   --jsonl validation/debian-admin-bash-review-candidates.sandbox-checks.jsonl \
   --report validation/debian-admin-bash-review-candidates.sandbox-checks.md
+
+python scripts/review_state.py status
 ```
 
 The sandbox checker is conservative. It runs syntax checks for extracted Bash blocks, executes only allowlisted fixture-safe commands, and classifies host-admin commands as `static_only` or `blocked` with a suggested next review action.
+
+The review-state checker is not a semantic reviewer. It computes canonical record hashes and detects stale `reviewed` markers so unchanged records and already-checked families do not consume review effort again.
 
 ## What the validator checks
 
@@ -101,7 +105,8 @@ The sandbox checker is conservative. It runs syntax checks for extracted Bash bl
 - side-effect metadata mismatches;
 - warning metadata for higher-risk state-changing examples;
 - basic answer-style consistency;
-- review-status honesty.
+- review-status honesty;
+- stale hash-bound review markers when `scripts/review_state.py status` is run.
 
 ## What validation does not prove
 
@@ -125,6 +130,8 @@ Validation does not prove that:
 | [Eval heuristic score](debian-admin-bash-eval.heuristic-score.md) | Heuristic safe-first eval runner self-check on reference answers | pass |
 | [Review-candidate validation report](debian-admin-bash-review-candidates.validation-report.md) | 360-record review-candidate subset validation | pass |
 | [Review-candidate sandbox report](debian-admin-bash-review-candidates.sandbox-checks.md) | Conservative sandbox/static triage of review-candidate command blocks | advisory |
+| `datasets/debian-admin-bash/review/review-manifest.json` | Hash-bound record review-state summary | current |
+| `datasets/debian-admin-bash/review/family-review-manifest.json` | Hash-bound family consistency-review summary | current |
 | [Preference validation report](debian-admin-bash-preference.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
 

@@ -32,6 +32,29 @@ Only mark a record as `reviewed` when semantic and safety review are both comple
 
 Do not mark a record as reviewed only because validation passed.
 
+Reviewed status must be hash-bound. A record that is marked `reviewed` must include `meta.review.provenance.record_sha256`, computed by `scripts/review_state.py` over the record content and governance metadata, excluding review bookkeeping. If the prompt, answer, safety metadata, target OS, tags, or other governed content changes, the hash changes and the review state becomes stale.
+
+Use this workflow to avoid spending review effort twice:
+
+```bash
+python scripts/review_state.py status
+python scripts/review_state.py stamp-records \
+  --ids-file reviewed-record-ids.txt \
+  --reviewer operator \
+  --review-batch v1.2-sqlite-wave-001
+python scripts/review_state.py write-manifest
+```
+
+Family-level consistency review is tracked separately in `family-review-manifest.json` with a hash over the reviewed record IDs. Use it only after checking that a family is internally consistent; changing any member record makes the family review stale.
+
+```bash
+python scripts/review_state.py stamp-family \
+  --family-id sqlite-locking-wave-001 \
+  --ids-file sqlite-locking-family.ids \
+  --reviewer operator \
+  --review-batch v1.2-sqlite-wave-001
+```
+
 ## Training recommendation
 
 For a small 3B model, prefer a smaller reviewed subset over a larger noisy set. If review capacity is limited, train on:

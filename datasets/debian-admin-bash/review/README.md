@@ -4,6 +4,22 @@ This file is a candidate subset for manual semantic/safety review and training e
 
 It is not a claim that these records are human-reviewed. The source records keep their governed `review.status` values.
 
+## Review-state manifests
+
+Review markers are deterministic and hash-bound so unchanged records do not need to be reviewed again.
+
+- `review-manifest.json` summarizes current record review state. By default it stores only non-draft entries plus aggregate counts, because draft records do not need individual manifest rows.
+- `family-review-manifest.json` stores explicit family-level consistency reviews. It starts empty and should only be populated after a family has actually been checked.
+
+Use:
+
+```bash
+python scripts/review_state.py status
+python scripts/review_state.py write-manifest
+```
+
+A reviewed record becomes stale if its canonical content hash changes. A reviewed family becomes stale if any member record hash changes or disappears.
+
 ## Output
 
 - File: `datasets/debian-admin-bash/review/review-candidates.jsonl`

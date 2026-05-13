@@ -1,0 +1,6 @@
+{
+  "$schema": "https://github.com/rozmiarD/llm-fine-tuning-datasets/family-review-manifest.v0.1",
+  "dataset": "datasets/debian-admin-bash/debian-admin-bash-sft.jsonl",
+  "families": {},
+  "generated_at": "2026-05-13T15:49:50Z"
+}
