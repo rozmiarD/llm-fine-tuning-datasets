@@ -36,6 +36,7 @@ DATASET_CARD.md
 Validation and quality reports:
 
 ```text
+../../validation/VALIDATION_PROVENANCE.md
 ../../validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ../../validation/debian-admin-bash-sft.v1.1.validation-report.md
 ../../validation/debian-admin-bash-sft.v1.1.quality-audit.md
@@ -73,6 +74,8 @@ It uses the existing governed record-shape schema:
 `meta.dataset_version` is `1.1` because this is the dataset content version. The schema remains v0.2 because the governed record shape did not change.
 
 All records are currently marked as draft. Passing JSON Schema validation and governance linting does not mean that records have been manually reviewed for semantic correctness, safety, or execution behavior.
+
+Validation provenance is tracked in `../../validation/VALIDATION_PROVENANCE.md`, including the automated tools used and the OpenClaw model/mode involved in model-assisted audit work.
 
 PostgreSQL is intentionally excluded from the active corpus; database coverage is scoped to SQLite as a local file-backed admin surface.
 

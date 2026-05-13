@@ -2,6 +2,12 @@
 
 This directory contains validation scripts, validation notes, and validation reports.
 
+## Validation provenance
+
+The current validation/model provenance is recorded in [Validation provenance](VALIDATION_PROVENANCE.md).
+
+Short version for the current local quality wave: deterministic scripts produced the validation/sandbox counts; model-assisted curation and audit were performed in OpenClaw with `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`. This is not a claim of full independent semantic/human review.
+
 ## Validation layers
 
 Validation is layered.
@@ -148,6 +154,7 @@ The validator does not prove that:
 | [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
 | [v0.1 validation report](debian-admin-bash-sft.v0.1.historical.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
+| [Validation provenance](VALIDATION_PROVENANCE.md) | Validator/tool/model provenance and review-claim boundary | current |
 | [debian-admin-bash v1.1 governed SFT validation report](debian-admin-bash-sft.v1.1.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
 | [debian-admin-bash v1.1 quality audit](debian-admin-bash-sft.v1.1.quality-audit.md) | Distribution, repetition watchlist, review priorities, and next-addition recommendations | advisory |
 | [debian-admin-bash single-turn eval validation report](debian-admin-bash-eval.v0.1.validation-report.md) | Held-out single-turn eval validation | pass |

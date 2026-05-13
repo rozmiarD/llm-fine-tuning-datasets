@@ -6,6 +6,13 @@
 - Checked code blocks: 360
 - Result SHA-256: `615ef4993413399b250525ef81d00057f5806a69a47db37d865616014e1a1dda`
 
+## Validation provenance
+
+- Sandbox counts: `scripts/run_sandbox_checks.py` with backend `bwrap`.
+- Model-assisted interpretation/documentation: OpenClaw session using `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`.
+- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
+- Boundary: this report is sandbox/static triage, not full semantic review.
+
 ## Status counts
 
 - `blocked`: 248

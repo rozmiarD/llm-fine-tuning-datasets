@@ -1,5 +1,12 @@
 # Quality audit: debian-admin-bash-sft.v1.1
 
+## Validation provenance
+
+- Automated counts: local deterministic scripts.
+- Model-assisted audit/curation: OpenClaw session using `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`.
+- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
+- Boundary: this is not a full independent semantic/human review; records remain `draft`.
+
 ## Summary
 
 - Records: 2672
