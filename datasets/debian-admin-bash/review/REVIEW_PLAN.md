@@ -6,7 +6,7 @@ This review plan is for the active `debian-admin-bash-sft.v1.1` dataset.
 
 Create a reviewed subset for training and release decisions without pretending that all generated draft records are production-ready.
 
-Validation/model provenance for this wave is tracked in `../../validation/VALIDATION_PROVENANCE.md`. The current OpenClaw-assisted audit used `openai-codex/gpt-5.5` in think mode `medium`; this is not a substitute for full semantic/safety review.
+Validation/model provenance for this wave is tracked in `../../validation/VALIDATION_PROVENANCE.md`. The current OpenClaw-assisted audit used `openai-codex/gpt-5.5` with intended/current think mode `xhigh` (an earlier status read briefly reported `medium`; see provenance); this is not a substitute for full semantic/safety review.
 
 ## Review stages
 

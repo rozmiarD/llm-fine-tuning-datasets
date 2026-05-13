@@ -6,7 +6,7 @@ This directory contains validation scripts, validation notes, and validation rep
 
 The current validation/model provenance is recorded in [Validation provenance](VALIDATION_PROVENANCE.md).
 
-Short version for the current local quality wave: deterministic scripts produced the validation/sandbox counts; model-assisted curation and audit were performed in OpenClaw with `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`. This is not a claim of full independent semantic/human review.
+Short version for the current local quality wave: deterministic scripts produced the validation/sandbox counts; model-assisted curation and audit were performed in OpenClaw with `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`. An earlier status read briefly reported `medium`; see provenance notes. This is not a claim of full independent semantic/human review.
 
 ## Validation layers
 

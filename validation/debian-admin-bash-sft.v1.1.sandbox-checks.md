@@ -9,7 +9,7 @@
 ## Validation provenance
 
 - Sandbox counts: `scripts/run_sandbox_checks.py` with backend `bwrap`.
-- Model-assisted interpretation/documentation: OpenClaw session using `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`.
+- Model-assisted interpretation/documentation: OpenClaw session using `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`; an earlier status read briefly reported `medium`, documented in provenance.
 - Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
 - Boundary: this report is sandbox/static triage, not full semantic review.
 

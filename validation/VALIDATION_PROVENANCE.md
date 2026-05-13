@@ -36,15 +36,17 @@ The following checks are deterministic local tooling, not model judgment:
 
 The dataset quality audit, review-candidate selection strategy, eval/preference design, and sandbox triage interpretation were produced with AI assistance in OpenClaw.
 
-Model visible from OpenClaw session status at the time of this validation wave:
+Model visible from OpenClaw session status for the current session after operator re-check:
 
 ```text
 model: openai-codex/gpt-5.5
 fallback: openai-codex/gpt-5.4
-reasoning / think mode: medium
+reasoning / think mode: xhigh
 text verbosity: low
 execution mode: direct, elevated runtime available
 ```
+
+Note: an earlier status read while writing this provenance returned `Think: medium`, which conflicted with the operator-selected setting and a later live status check showing `Think: xhigh`. Treat the reliable/intended provenance for this wave as `xhigh`, while recognizing that deterministic validators and sandbox checks, not model reasoning mode, produced the pass/fail counts.
 
 Do not interpret this as a full independent semantic review by that model. The model helped design, generate, triage, and document artefacts; deterministic validators and sandbox checks produced the pass/fail counts.
 

@@ -3,7 +3,7 @@
 ## Validation provenance
 
 - Automated counts: local deterministic scripts.
-- Model-assisted audit/curation: OpenClaw session using `openai-codex/gpt-5.5`, think mode `medium`, text verbosity `low`.
+- Model-assisted audit/curation: OpenClaw session using `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`; an earlier status read briefly reported `medium`, documented in provenance.
 - Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
 - Boundary: this is not a full independent semantic/human review; records remain `draft`.
 
