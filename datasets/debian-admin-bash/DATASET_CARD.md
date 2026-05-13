@@ -5,7 +5,7 @@
 Current active dataset:
 
 ```text
-debian-admin-bash-sft.v1.0
+debian-admin-bash-sft.v1.1
 ```
 
 Reference dataset family:
@@ -20,42 +20,42 @@ This dataset currently has two active tracks:
 
 | Track | File | Status |
 |---|---|---|
-| debian-admin-bash v1.0 | `debian-admin-bash-sft.v1.0.jsonl` | active governed draft dataset |
+| debian-admin-bash v1.1 | `debian-admin-bash-sft.v1.1.jsonl` | active governed draft dataset |
 | v0.2 sample | `samples/debian-admin-bash-sft.v0.2.sample.jsonl` | governed reference sample |
 
 The previous full v0.1 corpus was removed from the active dataset tree because it contained faulty data and should not be used as a valid training source.
 
 The v0.2 sample defines the governed source-record shape with explicit risk, safety, answer-style, and review metadata.
 
-The active v1.0 Debian-admin Bash dataset contains 2552 governed draft records. It uses the existing governed v0.2 record-shape schema because the record shape did not change.
+The active v1.1 Debian-admin Bash dataset contains 2672 governed draft records. It uses the existing governed v0.2 record-shape schema because the record shape did not change.
 
 PostgreSQL is intentionally excluded from the active corpus; database coverage is scoped to SQLite as a local file-backed admin surface.
 
-## debian-admin-bash v1.0 metadata
+## debian-admin-bash v1.1 metadata
 
 Source lineage:
 
 ```text
 debian-admin-bash-sft.v0.3.cleaned-source.jsonl
-curated v0.4-v1.0 Debian-admin Bash supplements
+curated v0.4-v1.1 Debian-admin Bash supplements
 ```
 
 Output:
 
 ```text
-debian-admin-bash-sft.v1.0.jsonl
+debian-admin-bash-sft.v1.1.jsonl
 ```
 
 Record count:
 
 ```text
-2552
+2672
 ```
 
 SHA-256:
 
 ```text
-e9cf20cf01a7d71f45718f6df63de17e8d62ab0feb6bc4ea19e00e0e98757b25
+2e20e432b70ff4ab260f5ee087d221dbcda10118bc8c301ff2b8285e340c7064
 ```
 
 Governance schema:
@@ -67,7 +67,7 @@ schemas/debian-admin-bash.v0.2.schema.json
 Validation report:
 
 ```text
-validation/debian-admin-bash-sft.v1.0.validation-report.md
+validation/debian-admin-bash-sft.v1.1.validation-report.md
 ```
 
 Review status:
@@ -78,7 +78,7 @@ draft
 
 ## Production-readiness statement
 
-The active v1.0 dataset should not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
+The active v1.1 dataset should not be treated as production-grade only because it passes schema and governance linting. Its records remain `draft` until semantic review, safety review, and any required execution validation are completed.
 
 Before training, records should be reviewed for:
 
@@ -136,7 +136,7 @@ This dataset is not optimized for base models without instruction tuning unless 
 
 Canonical source format and model-specific export expectations are defined in [Dataset format](../../docs/dataset-format.md).
 
-This card only records dataset-specific facts: the active v1.0 file is JSONL source data, not a trainer-specific export.
+This card only records dataset-specific facts: the active v1.1 file is JSONL source data, not a trainer-specific export.
 
 ## Recommended answer style and quality priorities
 
@@ -169,13 +169,13 @@ Good records should teach:
 - verification after a fix;
 - honest risk and review metadata.
 
-## v1.0 expansion summary
+## v1.1 expansion summary
 
-The v1.0 supplement intentionally strengthens existing Debian/Ubuntu admin surfaces instead of adding a new domain. It adds apt/dpkg lifecycle diagnostics and guarded changes, package/repository/keyring/lock/output errors, process/resource/OOM/file-descriptor/systemd-cgroup diagnosis, and mixed output-driven incidents connecting package maintenance with services and host resources.
+The v1.1 supplement intentionally adds evidence-first incident records rather than a new domain. It covers systemd, packages, processes, backup/restore, permissions, SSH/auth, AppArmor/security, SQLite, networking, Docker, filesystem, and logs. Each record starts from realistic terminal evidence and asks for one safe first verification command.
 
 It does not add PostgreSQL, Kubernetes, cloud-provider operations, Terraform, GPU/CUDA, Wireshark, packet forensics, offensive security, broad backend development, or broad enterprise IAM.
 
-## Distribution summary for debian-admin-bash v1.0
+## Distribution summary for debian-admin-bash v1.1
 
 ### Difficulty
 
@@ -183,13 +183,13 @@ It does not add PostgreSQL, Kubernetes, cloud-provider operations, Terraform, GP
 |---|---:|
 | `beginner` | 425 |
 | `intermediate` | 1107 |
-| `advanced` | 1020 |
+| `advanced` | 1140 |
 
 ### Risk level
 
 | Risk level | Count |
 |---|---:|
-| `safe_readonly` | 1918 |
+| `safe_readonly` | 2038 |
 | `state_change_low` | 273 |
 | `state_change_high` | 63 |
 | `network_sensitive` | 101 |
@@ -202,7 +202,7 @@ It does not add PostgreSQL, Kubernetes, cloud-provider operations, Terraform, GP
 | Answer style | Count |
 |---|---:|
 | `command_with_brief_explanation` | 1109 |
-| `diagnostic_steps` | 692 |
+| `diagnostic_steps` | 812 |
 | `guarded_procedure` | 345 |
 | `refusal_with_safe_alternative` | 200 |
 | `script_with_explanation` | 206 |
@@ -215,7 +215,7 @@ It should not be treated as a complete system administration corpus, a security 
 
 The dataset teaches terminal operator behavior and command generation patterns. Runtime safety, authorization, and execution controls must be implemented outside the model.
 
-The active v1.0 dataset has schema and governance-lint validation evidence, but all records remain draft until manual review.
+The active v1.1 dataset has schema and governance-lint validation evidence, but all records remain draft until manual review.
 
 ## Migration recommendation
 
