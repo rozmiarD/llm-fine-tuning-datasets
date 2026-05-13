@@ -19,7 +19,7 @@ The dataset content version belongs in record metadata, validation reports, data
 Current content checkpoint:
 
 ```text
-meta.dataset_version = "1.1"
+meta.dataset_version = "1.2"
 ```
 
 This avoids cluttering `main` with full JSONL snapshots for every checkpoint. Historical checkpoint summaries belong in `datasets/debian-admin-bash/CHANGELOG.md` and git history.
@@ -90,7 +90,7 @@ Do not put every axis into the file name. Keep these in `meta` and dataset cards
 Use dataset content versioning in metadata and changelog entries:
 
 ```text
-v1.1
+v1.2
 ```
 
 Increase the content version when scope, source data, record quality rules, or intended training use changes significantly. A dataset content version does not require a new JSON Schema version when the governed record shape is unchanged.

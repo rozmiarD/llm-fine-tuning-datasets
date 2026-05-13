@@ -1,11 +1,11 @@
 {
   "$schema": "https://github.com/rozmiarD/llm-fine-tuning-datasets/review-manifest.v0.1",
   "dataset": "datasets/debian-admin-bash/debian-admin-bash-sft.jsonl",
-  "generated_at": "2026-05-13T15:52:19Z",
-  "record_count": 2672,
+  "generated_at": "2026-05-13T20:21:35Z",
+  "record_count": 2836,
   "records": {},
   "summary": {
-    "draft": 2672,
+    "draft": 2836,
     "quarantined": 0,
     "rejected": 0,
     "reviewed": 0,

@@ -10,7 +10,7 @@ Current public SFT file:
 datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
 ```
 
-The current content checkpoint is `v1.1`, but the file name is stable on purpose. Historical full JSONL snapshots are tracked by git history and summarized in [CHANGELOG.md](CHANGELOG.md), not kept as active public files.
+The current content checkpoint is `v1.2`, but the file name is stable on purpose. Historical full JSONL snapshots are tracked by git history and summarized in [CHANGELOG.md](CHANGELOG.md), not kept as active public files.
 
 ## Current metadata
 
@@ -18,9 +18,9 @@ The current content checkpoint is `v1.1`, but the file name is stable on purpose
 |---|---|
 | Dataset family | `debian-admin-bash-sft` |
 | Current file | `debian-admin-bash-sft.jsonl` |
-| Content checkpoint | `v1.1` |
-| Records | `2672` |
-| SHA-256 | `2e20e432b70ff4ab260f5ee087d221dbcda10118bc8c301ff2b8285e340c7064` |
+| Content checkpoint | `v1.2` |
+| Records | `2836` |
+| SHA-256 | `e021ee617322960579776f38cd71443ff5027df29b369c9e257ea0025e93aa2a` |
 | Schema | `schemas/debian-admin-bash.v0.2.schema.json` |
 | Review status | `draft` |
 | Validation report | `validation/debian-admin-bash-sft.validation-report.md` |
@@ -35,7 +35,7 @@ The records emphasize:
 - Bash command generation;
 - concise command-first answers;
 - inspection before mutation;
-- systemd, apt/dpkg, permissions, backup/restore, SSH/auth, Docker, networking, logs, incident triage, Bash tooling, structured outputs, and SQLite workflows;
+- systemd, apt/dpkg, permissions, backup/restore, SSH/auth, Docker, bounded local VirtualBox administration, networking, logs, incident triage, Bash tooling, structured outputs, and SQLite workflows;
 - refusals or safe alternatives for unsafe administrative shortcuts.
 
 ## Active companion artifacts
@@ -60,6 +60,7 @@ All SFT records remain `review.status="draft"` until semantic review, safety rev
 - Some repeated templates remain and should be deduplicated or diversified during review.
 - Sandbox triage intentionally blocks many host-admin commands rather than executing them.
 - SQLite is the scoped database surface; PostgreSQL is intentionally excluded.
+- VirtualBox coverage is bounded to local host VM administration, not broad cloud or enterprise virtualization.
 - Training pipelines must still apply model-specific formatting, sampling, and runtime policy controls.
 
 ## Recommended next steps before training

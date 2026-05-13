@@ -27,8 +27,8 @@ See [Dataset governance](docs/dataset-governance.md), [Quality guidelines](docs/
 
 | Dataset | Target model | Use | Language | Platform | Records | Status |
 |---|---:|---|---|---|---:|---|
-| [`debian-admin-bash-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 2672 | governed draft dataset |
-| [`debian-admin-bash` eval/review artifacts](datasets/debian-admin-bash/README.md) | small Debian-admin | eval/review/preference | English | Debian/Ubuntu | 480 companion records | draft quality artifacts |
+| [`debian-admin-bash-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 2836 | governed draft dataset |
+| [`debian-admin-bash` eval/review artifacts](datasets/debian-admin-bash/README.md) | small Debian-admin | eval/review/preference | English | Debian/Ubuntu | 680 companion records | draft quality artifacts |
 
 Current SFT file:
 
@@ -36,7 +36,7 @@ Current SFT file:
 datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
 ```
 
-The current content checkpoint is `v1.1`; the filename is stable so public `main` does not accumulate full JSONL snapshots for every checkpoint.
+The current content checkpoint is `v1.2`; the filename is stable so public `main` does not accumulate full JSONL snapshots for every checkpoint.
 
 ## Repository goals
 

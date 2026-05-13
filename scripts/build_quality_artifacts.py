@@ -17,7 +17,7 @@ def slug(s):
  s=s.lower(); s=re.sub(r'`[^`]+`','',s); s=re.sub(r'[^a-z0-9]+','-',s).strip('-'); return s[:70].strip('-') or 'record'
 
 def meta(task,sd,tags,style='diagnostic_steps',risk='safe_readonly',diff='advanced'):
- return {'dataset_version':'1.1','task_type':task,'language':'en','domain':'debian_admin_bash','subdomain':sd,'target_os':{'family':'linux','distros':['debian','ubuntu'],'shell':'bash','package_manager':'apt' if sd=='packages' else 'none'},'target_model_profile':'small-debian-admin','difficulty':diff,'risk_level':risk,'requires_root':False,'answer_style':style,'tags':sorted(set(['linux','debian','ubuntu','held-out']+tags)),'safety':{'has_side_effects':False,'side_effects':[],'destructive':False,'warning_required':False,'warning_present':False,'dry_run_available':False,'rollback_available':False},'review':{'status':'draft','semantic_review':False,'safety_review':False,'execution_validation':{'mode':'static_only','status':'pending','reason':'Held-out eval/reference answer; not manually executed.'}},'source':{'source_dataset_version':'eval-v0.1','curation':'held_out_quality_eval'}}
+ return {'dataset_version':'1.2','task_type':task,'language':'en','domain':'debian_admin_bash','subdomain':sd,'target_os':{'family':'linux','distros':['debian','ubuntu'],'shell':'bash','package_manager':'apt' if sd=='packages' else 'none'},'target_model_profile':'small-debian-admin','difficulty':diff,'risk_level':risk,'requires_root':False,'answer_style':style,'tags':sorted(set(['linux','debian','ubuntu','held-out']+tags)),'safety':{'has_side_effects':False,'side_effects':[],'destructive':False,'warning_required':False,'warning_present':False,'dry_run_available':False,'rollback_available':False},'review':{'status':'draft','semantic_review':False,'safety_review':False,'execution_validation':{'mode':'static_only','status':'pending','reason':'Held-out eval/reference answer; not manually executed.'}},'source':{'source_dataset_version':'eval-v0.1','curation':'held_out_quality_eval'}}
 
 def rec(task,idx,sd,title,user,assistant,tags,style='diagnostic_steps',risk='safe_readonly'):
  m=meta(task,sd,tags,style,risk)
@@ -77,17 +77,26 @@ sub=collections.Counter(r['meta']['subdomain'] for r in recs)
 risk=collections.Counter(r['meta']['risk_level'] for r in recs)
 style=collections.Counter(r['meta']['answer_style'] for r in recs)
 diff=collections.Counter(r['meta']['difficulty'] for r in recs)
+new_recs=[r for r in recs if r.get('id','').startswith('debian-admin-bash:v12.')]
+newsub=collections.Counter(r['meta']['subdomain'] for r in new_recs)
 user_blocks=sum(1 for r in recs if '```text' in next(m['content'] for m in r['messages'] if m['role']=='user'))
 refusals=sum(1 for r in recs if r['meta']['answer_style']=='refusal_with_safe_alternative')
+pref_path=ROOT/'datasets/debian-admin-bash/preferences/preference.jsonl'
+pref_count=sum(1 for line in pref_path.read_text().splitlines() if line.strip()) if pref_path.exists() else 0
 # repeated normalized user clusters
 clusters=collections.defaultdict(list)
 for r in recs:
  u=next(m['content'] for m in r['messages'] if m['role']=='user').lower()
  n=re.sub(r'```.*?```','```X```',u,flags=re.S)
- n=re.sub(r'\b\d+\b','N',n); n=re.sub(r'case n|variant n','CASE',n); n=re.sub(r'\s+',' ',n).strip()
+ n=re.sub(r'\b\d+\b','N',n); n=re.sub(r'case n|variant n','CASE',n); n=re.sub(r'host [a-z0-9_.-]+','host HOST',n); n=re.sub(r'\s+',' ',n).strip()
  clusters[n].append(r['id'])
 repeats=sorted([(len(v),k,v[:5]) for k,v in clusters.items() if len(v)>=10], reverse=True)[:20]
-lines=['# Quality audit: debian-admin-bash-sft','','## Summary','',f'- Records: {len(recs)}',f'- User prompts with text/output blocks: {user_blocks}',f'- Refusal records: {refusals}',f'- Held-out eval records added separately: {len(single)+len(multi)}','','## Distribution','','### Subdomain']
+lines=['# Quality audit: debian-admin-bash-sft','','## Validation provenance','','- Automated counts: local deterministic scripts.','- Boundary: this is not a full independent semantic/human review; records remain `draft`.','- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).','','## Summary','',f'- Records: {len(recs)}',f'- v1.2 SFT records added: {len(new_recs)}',f'- User prompts with text/output blocks: {user_blocks}',f'- Refusal records: {refusals}',f'- Held-out eval records added separately: {len(single)+len(multi)}',f'- Preference pairs: {pref_count}','','## v1.2 additions by subdomain']
+if newsub:
+ for k,v in newsub.most_common(): lines.append(f'- `{k}`: {v}')
+else:
+ lines.append('- None detected.')
+lines+=['','## Distribution','','### Subdomain']
 for k,v in sub.most_common(): lines.append(f'- `{k}`: {v}')
 lines+=['','### Risk level']
 for k,v in risk.most_common(): lines.append(f'- `{k}`: {v}')
@@ -99,6 +108,6 @@ lines+=['','## Repetition watchlist','']
 if repeats:
  for c,k,ids in repeats: lines.append(f'- {c} records: {k[:140]}... examples: {", ".join(ids)}')
 else: lines.append('- No normalized prompt clusters at threshold.')
-lines+=['','## Assessment','','The dataset is now strong as a narrow Debian/Ubuntu admin corpus. The biggest quality lever is not another broad domain; it is curation: reduce repeated command-explanation templates, review high-risk records, and test against held-out output-driven evals.','','## Recommended next additions','','1. Build an automated eval runner that scores model answers against the held-out evals for safe-first behavior, Debian correctness, and concision.','2. Create a manually reviewed training subset rather than pushing more draft-only records.','3. Add a small preference set for bad-vs-good answers on unsafe or premature state-changing requests.','4. If adding content, keep it to underrepresented local-admin maintenance: logrotate/cron/timers and restore drills, not new tools or domains.']
+lines+=['','## Assessment','','The v1.2 wave improves undercovered local Debian/Ubuntu operational surfaces without broadening into cloud, Kubernetes, PostgreSQL, or offensive security. The main remaining quality lever is still review discipline and template diversity, not raw volume.','','## Recommended next steps','','1. Keep new records draft until hash-bound semantic/safety review is actually performed.','2. Prefer future small waves over large generated batches.','3. If adding more VirtualBox, keep it local-host-only and capped.','4. Build model-eval runs after fine-tuning; current eval score is reference-answer self-check, not a trained-model benchmark.']
 (VAL_DIR/'debian-admin-bash-sft.quality-audit.md').write_text('\n'.join(lines)+'\n')
 print('wrote evals, review plan, quality audit')

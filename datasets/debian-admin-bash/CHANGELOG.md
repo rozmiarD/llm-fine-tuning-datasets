@@ -12,6 +12,55 @@ Older full JSONL snapshots are intentionally not kept as active files on `main`;
 
 All SFT records remain `review.status="draft"` unless a future changelog entry explicitly states otherwise. Structural validation is not a claim of semantic/safety review.
 
+## debian-admin-bash-sft v1.1 to v1.2
+
+Generated: 2026-05-13
+
+### Source
+
+- Input dataset: `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl`
+- Input content checkpoint: `v1.1`
+- Input records: `2672`
+- Input SHA-256: `2e20e432b70ff4ab260f5ee087d221dbcda10118bc8c301ff2b8285e340c7064`
+
+### Output
+
+- Output dataset: `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl`
+- Output content checkpoint: `v1.2`
+- Output records: `2836`
+- Added SFT records: `164`
+- SHA-256: `e021ee617322960579776f38cd71443ff5027df29b369c9e257ea0025e93aa2a`
+- Schema: `schemas/debian-admin-bash.v0.2.schema.json`
+- Validation report: `validation/debian-admin-bash-sft.validation-report.md`
+- Review status: `draft`
+
+### Added SFT coverage
+
+| Surface | Records | Purpose |
+|---|---:|---|
+| SQLite operational depth | 20 | WAL/locking, `.indexes`, `EXPLAIN QUERY PLAN`, `VACUUM INTO`, online backup, guarded migrations. |
+| JSON/JQ/YAML data plumbing | 16 | `jq empty`, JSONL line validation, atomic JSON patching, yq/Python fallback. |
+| Structured output contracts | 4 | Stable operator handoff JSON contracts. |
+| systemd deep operations | 20 | 203/EXEC, 217/USER, 226/NAMESPACE, persistent timers, StartLimit triage. |
+| Permissions / SSH / sudoers / AppArmor | 20 | Path-chain inspection, authorized_keys modes, sudoers validation, AppArmor verification, ACLs. |
+| Backup/restore drills | 16 | rsync dry-run restore, tar ACL/xattr preservation, temp restore compare, checksum manifests. |
+| Docker local admin | 16 | Compose port checks, healthcheck inspection, bind mounts, safe prune refusal. |
+| Networking/TLS | 16 | DNS/resolved triage, netplan safe workflow, UFW prechecks, TLS expiry inspection. |
+| Bash scripting | 16 | `getopts`, `find -print0`, `flock`, root guards. |
+| VirtualBox local admin | 20 | VM inventory, vboxdrv/DKMS diagnosis, host-only checks, snapshots, destructive-delete refusal. |
+
+### Preference set expansion
+
+The draft preference set was expanded from `60` to `200` bad-vs-good pairs, including unsafe shortcuts around sudoers, netplan over SSH, Docker prune, curl-to-shell installers, backup deletion, and destructive VirtualBox actions.
+
+### Scope control
+
+This checkpoint stays within local Debian/Ubuntu host administration. VirtualBox coverage is intentionally bounded to local host VM administration and does not add broad cloud, Kubernetes, Terraform, PostgreSQL, offensive security, or enterprise virtualization scope.
+
+### Non-claims
+
+All added SFT and preference records remain draft. This checkpoint improves structural coverage and training signal diversity but does not claim human semantic review, safety review, execution validation, or production readiness.
+
 ## Documentation and artifact-layout cleanup after v1.1
 
 Date: 2026-05-13

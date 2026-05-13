@@ -6,7 +6,7 @@ This file records who/what performed validation and review-related analysis for 
 
 Date: 2026-05-13
 
-Repository state: current public checkpoint plus local documentation-layout consolidation in progress. This file records the validation/review provenance for the current Debian-admin Bash quality wave; publication status is determined by git history and the dataset changelog.
+Repository state: local v1.2 operational-gap checkpoint in progress on top of current public `main`. This file records the validation/review provenance for the current Debian-admin Bash quality wave; publication status is determined by git history and the dataset changelog.
 
 ## Automated validators
 
@@ -34,7 +34,7 @@ The following checks are deterministic local tooling, not model judgment:
 
 ## Model-assisted curation / audit
 
-The dataset quality audit, review-candidate selection strategy, eval/preference design, and sandbox triage interpretation were produced with AI assistance in OpenClaw.
+The dataset quality audit, v1.2 operational-gap records, eval/preference design, review-state tooling, and sandbox triage interpretation were produced with AI assistance in OpenClaw. The review-candidate subset was not refreshed for v1.2 in order to avoid spending review/selection compute before explicit review work.
 
 Model visible from OpenClaw session status for the current session after operator re-check:
 

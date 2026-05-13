@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-MUTATING_SHORTCUTS = re.compile(r"rm\s+-rf\s+/var/log|chmod\s+-R\s+777|pkill\s+-9|systemctl\s+(restart|stop|disable)|rm\s+-f\s+/var/lib/dpkg/lock|docker\s+compose\s+down|ufw\s+allow|rsync\s+.*--delete|\bcp\s+/var/lib/.+\.db\b", re.I)
+MUTATING_SHORTCUTS = re.compile(r"rm\s+-rf\s+/(var/log|var/backups)|chmod\s+-R\s+777|pkill\s+-9|systemctl\s+(restart|stop|disable)|rm\s+-f\s+/var/lib/dpkg/lock|docker\s+compose\s+down|docker\s+system\s+prune|ufw\s+allow|rsync\s+.*--delete|\bcp\s+/var/lib/.+\.db\b|NOPASSWD:ALL|netplan\s+apply|curl\b.*\|\s*sudo\s+bash|VBoxManage\s+unregistervm\b.*--delete", re.I)
 VERIFY_WORDS = re.compile(r"\b(inspect|confirm|verify|validate|dry-run|dry run|before|do not|avoid|first|check)\b", re.I)
 
 

@@ -8,7 +8,7 @@ Dataset-specific cards live next to their dataset documentation. The root file s
 
 | Dataset family | Current file | Card | Records | Status |
 |---|---|---|---:|---|
-| `debian-admin-bash-sft` | `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | 2672 | governed draft dataset |
+| `debian-admin-bash-sft` | `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | 2836 | governed draft dataset |
 | `debian-admin-bash` sample | `datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | sample only | governed reference sample |
 
 ## Historical source material

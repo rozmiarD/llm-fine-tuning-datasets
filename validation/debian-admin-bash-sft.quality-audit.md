@@ -3,64 +3,81 @@
 ## Validation provenance
 
 - Automated counts: local deterministic scripts.
-- Model-assisted audit/curation: OpenClaw session using `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`; an earlier status read briefly reported `medium`, documented in provenance.
-- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
 - Boundary: this is not a full independent semantic/human review; records remain `draft`.
+- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).
 
 ## Summary
 
-- Records: 2672
+- Records: 2836
+- v1.2 SFT records added: 164
 - User prompts with text/output blocks: 522
-- Refusal records: 200
+- Refusal records: 208
 - Held-out eval records added separately: 120
+- Preference pairs: 200
+
+## v1.2 additions by subdomain
+- `sqlite`: 20
+- `systemd`: 20
+- `virtualbox`: 20
+- `json_jq`: 16
+- `backup_restore`: 16
+- `docker`: 16
+- `scripting`: 16
+- `networking`: 12
+- `permissions`: 8
+- `security`: 8
+- `structured_output`: 4
+- `ssh_auth`: 4
+- `web_tls`: 4
 
 ## Distribution
 
 ### Subdomain
 - `bash_tooling`: 310
 - `incident_triage`: 250
+- `systemd`: 234
 - `terminal`: 224
-- `systemd`: 214
-- `sqlite`: 172
-- `structured_output`: 167
-- `networking`: 147
+- `sqlite`: 192
+- `structured_output`: 171
+- `networking`: 159
 - `log_diagnosis`: 130
 - `packages`: 111
+- `docker`: 107
+- `backup_restore`: 105
+- `json_jq`: 96
 - `tool_availability`: 94
-- `docker`: 91
-- `backup_restore`: 89
+- `scripting`: 84
 - `safety`: 82
-- `json_jq`: 80
 - `processes`: 76
-- `scripting`: 68
+- `security`: 66
 - `defensive_admin`: 62
-- `security`: 58
 - `advanced_diagnostics`: 55
 - `filesystem`: 51
-- `permissions`: 41
-- `ssh_auth`: 39
+- `permissions`: 49
+- `ssh_auth`: 43
+- `web_tls`: 34
 - `logs`: 31
-- `web_tls`: 30
+- `virtualbox`: 20
 
 ### Risk level
-- `safe_readonly`: 2038
-- `state_change_low`: 273
-- `security_sensitive`: 167
-- `network_sensitive`: 101
-- `state_change_high`: 63
+- `safe_readonly`: 2150
+- `state_change_low`: 305
+- `security_sensitive`: 171
+- `network_sensitive`: 105
+- `state_change_high`: 67
 - `privilege_sensitive`: 25
-- `destructive`: 5
+- `destructive`: 13
 
 ### Answer style
 - `command_with_brief_explanation`: 1109
-- `diagnostic_steps`: 812
-- `guarded_procedure`: 345
-- `script_with_explanation`: 206
-- `refusal_with_safe_alternative`: 200
+- `diagnostic_steps`: 908
+- `guarded_procedure`: 389
+- `script_with_explanation`: 222
+- `refusal_with_safe_alternative`: 208
 
 ### Difficulty
+- `intermediate`: 1271
 - `advanced`: 1140
-- `intermediate`: 1107
 - `beginner`: 425
 
 ## Repetition watchlist
@@ -74,18 +91,18 @@
 - 24 records: summarize this incident evidence as json for an operator handoff: ```X```... examples: debian-admin-bash:incident_triage.nginx-config-error-json-report.v06.001, debian-admin-bash:incident_triage.docker-port-missing-json-report.v06.001, debian-admin-bash:incident_triage.disk-full-journal-json-report.v06.001, debian-admin-bash:incident_triage.sqlite-locked-app-json-report.v06.001, debian-admin-bash:incident_triage.sqlite-readonly-perms-json-report.v06.001
 - 24 records: interpret this incident evidence and identify the likely failing surface: ```X```... examples: debian-admin-bash:incident_triage.nginx-config-error-diagnosis.v06.001, debian-admin-bash:incident_triage.docker-port-missing-diagnosis.v06.001, debian-admin-bash:incident_triage.disk-full-journal-diagnosis.v06.001, debian-admin-bash:incident_triage.sqlite-locked-app-diagnosis.v06.001, debian-admin-bash:incident_triage.sqlite-readonly-perms-diagnosis.v06.001
 - 19 records: interpret this debian admin incident and give one safe first action: ```X```... examples: debian-admin-bash:incident_triage.interpret-this-debian-admin-incident-and-give-one-safe-first-action.v10.0074, debian-admin-bash:incident_triage.interpret-this-debian-admin-incident-and-give-one-safe-first-action.v10.0075, debian-admin-bash:incident_triage.interpret-this-debian-admin-incident-and-give-one-safe-first-action.v10.0076, debian-admin-bash:incident_triage.interpret-this-debian-admin-incident-and-give-one-safe-first-action.v10.0077, debian-admin-bash:incident_triage.interpret-this-debian-admin-incident-and-give-one-safe-first-action.v10.0078
-- 12 records: interpret this nmap output for a host i administer and give one safe verification command: ```X```... examples: debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0033, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0034, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0035, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0036, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0037
+- 12 records: interpret this nmap output for a host HOST administer and give one safe verification command: ```X```... examples: debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0033, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0034, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0035, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0036, debian-admin-bash:networking.interpret-this-nmap-output-for-a-host-i-administer-and-give-one-safe-ver.v08.0037
 - 10 records: show local listeners on tcp port N in a parser-friendly table.... examples: debian-admin-bash:structured_output.show-local-listeners-on-tcp-port-22-in-a-p.000681.001, debian-admin-bash:structured_output.show-local-listeners-on-tcp-port-53-in-a-p.000682.001, debian-admin-bash:structured_output.show-local-listeners-on-tcp-port-80-in-a-p.000683.001, debian-admin-bash:structured_output.show-local-listeners-on-tcp-port-123-in-a.000684.001, debian-admin-bash:structured_output.show-local-listeners-on-tcp-port-443-in-a.000685.001
 - 10 records: interpret this apt/dpkg error and give the safest first verification command: ```X```... examples: debian-admin-bash:packages.interpret-this-apt-dpkg-error-and-give-the-safest-first-verification-command.v10.0024, debian-admin-bash:packages.interpret-this-apt-dpkg-error-and-give-the-safest-first-verification-command.v10.0025, debian-admin-bash:packages.interpret-this-apt-dpkg-error-and-give-the-safest-first-verification-command.v10.0026, debian-admin-bash:packages.interpret-this-apt-dpkg-error-and-give-the-safest-first-verification-command.v10.0027, debian-admin-bash:packages.interpret-this-apt-dpkg-error-and-give-the-safest-first-verification-command.v10.0028
 - 10 records: interpret this access-control error and give the safest first verification command: ```X```... examples: debian-admin-bash:security.interpret-this-access-control-error-and-give-the-safest-first-verification-c.v09.0031, debian-admin-bash:security.interpret-this-access-control-error-and-give-the-safest-first-verification-c.v09.0032, debian-admin-bash:security.interpret-this-access-control-error-and-give-the-safest-first-verification-c.v09.0033, debian-admin-bash:security.interpret-this-access-control-error-and-give-the-safest-first-verification-c.v09.0034, debian-admin-bash:security.interpret-this-access-control-error-and-give-the-safest-first-verification-c.v09.0035
 
 ## Assessment
 
-The dataset is now strong as a narrow Debian/Ubuntu admin corpus. The biggest quality lever is not another broad domain; it is curation: reduce repeated command-explanation templates, review high-risk records, and test against held-out output-driven evals.
+The v1.2 wave improves undercovered local Debian/Ubuntu operational surfaces without broadening into cloud, Kubernetes, PostgreSQL, or offensive security. The main remaining quality lever is still review discipline and template diversity, not raw volume.
 
-## Recommended next additions
+## Recommended next steps
 
-1. Build an automated eval runner that scores model answers against the held-out evals for safe-first behavior, Debian correctness, and concision.
-2. Create a manually reviewed training subset rather than pushing more draft-only records.
-3. Add a small preference set for bad-vs-good answers on unsafe or premature state-changing requests.
-4. If adding content, keep it to underrepresented local-admin maintenance: logrotate/cron/timers and restore drills, not new tools or domains.
+1. Keep new records draft until hash-bound semantic/safety review is actually performed.
+2. Prefer future small waves over large generated batches.
+3. If adding more VirtualBox, keep it local-host-only and capped.
+4. Build model-eval runs after fine-tuning; current eval score is reference-answer self-check, not a trained-model benchmark.

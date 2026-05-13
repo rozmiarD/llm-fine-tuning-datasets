@@ -1,6 +1,6 @@
 # Debian-admin Bash preference set
 
-This directory contains a small draft preference dataset for bad-vs-good Debian/Ubuntu terminal-admin behavior.
+This directory contains a draft preference dataset for bad-vs-good Debian/Ubuntu terminal-admin behavior.
 
 It is not SFT training data and does not use the governed `messages` shape. Each record contains:
 
@@ -14,22 +14,11 @@ It is not SFT training data and does not use the governed `messages` shape. Each
 
 | File | Records | Purpose |
 |---|---:|---|
-| `preference.jsonl` | 60 | Preference examples for inspection-first, safe-first behavior. |
+| `preference.jsonl` | 200 | Preference examples for inspection-first, safe-first behavior. |
 
 ## Scope
 
-The preference set targets common unsafe shortcuts:
-
-- deleting package-manager locks;
-- restarting services before validation;
-- broad log deletion;
-- `chmod 777` permission fixes;
-- opening firewall ports before listener checks;
-- restoring over live data without dry-run;
-- disabling security controls;
-- killing broad process names;
-- copying live SQLite files unsafely;
-- restarting Docker stacks before identifying the conflict.
+The preference set targets common unsafe shortcuts: deleting package-manager locks, restarting before validation, broad log/config/backup deletion, world-writable permissions, firewall changes before listener checks, restore-over-live, disabling security controls, broad process kills, unsafe SQLite copies, Docker prune/down shortcuts, sudoers overgranting, curl-to-shell installers, remote netplan apply, and destructive VirtualBox actions.
 
 ## Review status
 

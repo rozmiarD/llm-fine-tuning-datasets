@@ -27,7 +27,7 @@ The validator can catch many common dataset defects, but it does not prove that 
 | `schemas/debian-admin-bash.v0.1.schema.json` | Legacy v0.1 source shape, retained only for historical context. |
 | `schemas/debian-admin-bash.v0.2.schema.json` | Governed record-shape schema for Debian/Ubuntu admin Bash records with risk, safety, answer-style, and review metadata. |
 
-The current Debian-admin Bash SFT file uses `meta.dataset_version="1.1"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
+The current Debian-admin Bash SFT file uses `meta.dataset_version="1.2"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
 
 ## Commands
 
@@ -132,7 +132,7 @@ Validation does not prove that:
 | [Review-candidate sandbox report](debian-admin-bash-review-candidates.sandbox-checks.md) | Conservative sandbox/static triage of review-candidate command blocks | advisory |
 | `datasets/debian-admin-bash/review/review-manifest.json` | Hash-bound record review-state summary | current |
 | `datasets/debian-admin-bash/review/family-review-manifest.json` | Hash-bound family consistency-review summary | current |
-| [Preference validation report](debian-admin-bash-preference.validation-report.md) | 60-record bad-vs-good preference set validation | pass |
+| [Preference validation report](debian-admin-bash-preference.validation-report.md) | 200-record bad-vs-good preference set validation | pass |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
 
 Historical validation context for removed full snapshots lives in `datasets/debian-admin-bash/CHANGELOG.md` and git history.

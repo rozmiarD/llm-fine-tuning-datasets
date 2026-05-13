@@ -1,23 +1,26 @@
 # Preference dataset validation report
 
 - Dataset: `datasets/debian-admin-bash/preferences/preference.jsonl`
-- Records: 60
+- Records: 200
 - Errors: 0
 - Warnings: 0
 - Status: PASSED
 
 ## Subdomain distribution
 
-- `backup_restore`: 6
-- `docker`: 6
-- `filesystem`: 6
-- `networking`: 6
-- `packages`: 6
-- `processes`: 6
-- `security`: 6
-- `sqlite`: 6
-- `ssh_auth`: 6
-- `systemd`: 6
+- `backup_restore`: 20
+- `docker`: 20
+- `filesystem`: 10
+- `json_jq`: 10
+- `networking`: 20
+- `packages`: 20
+- `permissions`: 10
+- `processes`: 10
+- `security`: 20
+- `sqlite`: 10
+- `ssh_auth`: 10
+- `systemd`: 20
+- `virtualbox`: 20
 
 ## Errors
 
