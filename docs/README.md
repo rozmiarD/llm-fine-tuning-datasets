@@ -10,6 +10,7 @@ This directory contains reusable documentation for dataset shape, governance, qu
 | Governance and validation model | [Dataset governance](dataset-governance.md) | validation layers, risk levels, answer styles, non-claims, and review rules |
 | Record quality bar | [Quality guidelines](quality-guidelines.md) | examples, Debian/Ubuntu consistency, scripting habits, and expansion policy |
 | File naming | [Naming convention](naming-convention.md) | dataset file names, field meanings, and versioning |
+| Repository-specific workflow | [Repository playbook](repository-playbook.md) | official checkpoint publishing, draft handling, changelog/migration-note policy, and push discipline for this repo only |
 | Accessible documentation | [Accessibility guidelines](accessibility-guidelines.md) | readable docs, tables, badges, examples, and visual alternatives |
 
 ## Documentation rule

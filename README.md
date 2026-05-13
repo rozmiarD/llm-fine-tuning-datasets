@@ -23,7 +23,7 @@ source JSONL
   -> model-specific export
 ```
 
-See [Dataset governance](docs/dataset-governance.md). The documentation map is in [docs/README.md](docs/README.md).
+See [Dataset governance](docs/dataset-governance.md). The documentation map is in [docs/README.md](docs/README.md). Repository-specific publishing rules are in [Repository playbook](docs/repository-playbook.md).
 
 ## Dataset registry
 
@@ -47,6 +47,7 @@ The repository is intended to provide:
 - dataset cards and per-dataset documentation;
 - validation schemas and executable validation scripts;
 - dataset-governance rules for safety, risk, answer style, and review status;
+- repository-specific publishing rules that keep draft waves local and push only official checkpoints;
 - quality guidelines for creating useful training records;
 - documentation that remains readable and accessible without relying on visuals alone.
 
@@ -149,7 +150,8 @@ See [Naming convention](docs/naming-convention.md).
 │   ├── dataset-format.md
 │   ├── dataset-governance.md
 │   ├── naming-convention.md
-│   └── quality-guidelines.md
+│   ├── quality-guidelines.md
+│   └── repository-playbook.md
 ├── schemas/
 │   ├── debian-admin-bash.v0.1.schema.json
 │   └── debian-admin-bash.v0.2.schema.json

@@ -32,6 +32,16 @@ Avoid:
 - distro-mixed command sequences unless the task is explicitly cross-distro;
 - claims that schema validation equals production readiness.
 
+## Repository workflow
+
+This repository has a repository-specific playbook for draft handling, official checkpoints, changelog/migration-note policy, and push discipline:
+
+```text
+docs/repository-playbook.md
+```
+
+Follow that playbook for this repository only. In particular, do not push every working draft dataset version to the remote repository. Keep draft waves local and push only coherent official checkpoints. Preserve useful draft history in migration notes or changelog-style summaries instead of publishing noisy per-version README files.
+
 ## Documentation rules
 
 Documentation should be boring, navigable, and evidence-backed.
@@ -42,7 +52,7 @@ Use this hierarchy:
 - `DATASET_CARD.md`: repository-level dataset index and high-level caveats.
 - `datasets/<family>/README.md`: family-specific source files, schema, validation, metadata values, and usage notes.
 - `datasets/<family>/DATASET_CARD.md`: detailed dataset card, distribution counters, limitations, and intended use.
-- `docs/`: reusable policies, format rules, naming rules, governance, quality, and accessibility guidance.
+- `docs/`: reusable policies, format rules, naming rules, governance, quality, repository playbook, and accessibility guidance.
 - `validation/`: executable validator, reproducible commands, and generated validation reports.
 
 Keep docs truthful:
