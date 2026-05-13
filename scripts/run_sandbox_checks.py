@@ -6,6 +6,7 @@ The checker is deliberately conservative:
 - extracts Bash code blocks from assistant answers;
 - always runs `bash -n` syntax checks in a temporary file;
 - executes only allowlisted read-only/basic-fixture commands;
+- includes fixture backends for SQLite and tempdir filesystem/rsync checks;
 - blocks commands with sudo, service control, package mutation, network mutation,
   deletion, ownership/permission changes, Docker mutation, raw disk tools, or
   host-sensitive paths;
@@ -54,18 +55,52 @@ SAFE_HEAD = {
     "wc", "tr", "xargs", "find", "basename", "dirname", "realpath", "readlink", "date", "stat", "du", "df",
     "pwd", "ls", "cat", "touch", "mkdir", "mktemp", "tee", "jq", "python", "python3", "bash", "sh",
 }
+TEMP_FIXTURE_HEAD = SAFE_HEAD | {"rsync", "namei", "getfacl", "setfacl", "diff", "tar", "install", "chmod", "cp"}
+SQLITE_FIXTURE_HEAD = SAFE_HEAD | {"sqlite3", "lsof", "fuser"}
+HARD_BLOCK_FOR_FIXTURES = re.compile(
+    r"\b(sudoedit|systemctl|service\s+\S+\s+(restart|stop|start|reload)|apt(?:-get)?\s+(install|remove|purge|upgrade|dist-upgrade|autoremove)|"
+    r"dpkg\s+(-i|--install|--configure|--remove|--purge)|mount\s+|umount\s+|useradd|usermod|userdel|groupadd|groupdel|passwd|chpasswd|"
+    r"visudo|chown\s+|chgrp\s+|setfacl\s+|ufw\s+|iptables\b|ip6tables\b|nft\s+|netplan\s+apply|docker\s+|mkfs|wipefs|dd\s+.*\bof=|kill\s+|pkill\s+|killall\s+|smartctl|journalctl)",
+    re.I,
+)
+SQLITE_BLOCKERS = re.compile(r"\b(systemctl|service\s+|apt(?:-get)?\s+|dpkg\s+|chown\s+|chmod\s+|mount\s+|umount\s+|ufw\s+|iptables|nft\s+|docker\s+|journalctl)\b", re.I)
 
 FIXTURE = """set -euo pipefail
-mkdir -p fixture/logs fixture/app fixture/etc
-printf 'alpha\\nbeta\\nerror: example\\n' > fixture/logs/app.log
-printf '{\"ok\": true, \"items\": [1, 2, 3]}\\n' > fixture/app/state.json
-printf 'KEY=value\\n' > fixture/etc/app.env
+mkdir -p fixture/logs fixture/app fixture/etc fixture/etc/app fixture/etc/nginx fixture/srv fixture/backup fixture/restore-test fixture/home fixture/tmp fixture/var/lib/app fixture/var/lib/myapp fixture/var/log
+for n in app app2 app3 app4 app5 app-alpha app-bravo app-charlie app-delta app-echo app-foxtrot app-golf app-hotel; do
+  mkdir -p "fixture/srv/$n" "fixture/backup/$n" "fixture/restore-test/$n"
+  printf 'config=true\n' > "fixture/srv/$n/config.yml"
+  printf 'payload for %s\n' "$n" > "fixture/srv/$n/file.txt"
+done
+mkdir -p fixture/srv/reports fixture/restore-test/reports fixture/home/alice fixture/home/USER/.ssh fixture/backup/alice fixture/backup/host fixture/backup/app fixture/backup/etc fixture/var/lib/app fixture/var/lib/myapp
+printf 'server { listen 80; }\n' > fixture/etc/nginx/nginx.conf
+printf 'ssh-rsa AAAA example\n' > fixture/home/USER/.ssh/authorized_keys
+printf 'alpha\nbeta\nerror: example\n' > fixture/logs/app.log
+printf '{\"ok\": true, \"items\": [1, 2, 3]}\n' > fixture/app/state.json
+printf 'KEY=value\n' > fixture/etc/app.env
+printf 'CONFIG=true\n' > fixture/etc/app/config.yml
+printf 'failed opening private.key\npermission denied\nvanished file\n' > rsync.log
+printf 'id,name\n1,Alice\n2,Bob\n' > users.csv
+printf 'id,name\n3,Carol\n' > data.csv
+printf 'PRAGMA user_version=7;\n' > migration.sql
+printf 'CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT); INSERT OR IGNORE INTO users(id,name) VALUES (1,"Alice"),(2,"Bob");\n' > users.dump.sql
+tar -czf fixture/backup/etc.tar.gz -C fixture etc 2>/dev/null || true
+if command -v sqlite3 >/dev/null 2>&1; then
+  for db in app.db staging.db backup.db restored.db corrupt.db optimize-test.db fixture/var/lib/app/app.db fixture/var/lib/myapp/app.db; do
+    mkdir -p "$(dirname "$db")"
+    sqlite3 "$db" 'CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT); CREATE TABLE IF NOT EXISTS sessions(id INTEGER PRIMARY KEY, expires_at TEXT); CREATE TABLE IF NOT EXISTS imported_data(id TEXT, name TEXT); CREATE TABLE IF NOT EXISTS users_import(id TEXT, name TEXT); INSERT OR IGNORE INTO users(id,name) VALUES (1,"Alice"),(2,"Bob"); INSERT OR IGNORE INTO sessions(id,expires_at) VALUES (1,datetime("now","-40 days")); PRAGMA user_version=5;'
+  done
+fi
 """
 
 
 def suggestion_for(mode: str, status: str, reason: str, block: str) -> str:
     text = block.lower()
-    if status == "passed":
+    if status == "fixture_checked":
+        if mode == "fixture_sqlite":
+            return "sqlite_fixture_checked"
+        if mode == "fixture_tempdir_filesystem":
+            return "tempdir_filesystem_fixture_checked"
         return "eligible_for_mechanical_check_review"
     if status == "failed":
         return "fix_bash_syntax_or_command_assumption"
@@ -130,30 +165,104 @@ def first_command_name(line: str) -> str:
         return ""
     if "=$(" in stripped or stripped.startswith(("if ", "for ", "while ", "case ", "function ")):
         return "compound"
+    if stripped in {"SQL", "EOF"} or stripped.startswith((".", "BEGIN", "COMMIT", "PRAGMA", "SELECT", "DELETE", "INSERT", "UPDATE", "CREATE")):
+        return ""
     try:
         parts = shlex.split(stripped, comments=True, posix=True)
     except ValueError:
         return "parse-error"
     if not parts:
         return ""
+    while parts and re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", parts[0]):
+        parts = parts[1:]
+    if not parts:
+        return "compound"
     if parts[0] in {"command", "env"} and len(parts) > 1:
         return parts[1]
     return parts[0]
 
 
-def classify(block: str) -> tuple[str, str]:
+def command_heads(block: str) -> set[str]:
+    heads: set[str] = set()
+    heredoc_until: str | None = None
+    for line in block.splitlines():
+        stripped = line.strip()
+        if heredoc_until:
+            if stripped == heredoc_until:
+                heredoc_until = None
+            continue
+        match = re.search(r"<<[-]?['\"]?([A-Za-z0-9_]+)['\"]?", line)
+        if match:
+            heredoc_until = match.group(1)
+        head = first_command_name(line)
+        if head:
+            heads.add(head)
+    return heads
+
+
+def normalize_fixture_block(block: str) -> str:
+    out = block
+    out = re.sub(r"\bsudo\s+-u\s+\S+\s+", "", out)
+    out = re.sub(r"\bsudo\s+", "", out)
+    rewrites = [
+        (r"(?<![A-Za-z0-9._-])/srv/([A-Za-z0-9._/-]+)", r"fixture/srv/\1"),
+        (r"(?<![A-Za-z0-9._-])/backup/([A-Za-z0-9._/-]+)", r"fixture/backup/\1"),
+        (r"(?<![A-Za-z0-9._-])/restore-test/([A-Za-z0-9._/-]+)", r"fixture/restore-test/\1"),
+        (r"(?<![A-Za-z0-9._-])/home/([A-Za-z0-9._/-]+)", r"fixture/home/\1"),
+        (r"(?<![A-Za-z0-9._-])/var/lib/([A-Za-z0-9._/-]+)", r"fixture/var/lib/\1"),
+        (r"(?<![A-Za-z0-9._-])/var/log/([A-Za-z0-9._/-]+)", r"fixture/var/log/\1"),
+        (r"(?<![A-Za-z0-9._-])/etc/nginx/([A-Za-z0-9._/-]+)", r"fixture/etc/nginx/\1"),
+        (r"(?<![A-Za-z0-9._-])/etc/([A-Za-z0-9._/-]+)", r"fixture/etc/\1"),
+        (r"(?<![A-Za-z0-9._-])/tmp/([A-Za-z0-9._/-]+)", r"fixture/tmp/\1"),
+        (r"(?<![A-Za-z0-9._/-])/tmp(?![A-Za-z0-9._/-])", r"fixture/tmp"),
+    ]
+    for pattern, repl in rewrites:
+        out = re.sub(pattern, repl, out)
+    return out
+
+
+def has_unmapped_sensitive_path(block: str) -> bool:
+    scrubbed = re.sub(r"fixture/(srv|backup|restore-test|home|var|etc|tmp)(/|\b)", "fixture_path/", block)
+    return bool(HOST_SENSITIVE.search(scrubbed) or re.search(r"/(srv|backup|restore-test)(/|\b)", scrubbed))
+
+
+def fixture_candidate(block: str, allowed_heads: set[str], blockers: re.Pattern[str]) -> tuple[bool, str, str]:
+    normalized = normalize_fixture_block(block)
+    if re.search(r"\bsetfacl\b", normalized):
+        return False, normalized, "contains fixture-blocked ACL mutation command"
+    if blockers.search(normalized):
+        return False, normalized, "contains fixture-blocked host-admin command"
+    if NETWORK.search(normalized):
+        return False, normalized, "network command requires container/mock-specific policy"
+    if has_unmapped_sensitive_path(normalized):
+        return False, normalized, "references unmapped host-sensitive path"
+    heads = command_heads(normalized)
+    unknown = {h for h in heads if h not in allowed_heads and h != "compound"}
+    if unknown:
+        return False, normalized, "contains non-allowlisted command heads: " + ", ".join(sorted(unknown)[:8])
+    return True, normalized, "fixture-safe after path normalization"
+
+
+def classify(block: str) -> tuple[str, str, str]:
+    if "sqlite3" in block and shutil.which("sqlite3"):
+        ok, normalized, reason = fixture_candidate(block, SQLITE_FIXTURE_HEAD, SQLITE_BLOCKERS)
+        if ok:
+            return "fixture_sqlite", reason, normalized
+    if any(token in block for token in ["rsync", "getfacl", "setfacl", "namei", "tar ", "cp ", "chmod", "/srv/", "/backup/", "/restore-test/", "/home/"]):
+        ok, normalized, reason = fixture_candidate(block, TEMP_FIXTURE_HEAD, HARD_BLOCK_FOR_FIXTURES)
+        if ok:
+            return "fixture_tempdir_filesystem", reason, normalized
     if DANGEROUS.search(block):
-        return "blocked_risky", "dangerous or state-changing command pattern"
+        return "blocked_risky", "dangerous or state-changing command pattern", block
     if NETWORK.search(block):
-        return "blocked_network", "network command requires container/mock-specific policy"
+        return "blocked_network", "network command requires container/mock-specific policy", block
     if HOST_SENSITIVE.search(block):
-        # Permit paths if only used in echo/printf examples? Keep conservative.
-        return "static_only", "references host-sensitive absolute path"
-    heads = {first_command_name(line) for line in block.splitlines() if first_command_name(line)}
+        return "static_only", "references host-sensitive absolute path", block
+    heads = command_heads(block)
     unknown = {h for h in heads if h not in SAFE_HEAD and h != "compound"}
     if unknown:
-        return "static_only", "contains non-allowlisted command heads: " + ", ".join(sorted(unknown)[:8])
-    return "fixture_subprocess", "allowlisted local command block"
+        return "static_only", "contains non-allowlisted command heads: " + ", ".join(sorted(unknown)[:8]), block
+    return "fixture_subprocess", "allowlisted local command block", block
 
 
 def run(cmd: list[str], cwd: Path, timeout: int = 5) -> subprocess.CompletedProcess[str]:
@@ -221,7 +330,7 @@ def check_record(record: dict[str, Any], backend: str) -> list[CheckResult]:
         with tempfile.TemporaryDirectory(prefix="dataset-sandbox-") as td:
             cwd = Path(td)
             syntax_status, syntax_rc, syntax_err = syntax_check(block, cwd)
-            mode, reason = classify(block)
+            mode, reason, checked_block = classify(block)
             exec_status = "skipped"
             rc: int | None = None
             out = ""
@@ -231,12 +340,13 @@ def check_record(record: dict[str, Any], backend: str) -> list[CheckResult]:
                 status = "failed"
                 mode = "syntax_check"
                 reason = "bash syntax check failed"
-            elif mode == "fixture_subprocess":
-                exec_status, rc, out, err = execute(block, cwd, backend)
-                status = "passed" if exec_status == "passed" else "failed"
+                checked_block = block
+            elif mode.startswith("fixture_"):
+                exec_status, rc, out, err = execute(checked_block, cwd, backend)
+                status = "fixture_checked" if exec_status == "passed" else "failed"
             elif mode == "static_only":
                 status = "static_only"
-            suggestion = suggestion_for(mode, status, reason, block)
+            suggestion = suggestion_for(mode, status, reason, checked_block)
             results.append(CheckResult(rid, subdomain, idx, mode, status, reason, suggestion, syntax_status, exec_status, rc, out, err))
     return results
 
@@ -265,6 +375,20 @@ def write_report(path: Path, dataset: Path, rows: list[CheckResult], backend: st
         f"- Result JSONL: `{jsonl_path.relative_to(ROOT) if jsonl_path.is_relative_to(ROOT) else jsonl_path}`",
         f"- Checked code blocks: {len(rows)}",
         f"- Result SHA-256: `{hashlib.sha256(jsonl_path.read_bytes()).hexdigest() if jsonl_path.exists() else '<not-written>'}`",
+        "",
+        "## Validation provenance",
+        "",
+        f"- Sandbox counts: `scripts/run_sandbox_checks.py` with backend `{backend}`.",
+        "- Fixture execution: conservative tempdir/bwrap fixtures only; no host-admin commands are executed against the live host.",
+        "- Model-assisted interpretation/documentation: OpenClaw session using `openai-codex/gpt-5.5`, intended/current think mode `xhigh`, text verbosity `low`; an earlier status read briefly reported `medium`, documented in provenance.",
+        "- Provenance details: [VALIDATION_PROVENANCE.md](VALIDATION_PROVENANCE.md).",
+        "- Boundary: this report is sandbox/static triage, not full semantic review.",
+        "",
+        "## Fixture backend notes",
+        "",
+        "- `fixture_sqlite`: creates synthetic SQLite databases and runs allowlisted `sqlite3`/read-lock style checks against them.",
+        "- `fixture_tempdir_filesystem`: rewrites selected absolute paths into a synthetic tempdir tree for allowlisted filesystem/backup commands such as local `rsync`, `cp`, `tar`, `namei`, and `chmod`.",
+        "- ACL/user/service/package/network mutations remain blocked or static-only unless a stronger dedicated fixture is added.",
         "",
         "## Status counts",
         "",
@@ -298,7 +422,7 @@ def write_report(path: Path, dataset: Path, rows: list[CheckResult], backend: st
             lines.append(f"- `{r.record_id}` block {r.block_index}: {r.reason}; stderr: `{r.stderr_tail.strip()[:180]}`")
     else:
         lines.append("None.")
-    lines += ["", "## Interpretation", "", "`passed` means only that the extracted Bash block passed the configured sandbox check. It does not prove the record is semantically correct or safe in production. `blocked` and `static_only` are expected for host-admin commands that require real services, root, package state, network policy, or host-sensitive paths.", ""]
+    lines += ["", "## Interpretation", "", "`fixture_checked` means only that a normalized copy of the extracted Bash block passed the configured fixture/sandbox check. It does not prove the record is semantically correct or safe in production. `blocked` and `static_only` are expected for host-admin commands that require real services, root, package state, network policy, or host-sensitive paths.", ""]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
 
