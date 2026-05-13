@@ -8,7 +8,7 @@ Dataset-specific cards should live next to their dataset documentation. The root
 
 | Dataset | Card | Purpose | Records | Status |
 |---|---|---|---:|---|
-| `debian-admin-bash-sft.v0.8` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Debian/Ubuntu admin Bash SFT source records with Bash tooling, incident triage, structured parser, SQLite, backup/restore, SSH/auth, and defensive-admin coverage | 2360 | governed draft dataset |
+| `debian-admin-bash-sft.v0.9` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Debian/Ubuntu admin Bash SFT source records with Bash tooling, incident triage, structured parser, SQLite, backup/restore, SSH/auth, and defensive-admin coverage | 2460 | governed draft dataset |
 | `debian-admin-bash-sft.v0.2` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | Governed source-record reference sample | sample only | governed reference sample |
 
 ## Removed source material

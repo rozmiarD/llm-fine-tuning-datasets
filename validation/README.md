@@ -22,7 +22,7 @@ The validator can catch many common dataset defects, but it does not prove that 
 | `schemas/debian-admin-bash.v0.1.schema.json` | Legacy v0.1 source records retained for historical/audit validation only. |
 | `schemas/debian-admin-bash.v0.2.schema.json` | Governed record-shape schema for Debian/Ubuntu admin Bash records with risk, safety, answer-style, and review metadata. |
 
-The governed v0.8 Debian-admin Bash dataset uses `meta.dataset_version="0.8"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
+The governed v0.9 Debian-admin Bash dataset uses `meta.dataset_version="0.9"`, but it still validates against `schemas/debian-admin-bash.v0.2.schema.json` because the governed record shape did not change.
 
 ## Validator
 
@@ -47,13 +47,13 @@ python validation/validate_dataset.py \
   --report validation/debian-admin-bash-sft.v0.2.sample.validation-report.md
 ```
 
-Validate the governed v0.8 Debian-admin Bash dataset:
+Validate the governed v0.9 Debian-admin Bash dataset:
 
 ```bash
 python validation/validate_dataset.py \
-  datasets/debian-admin-bash/debian-admin-bash-sft.v0.8.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-sft.v0.9.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
-  --report validation/debian-admin-bash-sft.v0.8.validation-report.md
+  --report validation/debian-admin-bash-sft.v0.9.validation-report.md
 ```
 
 ## What the validator checks
@@ -99,7 +99,7 @@ The validator does not prove that:
 | [Bootstrap validation report](bootstrap-validation-report.md) | Initial repository structure and sample consistency | pass |
 | [v0.1 validation report](debian-admin-bash-sft.v0.1.historical.validation-report.md) | Historical validation report for the removed faulty legacy corpus | historical only |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
-| [debian-admin-bash v0.8 governed SFT validation report](debian-admin-bash-sft.v0.8.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
+| [debian-admin-bash v0.9 governed SFT validation report](debian-admin-bash-sft.v0.9.validation-report.md) | Debian/Ubuntu admin Bash SFT dataset validation | pass |
 
 ## Migration rule
 
