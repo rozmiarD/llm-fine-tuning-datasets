@@ -7,6 +7,7 @@ Debian/Ubuntu terminal-administration source data for supervised fine-tuning, ev
 | Purpose | File | Records | Status |
 |---|---|---:|---|
 | SFT source dataset | `debian-admin-bash-sft.jsonl` | 2836 | governed draft |
+| LiteCoder-Terminal-SFT export | `debian-admin-bash-litecoder-terminal-sft.json` | 2836 | generated export, structurally validated |
 | Review-candidate subset | `review/review-candidates.jsonl` | 360 | draft candidates for manual semantic/safety review |
 | Single-turn eval | `evals/single-turn.jsonl` | 80 | held-out draft eval, not training data |
 | Multi-turn eval | `evals/multiturn.jsonl` | 40 | held-out draft continuation eval, not training data |
@@ -18,6 +19,8 @@ Debian/Ubuntu terminal-administration source data for supervised fine-tuning, ev
 Historical full JSONL snapshots are not kept as active files on `main`. Use [CHANGELOG.md](CHANGELOG.md) plus git history for previous checkpoint summaries.
 
 The review-candidate subset is intentionally not refreshed in this v1.2 content wave; it remains a draft candidate artifact, not a review claim.
+
+The LiteCoder-Terminal-SFT export is generated from the canonical JSONL source. It uses a top-level JSON array with ShareGPT-style `conversations` turns (`human` / `gpt`), matching the structural format used by `Lite-Coder/LiteCoder-Terminal-SFT`. The source `system` message is folded into the first `human` value so training context is preserved.
 
 ## Current SFT metadata
 
@@ -81,6 +84,14 @@ python validation/validate_dataset.py \
 python validation/validate_preference_dataset.py \
   datasets/debian-admin-bash/preferences/preference.jsonl \
   --report validation/debian-admin-bash-preference.validation-report.md
+
+python scripts/convert_to_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json
+
+python validation/validate_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json \
+  --report validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md
 ```
 
 Run eval, sandbox, and review-state checks:

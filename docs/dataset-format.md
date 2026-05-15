@@ -195,6 +195,25 @@ Model-specific export should preserve:
 
 Do not edit source records just to satisfy one trainer. Add an exporter.
 
+### LiteCoder-Terminal-SFT style export
+
+Use `scripts/convert_to_litecoder_terminal_sft.py` when a trainer expects the same structural shape as `Lite-Coder/LiteCoder-Terminal-SFT`:
+
+```json
+[
+  {
+    "id": 0,
+    "source_id": "debian-admin-bash:terminal.example.000001.001",
+    "conversations": [
+      {"from": "human", "value": "System instructions:\n...\n\nTask Description:\n..."},
+      {"from": "gpt", "value": "..."}
+    ]
+  }
+]
+```
+
+The export intentionally folds the canonical `system` message into the first `human` value because the target format only uses `human`/`gpt` conversation turns. Validate the generated file with `validation/validate_litecoder_terminal_sft.py` before training.
+
 ## Assistant answer format
 
 Preferred for command answers:
