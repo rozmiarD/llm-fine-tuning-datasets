@@ -27,16 +27,18 @@ See [Dataset governance](docs/dataset-governance.md), [Quality guidelines](docs/
 
 | Dataset | Target model | Use | Language | Platform | Records | Status |
 |---|---:|---|---|---|---:|---|
-| [`debian-admin-bash-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT | English | Debian/Ubuntu | 2836 | governed draft dataset |
+| [`debian-admin-bash-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT source | English | Debian/Ubuntu | 2836 | governed draft dataset |
+| [`debian-admin-bash-litecoder-terminal-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin / terminal SFT trainers | generated SFT export | English | Debian/Ubuntu | 2836 | LiteCoder-Terminal-SFT-style structural export |
 | [`debian-admin-bash` eval/review artifacts](datasets/debian-admin-bash/README.md) | small Debian-admin | eval/review/preference | English | Debian/Ubuntu | 680 companion records | draft quality artifacts |
 
-Current SFT file:
+Current SFT source and generated trainer export:
 
 ```text
 datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
+datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json
 ```
 
-The current content checkpoint is `v1.2`; the filename is stable so public `main` does not accumulate full JSONL snapshots for every checkpoint.
+The current content checkpoint is `v1.2`; the source filename is stable so public `main` does not accumulate full JSONL snapshots for every checkpoint. The LiteCoder-Terminal-SFT-style JSON file is a generated export of that same current source, not a separate content checkpoint.
 
 ## Repository goals
 
@@ -87,6 +89,14 @@ python validation/validate_preference_dataset.py \
   datasets/debian-admin-bash/preferences/preference.jsonl \
   --report validation/debian-admin-bash-preference.validation-report.md
 
+python scripts/convert_to_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json
+
+python validation/validate_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json \
+  --report validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md
+
 python scripts/run_eval.py
 python scripts/run_sandbox_checks.py
 ```
@@ -107,6 +117,7 @@ python scripts/run_sandbox_checks.py
 │       ├── DATASET_CARD.md
 │       ├── CHANGELOG.md
 │       ├── debian-admin-bash-sft.jsonl
+│       ├── debian-admin-bash-litecoder-terminal-sft.json
 │       ├── evals/
 │       ├── preferences/
 │       ├── review/

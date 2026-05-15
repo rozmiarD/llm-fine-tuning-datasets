@@ -17,7 +17,7 @@ Use local commits, local branches, or private working files for draft waves. Pus
 A dataset version is ready to push only when all of the following are true:
 
 - the active JSONL file is the intended official version;
-- generated or intermediate draft files are removed or intentionally excluded;
+- generated or intermediate draft files are removed or intentionally excluded; generated trainer exports are retained only when they are reproducible from the active source and documented as exports;
 - record count, SHA-256, dataset card, README files, and validation report agree;
 - JSONL parsing, schema validation, and governance linting pass;
 - semantic/safety review status is stated honestly (`draft`, `reviewed`, `quarantined`, or `rejected`);
@@ -96,6 +96,14 @@ python validation/validate_dataset.py \
   datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
   --schema schemas/debian-admin-bash.v0.2.schema.json \
   --report validation/debian-admin-bash-sft.validation-report.md
+
+python scripts/convert_to_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-sft.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json
+
+python validation/validate_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json \
+  --report validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md
 ```
 
 Also verify the effective Git identity before commit/push:

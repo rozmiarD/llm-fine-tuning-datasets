@@ -9,11 +9,12 @@ Dataset-specific cards live next to their dataset documentation. The root file s
 | Dataset family | Current file | Card | Records | Status |
 |---|---|---|---:|---|
 | `debian-admin-bash-sft` | `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | 2836 | governed draft dataset |
+| `debian-admin-bash-litecoder-terminal-sft` | `datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | 2836 | generated LiteCoder-Terminal-SFT-style export |
 | `debian-admin-bash` sample | `datasets/debian-admin-bash/samples/debian-admin-bash-sft.v0.2.sample.jsonl` | [Dataset card](datasets/debian-admin-bash/DATASET_CARD.md) | sample only | governed reference sample |
 
 ## Historical source material
 
-The previous full `v0.1` corpus and intermediate full JSONL snapshots are not active public files. Historical context lives in dataset changelogs and git history.
+The previous full `v0.1` corpus and intermediate full JSONL snapshots are not active public files. Historical context lives in dataset changelogs and git history. Generated exports may be active public files when they are derived from the current source dataset and explicitly documented as exports.
 
 ## Card expectations
 

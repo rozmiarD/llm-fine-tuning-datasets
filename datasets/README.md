@@ -17,7 +17,7 @@ Each dataset directory should contain its own README with:
 
 | Directory | Dataset family | Purpose | Status |
 |---|---|---|---|
-| [`debian-admin-bash`](debian-admin-bash/README.md) | Debian/Ubuntu administration for small Debian-admin and coder-instruct model profiles | Debian/Ubuntu Bash command generation, short explanations, inspection-first troubleshooting, and governed safety metadata | governed draft dataset plus reference samples |
+| [`debian-admin-bash`](debian-admin-bash/README.md) | Debian/Ubuntu administration for small Debian-admin and coder-instruct model profiles | Debian/Ubuntu Bash command generation, short explanations, inspection-first troubleshooting, governed safety metadata, and a generated LiteCoder-Terminal-SFT-style export | governed draft dataset plus generated export, companion artifacts, and reference samples |
 
 ## Directory naming
 

@@ -12,6 +12,28 @@ Older full JSONL snapshots are intentionally not kept as active files on `main`;
 
 All SFT records remain `review.status="draft"` unless a future changelog entry explicitly states otherwise. Structural validation is not a claim of semantic/safety review.
 
+## LiteCoder-Terminal-SFT-style export
+
+Date: 2026-05-15
+
+Scope:
+
+- added generated export `datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json`;
+- added converter `scripts/convert_to_litecoder_terminal_sft.py`;
+- added structural validator `validation/validate_litecoder_terminal_sft.py`;
+- added export validation report `validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md`;
+- documented that the canonical `system` message is folded into the first `human` turn because the target LiteCoder-Terminal-SFT shape uses `human` / `gpt` conversation turns.
+
+Export facts:
+
+- Source dataset: `datasets/debian-admin-bash/debian-admin-bash-sft.jsonl`
+- Source content checkpoint: `v1.2`
+- Export records: `2836`
+- Export SHA-256: `db6967200b0a5de20b74ed49b10ed263945af1a95bb2932a1833388a2a7c0916`
+- Export validation report: `validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md`
+
+Non-claim: this is a structural trainer export of the current draft source dataset. It does not create a new semantic/safety review claim and does not make the records production-ready.
+
 ## debian-admin-bash-sft v1.1 to v1.2
 
 Generated: 2026-05-13
