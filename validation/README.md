@@ -85,6 +85,25 @@ python validation/validate_litecoder_terminal_sft.py \
   --report validation/debian-admin-bash-litecoder-terminal-sft.validation-report.md
 ```
 
+Generate and validate the focused terminal-agent corpus:
+
+```bash
+python scripts/build_terminal_agent_sft.py
+
+python validation/validate_dataset.py \
+  datasets/debian-admin-bash/debian-admin-bash-terminal-agent-sft.jsonl \
+  --schema schemas/debian-admin-bash.v0.2.schema.json \
+  --report validation/debian-admin-bash-terminal-agent-sft.validation-report.md
+
+python scripts/convert_to_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-terminal-agent-sft.jsonl \
+  datasets/debian-admin-bash/debian-admin-bash-terminal-agent-litecoder-sft.json
+
+python validation/validate_litecoder_terminal_sft.py \
+  datasets/debian-admin-bash/debian-admin-bash-terminal-agent-litecoder-sft.json \
+  --report validation/debian-admin-bash-terminal-agent-litecoder-sft.validation-report.md
+```
+
 Run eval, sandbox, and review-state checks:
 
 ```bash
@@ -146,6 +165,8 @@ Validation does not prove that:
 | `datasets/debian-admin-bash/review/family-review-manifest.json` | Hash-bound family consistency-review summary | current |
 | [Preference validation report](debian-admin-bash-preference.validation-report.md) | 200-record bad-vs-good preference set validation | pass |
 | [LiteCoder-Terminal-SFT export validation report](debian-admin-bash-litecoder-terminal-sft.validation-report.md) | Generated ShareGPT-style `human`/`gpt` JSON export validation | pass |
+| [Terminal-agent SFT validation report](debian-admin-bash-terminal-agent-sft.validation-report.md) | 640-record code-first terminal-agent source validation | pass |
+| [Terminal-agent LiteCoder export validation report](debian-admin-bash-terminal-agent-litecoder-sft.validation-report.md) | Generated terminal-agent ShareGPT-style `human`/`gpt` JSON export validation | pass |
 | [v0.2 sample validation report](debian-admin-bash-sft.v0.2.sample.validation-report.md) | Governed sample schema and governance validation | pass |
 
 Historical validation context for removed full snapshots lives in `datasets/debian-admin-bash/CHANGELOG.md` and git history.

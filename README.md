@@ -29,6 +29,8 @@ See [Dataset governance](docs/dataset-governance.md), [Quality guidelines](docs/
 |---|---:|---|---|---|---:|---|
 | [`debian-admin-bash-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin | SFT source | English | Debian/Ubuntu | 2836 | governed draft dataset |
 | [`debian-admin-bash-litecoder-terminal-sft`](datasets/debian-admin-bash/README.md) | small Debian-admin / terminal SFT trainers | generated SFT export | English | Debian/Ubuntu | 2836 | LiteCoder-Terminal-SFT-style structural export |
+| [`debian-admin-bash-terminal-agent-sft`](datasets/debian-admin-bash/README.md) | LiteCoder terminal agent | focused SFT source | English | Debian/Ubuntu | 640 | terminal-agent focused draft |
+| [`debian-admin-bash-terminal-agent-litecoder-sft`](datasets/debian-admin-bash/README.md) | LiteCoder terminal agent | generated SFT export | English | Debian/Ubuntu | 640 | code-first terminal-agent export |
 | [`debian-admin-bash` eval/review artifacts](datasets/debian-admin-bash/README.md) | small Debian-admin | eval/review/preference | English | Debian/Ubuntu | 680 companion records | draft quality artifacts |
 
 Current SFT source and generated trainer export:
@@ -36,9 +38,13 @@ Current SFT source and generated trainer export:
 ```text
 datasets/debian-admin-bash/debian-admin-bash-sft.jsonl
 datasets/debian-admin-bash/debian-admin-bash-litecoder-terminal-sft.json
+datasets/debian-admin-bash/debian-admin-bash-terminal-agent-sft.jsonl
+datasets/debian-admin-bash/debian-admin-bash-terminal-agent-litecoder-sft.json
 ```
 
 The current content checkpoint is `v1.2`; the source filename is stable so public `main` does not accumulate full JSONL snapshots for every checkpoint. The LiteCoder-Terminal-SFT-style JSON file is a generated export of that same current source, not a separate content checkpoint.
+
+The terminal-agent focused files are a separate code-first corpus for terminal model fine-tuning. See [Terminal-agent SFT corpus plan](docs/terminal-agent-dataset-plan.md) for the size estimate, quality rules, and regeneration commands.
 
 ## Repository goals
 
@@ -118,6 +124,8 @@ python scripts/run_sandbox_checks.py
 │       ├── CHANGELOG.md
 │       ├── debian-admin-bash-sft.jsonl
 │       ├── debian-admin-bash-litecoder-terminal-sft.json
+│       ├── debian-admin-bash-terminal-agent-sft.jsonl
+│       ├── debian-admin-bash-terminal-agent-litecoder-sft.json
 │       ├── evals/
 │       ├── preferences/
 │       ├── review/
